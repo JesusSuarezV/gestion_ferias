@@ -1,0 +1,77 @@
+<div class="cuerpo" id="cuerpo">
+    <div class="user">
+        <img class="imagen-user" th:src="@{/img/user.png}" alt="eventos">
+        <div class="datos-user">
+            <a class="n-user" th:text="${username}"></a>
+            <a class="r-user" th:text="${role}"></a>
+        </div>
+    </div>
+    <div clas="lista">
+        <ul class="lista-principal" id="lista-close">
+            <li class="elemento-1 elemento--click">
+                <div class="lista-item">
+                    <div class="imagen-titulo">
+                        <img class="imagen-item" th:src="@{/img/eventos.png}" alt="eventos">
+                        <a class="titulo-elemento-1">Ferias</a>
+                    </div>
+                    <i class="fa-solid fa-angle-right list-arrow" style="color: black;"></i>
+                </div>
+                <ul class="lista-secundaria">
+                    <li class="elemento-2"><a href="/Ferias">Catálogo de ferias</a></li>
+                    <li class="elemento-2"><a href="#">Ferias inscritas</a></li>
+                    <li class="elemento-2"><a href="#">Ferias finalizadas</a></li>
+                    <li class="elemento-2"><a href="/Ferias/Mis_Ferias">Ferias creadas</a></li>
+                </ul>
+            </li>
+            <li class="elemento-1 elemento--click">
+                <div class="lista-item">
+                    <div class="imagen-titulo">
+                        <img class="imagen-item" th:src="@{/img/proyectos.png}" alt="eventos">
+                        <a class="titulo-elemento-1">Proyectos</a>
+                    </div>
+                    <i class="fa-solid fa-angle-right list-arrow" style="color: black;"></i>
+                </div>
+                <ul class="lista-secundaria">
+                    <li class="elemento-2">Mis proyectos</li>
+                    <li class="elemento-2">Calificar proyectos</li>
+                </ul>
+            </li>
+            <li class="elemento-1 elemento--click">
+                <div class="lista-item">
+                    <div class="imagen-titulo">
+                        <img class="imagen-item" th:src="@{/img/check.png}" alt="eventos">
+                        <a class="titulo-elemento-1">Calificaciones</a>
+                    </div>
+                    <i class="fa-solid fa-angle-right list-arrow" style="color: black;"></i>
+                </div>
+                <ul class="lista-secundaria">
+                    <li class="elemento-2">Mis calificaciones</li>
+                </ul>
+            </li>
+            <li class="elemento-1 elemento--click">
+                <div class="lista-item">
+                    <div class="imagen-titulo">
+                        <img class="imagen-item" th:src="@{/img/win.png}" alt="eventos">
+                        <a class="titulo-elemento-1">Clasificación</a>
+                    </div>
+                    <i class="fa-solid fa-angle-right list-arrow" style="color: black;"></i>
+                </div>
+                <ul class="lista-secundaria">
+                    <li class="elemento-2">Aprobar proyectos</li>
+                </ul>
+            </li>
+            <li class="elemento-1 elemento--click">
+                <div class="lista-item">
+                    <div class="imagen-titulo">
+                        <img class="imagen-item" th:src="@{/img/user.png}" alt="eventos">
+                        <a class="titulo-elemento-1">Gestión de usuarios</a>
+                    </div>
+                    <i class="fa-solid fa-angle-right list-arrow" style="color: black;"></i>
+                </div>
+                <ul class="lista-secundaria">
+                    <li class="elemento-2">Usarios</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

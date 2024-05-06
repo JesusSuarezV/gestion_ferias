@@ -1,0 +1,191 @@
+/*Estilos para el menu y navbar*/
+
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'League Spartan';
+    font-size: larger;
+}
+
+.cuerpo{
+    width: 227px;
+    align-items: left;
+    overflow: hidden;
+    border-right-color: #4F6E85;
+    border-right-width: 2px;
+    border-right-style: solid;
+}
+
+.navegacion{
+    background-color: #4F6E85;
+    height: 35px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px 10px;
+    align-items: center;
+}
+
+.navegacion-index-2{
+    background-color: #4F6E85;
+    height: 35px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px 10px;
+    align-items: center;
+    color: white;
+}
+
+.barra{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    color: white;
+    align-items: center;
+}
+
+.icon-responsive{
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.barra a{
+    padding-left: 15px;
+}
+
+.item-derecho{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item-derecho a{
+    padding-left: 60px;
+}
+
+.imagen-exit{
+    height: 30px;
+    width: auto;
+}
+
+.menu{
+    height: 100vh;
+    display: flex;
+    /*flex-direction: column;*/
+    align-items: stretch;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.imagen-user{
+    width: 40px;
+    height: auto;
+}
+
+.imagen-titulo{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.user{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+    background-color: #D9D9D9;
+    width: unset;
+}
+
+.datos-user{
+    display: flex;
+    flex-direction: column;
+}
+
+.datos-user a{
+    padding-left: 10px;
+}
+
+.lista-principal{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.r-user{
+    font-size: smaller;
+}
+
+.lista-item{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+.lista-secundaria{
+    list-style: none;
+    padding-left: 45px;
+}
+
+.imagen-item{
+    height: 23px;
+    width: auto;
+}
+
+.elemento-2{
+    font-size: medium;
+    padding: 10px 6px;
+}
+
+.elemento-2 a {
+  text-decoration: none; /* Elimina el subrayado del enlace */
+  color: inherit; /* Toma el color del texto del elemento li */
+}
+
+
+.elemento-2:hover{
+    color: #4F6E85;
+    transition: 0.5s;
+}
+
+.titulo-elemento-1{
+    padding-left: 6px;
+    align-items: center;
+}
+
+.elemento--click{
+    cursor: pointer;
+}
+
+.lista-item:hover {
+    background-color: #aec2d1;
+    transition: 0.5s;
+}
+
+/*Menu desplegable*/
+
+.lista-secundaria{
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 1.5s ease-in-out;
+}
+
+.lista-secundaria.active{
+    max-height: 1000px;
+    transition: max-height 1.5s ease-in-out;
+}
+
+.lista-secundaria:not(.active){
+    transition: max-height 0.5s ease-out;
+}
+
+.arrow .list-arrow {
+    transform: rotate(90deg);
+}
+
+.list-arrow {
+    margin-left: 10px;
+}

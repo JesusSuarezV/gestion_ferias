@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/cuadricula.css}">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <script src="https://kit.fontawesome.com/43d3343120.js" crossorigin="anonymous"></script>
+    <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="contenedor" id="contenedor">
+        <div class="header" th:include="@{/fragments/navbar.html}"></div>
+        <div class="menu" th:include="@{/fragments/menu.html}"></div>
+        <div class="contenido">
+            <div th:if="${param.continue}" class="ventanita ventana-verde" id="notification">
+                <p>Ha iniciado sesion correctamente</p>
+                <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/js/script.js}"></script>
+</body>
+
+</html>

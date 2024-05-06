@@ -1,0 +1,76 @@
+/*Estilos para insertar el menu y navbar*/
+
+body {
+    margin: 0;
+    padding: 0;
+    margin: 0;
+    padding: 0;
+    font-family: 'League Spartan';
+    font-size: larger;
+}
+
+.contenedor {
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    grid-template-rows: 55px 100vh;
+    justify-items: stretch;
+    align-items: stretch;
+}
+
+.header {
+    grid-column-start: 1;
+    grid-column-end: span 2;
+    grid-row: 1;
+    border-style: none;
+}
+
+.menu {
+    grid-column: 1;
+    grid-row: 2;
+    border-style: none;
+}
+
+.contenido {
+    grid-column: 2;
+    grid-row: 2;
+    border-style: none;
+    align-items: center;
+}
+
+/*Registro exitoso*/
+
+
+.ventanita {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 25%;
+    height: 30px;
+    padding: 5px;
+    border-radius: 10px;
+    color: white;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.ventana-verde {
+    background-color: rgb(58, 141, 58); /* Color verde */
+}
+
+.ventana-roja {
+    background-color: rgb(204, 0, 0); /* Color rojo */
+}
+
+.ventana-azul {
+    background-color: rgb(0, 102, 204); /* Color azul */
+}
+
+.contenedor.active .ventanita {
+    display: none;
+}
+
+.close:hover {
+        cursor: pointer; /* Cambiar el cursor a pointer */
+    }

@@ -1,0 +1,151 @@
+input[type="file"] {
+  display: none;
+}
+
+.contenido {
+  margin-top: 30px;
+  margin-left: 60px;
+}
+
+  .titulo {
+    margin-top: 25px;
+    color: #002948;
+  }
+
+.crearEvento {
+  border: 3px solid #4F6E85;
+  padding: 20px;
+  width: 800px;
+  margin-top: 20px;
+}
+
+.subirImagen {
+  margin-top: 20px;
+}
+
+.botones {
+  margin-top: 20px;
+  text-align: center;
+}
+
+button {
+  padding: 8px 20px;
+  margin-right: 10px;
+}
+
+button:last-child {
+  margin-right: 0;
+}
+.entrada {
+  width: 70%;
+  background: #D9D9D9;
+  padding: 8px;
+  border-radius: 20px;
+  border: none;
+  margin-left: 10px;
+}
+
+
+
+
+.subirImagen button {
+  display: inline-block;
+  padding: 8px 20px;
+  background-color: #D9D9D9;
+  color: #002948;
+  border-radius: 50px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 57px;
+}
+
+  .botones button{
+    display: inline-block;
+    padding: auto;
+    background-color: #002948;
+    color: white;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+  }
+
+  .botones{
+    margin-left: 150px;
+  }
+
+  .crearVersion{
+    border: 3px solid #4F6E85;
+    padding: 20px;
+    width: 800px;
+    margin-top: 20px;
+  }
+
+  .inputGroup {
+   display: flex;
+   align-items: center;
+   margin-bottom: 10px;
+  }
+
+  .inputGroup label{
+    margin-right: 20px;
+  }
+
+  .inputGroup input{
+    background-color: #D9D9D9; /* Color de fondo gris */
+    padding: 8px;
+    border-radius: 20px; /* Radio del borde del input */
+    border: none;
+    width: 70%;
+  }
+
+  .inputGroup .fechaInput{
+    background-color: #D9D9D9; /* Color de fondo gris */
+    padding: 6px; /* Reducir el padding */
+    border-radius: px; /* Radio del borde del input */
+    border: none;
+    width: 15%; /* Reducir el ancho */
+  }
+
+  .inputGroup .version{
+    width: 20%;
+  }
+
+  .inputGroup .tipo{
+    width: 80%;
+  }
+  .inputGroup .correo{
+    width: 40%;
+  }
+
+.inputGroup .btnRubrica{
+  display: inline-block;
+  padding: auto;
+  background-color: #002948;
+  color: white;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.inputGroup .examinar{
+  display: inline-block;
+  padding: auto;
+  background-color: #D9D9D9;
+  color: #002948;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+  border: none;
+}
+
+  #fechaInicio{
+    margin-right: 150px;
+    margin-left: 32px;
+  }
+
+  #tipoEvento{
+    margin-left: 30px;
+    width: 50%;
+  }
+  

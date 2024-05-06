@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
+</head>
+<body class="cuerpo">
+<div th:if="${param.error}" class="ventanita ventana-roja" id="notification">
+    <p>Usuario o Contraseña invalidos</p>
+    <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
+</div>
+
+
+<div class="contenedor" id="contenedor">
+    <div class="form-contenedor sign-up">
+        <form th:action="@{/Registrarse}" th:object="${usuario}" method="post">
+            <h1>Regístrate</h1>
+            <span>Nombre</span>
+            <input id="nombre" name="nombre" type="text">
+            <span>Apellido</span>
+            <input id="apellido" name="apellido" type="text">
+            <span>Correo electrónico</span>
+            <input id="username" name="username" type="email">
+            <span>Contraseña</span>
+            <input id="password" name="password"  type="password">
+            <button type="submit">Registrarme</button>
+        </form>
+    </div>
+    <div class="form-contenedor sign-in">
+        <form th:action="@{/Iniciar_Sesion}" method="post">
+            <h1>Inicia sesión</h1>
+            <span>Correo electrónico</span>
+            <input id="username" type="email" name="username">
+            <span>Contraseña</span>
+            <input id="password" type="password" name="password">
+            <button type="submit">Iniciar sesión</button>
+        </form>
+    </div>
+    <div class="toggle-contenedor">
+        <div class="toggle">
+            <div class="toggle-panel toggle-left">
+                <h1>¡Bienvenido de nuevo!</h1>
+                <p>Inicia sesión y accede a
+                    la feria de proyectos</p>
+                <button class="hidden" id="login">Iniciar sesión</button>
+            </div>
+            <div class="toggle-panel toggle-right">
+                <h1>¿Eres nuevo aquí?</h1>
+                <p>Regístrate y continúa a la
+                    feria de proyectos</p>
+                <button class="hidden" id="register">Registrarme</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/login.js}"></script>
+</body>
+</html>

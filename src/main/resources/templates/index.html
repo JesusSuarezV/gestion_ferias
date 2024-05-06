@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="navegacion-index-1">
+        <nav class="nav-menu"> <!--Div de la barra de navegacion-->
+            <a>Logo o nombre</a>
+            <ul class="lista-nav">
+                <li><a>Eventos</a></li>
+                <li><a href="/Inicio">Entrar</a></li>
+            </ul>
+        </nav>
+        <div class="contenido-navbar">
+            <h1>FERIA DE PROYECTOS DE AULA</h1>
+            <center>
+                <hr>
+            </center>
+            <p>
+                Descubre proyectos de aula que integran teoría y práctica para potenciar el
+                aprendizaje real y significativo
+            </p>
+        </div>
+    </div>
+    <div class="elementos">
+        <div class="caja-elementos">
+            <div class="elemento-item">
+                <div class="circulo">
+                    <img th:src="@{/img/mapa.png}" alt="">
+                </div>
+                <p>
+                    Explora proyectos que desafían la creatividad y el ingenio de los estudiantes
+                </p>
+            </div>
+            <div class="elemento-item">
+                <div class="circulo">
+                    <img th:src="@{/img/6883567.png}" alt="">
+                </div>
+                <p>
+                    Los proyectos se evaluarán y los más destacados serán reconocidos por su
+                    excelencia y originalidad
+                </p>
+            </div>
+            <div class="elemento-item">
+                <div class="circulo">
+                    <img th:src="@{/img/488004.png}" alt="">
+                </div>
+                <p>
+                    Los estudiantes están invitados a participar y compartir sus proyectos más
+                    innovadores
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="ir-a-eventos">
+        <div class="texto">
+            <p>Descubre nuestros eventos</p>
+            <p>¡Competencias emocionantes y exposiciones inspiradoras
+                que celebran la creatividad y el talento estudiantil!</p>
+            <button>Eventos</button>
+        </div>
+    </div>
+    <div class="footer">
+        
+    </div>
+    <script th:src="@{/js/login.js}"></script>
+</body>
+
+</html>

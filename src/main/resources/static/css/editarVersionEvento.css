@@ -1,0 +1,127 @@
+input[type="file"] {
+    display: none;
+  }
+
+.contenido {
+    margin-top: 30px;
+    margin-left: 100px;
+}
+
+.titulo {
+    margin-top: 25px;
+    color: #002948;
+  }
+
+  .editarVersion {
+    border: 3px solid #4F6E85;
+    padding: 20px;
+    width: 800px;
+    margin-top: 20px;
+  }
+
+  .botones {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  button {
+    padding: 8px 20px;
+    margin-right: 10px;
+  }
+  
+  button:last-child {
+    margin-right: 0;
+  }
+
+  .nombreEvento input {
+    width: 70%;
+    background: #D9D9D9;
+    padding: 8px;
+    border-radius: 20px;
+    border: none;
+    margin-left: 10px;
+    margin-bottom: 20px;
+  }
+
+  .tipoEvento input {
+    width: 70%;
+    background: #D9D9D9;
+    padding: 8px;
+    border-radius: 20px;
+    border: none;
+    margin-left: 43px;
+    margin-bottom: 20px;
+  }
+
+
+
+  .fechaInicioFin input{
+    width: 20%;
+    background: #D9D9D9;
+    padding: 8px;
+    border-radius: 20px;
+    border: none;
+    margin-left: 45px;
+    margin-right: 40px;
+    margin-bottom: 20px;
+  }
+
+  .fechaCierre input{
+    width: 20%;
+    background: #D9D9D9;
+    padding: 8px;
+    border-radius: 20px;
+    border: none;
+    margin-left: 10px;
+    margin-bottom: 20px;
+
+  }
+
+  .rubrica .btnRubrica{
+    display: inline-block;
+    padding: auto;
+    background-color: #002948;
+    color: white;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-bottom: 20px;
+margin-left: 20px;
+  }
+
+  .correoPermitido input{
+    width: 20%;
+    background: #D9D9D9;
+    padding: 8px;
+    border-radius: 20px;
+    border: none;
+    margin-left: 20px;
+    margin-bottom: 20px;
+
+  }
+
+  .formatoProyecto{
+    margin-bottom: 10px;
+
+  }
+  .formatoProyecto .examinar{
+    display: inline-block;
+    padding: auto;
+    background-color: #D9D9D9;
+    color: #002948;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    border: none;
+    margin-left: 20px;
+  }
+
+  .botones button{
+    display: inline-block;
+    padding: auto;
+    background-color: #002948;
+    color: white;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+  }

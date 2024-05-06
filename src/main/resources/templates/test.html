@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Waos</title>
+</head>
+<body>
+<h1>Waos</h1>
+<h2 sec:authorize="hasAuthority('ESTUDIANTE')">Eres un Estudiante</h2>
+<h2 sec:authorize="hasAuthority('ADMIN_FERIA')">Eres un Administrador de ferias</h2>
+<h2 sec:authorize="hasAuthority('ADMIN_SISTEMA')">Eres un Administrador del sistema</h2>
+</body>
+</html>

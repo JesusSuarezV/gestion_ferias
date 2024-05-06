@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/cuadricula.css}">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="stylesheet" th:href="@{/css/styleEvento.css}">
+    <script src="https://kit.fontawesome.com/43d3343120.js" crossorigin="anonymous"></script>
+    <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
+</head>
+<body>
+<div class="contenedor">
+    <div class="header" th:include="@{/fragments/navbar.html}"></div>
+    <div class="menu" th:include="@{/fragments/menu.html}"></div>
+    <div class="contenido">
+        <h2 class="titulo">Crear Feria</h2>
+        <div class="crearEvento">
+            <form th:action="@{/Ferias/Guardar_Feria}" method="post" enctype="multipart/form-data">
+                <label for="nombreEvento">Nombre del Evento:</label>
+                <input class="entrada" type="text" id="nombreEvento" name="nombreEvento"
+                       placeholder="Ingrese el nombre del evento" required/>
+
+                <label for="descripcionEvento">Descripción del Evento:</label>
+                <textarea class="entrada" id="descripcionEvento" name="descripcionEvento"
+                          placeholder="Ingrese la descripción del evento" required></textarea>
+
+                <div class="subirImagen">
+                    <label for="imagenEvento">Subir imagen:</label>
+                    <input type="file" id="imagenEvento" name="imagenEvento" class="input-file" required />
+                    <button class="btn-examinar" type="button">Examinar</button>
+                </div>
+
+                <div class="botones">
+                    <button id="cancelarBtn">Cancelar</button>
+                    <button id="guardarBtn">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>
