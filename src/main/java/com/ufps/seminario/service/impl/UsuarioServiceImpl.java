@@ -5,6 +5,7 @@ import com.ufps.seminario.entity.TokenUsuario;
 import com.ufps.seminario.entity.Usuario;
 import com.ufps.seminario.repository.TokenUsuarioRepository;
 import com.ufps.seminario.repository.UsuarioRepository;
+import com.ufps.seminario.service.MailService;
 import com.ufps.seminario.service.TokenService;
 import com.ufps.seminario.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private MailService mailService;
+
     @Override
     public boolean guardarUsuario(Usuario usuario) {
         try {
@@ -35,6 +39,10 @@ public class UsuarioServiceImpl implements UsuarioService {
             String token = UUID.randomUUID().toString();
             TokenUsuario tokenUsuario = new TokenUsuario(token, LocalDate.now(), usuario, true);
             tokenService.guardarTokenUsuario(tokenUsuario);
+
+            String url = "localhost:8080/Confirmacion/" + token;
+            String cuerpo = "Por favor, confirme su cuenta en el siguiente enlace: <a href=\"" + url + "\">" + url + "</a>";
+            mailService.enviarCorreo(usuario.getUsername(), "ENLACE DE ACTIVACIÓN FPA", cuerpo);
 
             return true;
         } catch (Exception e) {
