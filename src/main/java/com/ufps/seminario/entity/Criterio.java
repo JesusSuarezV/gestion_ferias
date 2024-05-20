@@ -16,6 +16,6 @@ public class Criterio {
     private int valor;
     @ManyToOne
     @JoinColumn(name = "feria_id")
-    private Feria feria;
+    private Feria feria; //Versiones
     private boolean enabled;
 }

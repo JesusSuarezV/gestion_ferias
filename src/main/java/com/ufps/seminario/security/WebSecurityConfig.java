@@ -8,6 +8,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -53,7 +54,8 @@ public class WebSecurityConfig {
                                 .requestMatchers("/personas/nueva").hasAnyAuthority("ADMIN","CREATOR")
                                 .requestMatchers("/personas/editar/*").hasAnyAuthority("ADMIN","EDITOR")
                                 .requestMatchers("/personas/eliminar/*").hasAnyAuthority("ADMIN")
-                                .anyRequest().authenticated())
+                                .anyRequest().authenticated()) //Ajustar esto por authenticated() cuando se despliegue
+                                //.csrf(AbstractHttpConfigurer::disable) //Quitar esto cuanto no se pruebe desde postman
                 .formLogin(form -> form
                         .loginPage("/Iniciar_Sesion")
                         .permitAll())

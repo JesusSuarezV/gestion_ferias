@@ -1,47 +1,70 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
-    <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+    <title>Crear Feria</title>
     <link rel="stylesheet" th:href="@{/css/cuadricula.css}">
-    <link rel="stylesheet" th:href="@{/css/estilos.css}">
-    <link rel="stylesheet" th:href="@{/css/styleEvento.css}">
+    <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/crearFeria.css}">
+
     <script src="https://kit.fontawesome.com/43d3343120.js" crossorigin="anonymous"></script>
-    <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
 </head>
 <body>
 <div class="contenedor">
-    <div class="header" th:include="@{/fragments/navbar.html}"></div>
-    <div class="menu" th:include="@{/fragments/menu.html}"></div>
-    <div class="contenido">
-        <h2 class="titulo">Crear Feria</h2>
-        <div class="crearEvento">
-            <form th:action="@{/Ferias/Guardar_Feria}" method="post" enctype="multipart/form-data">
-                <label for="nombreEvento">Nombre del Evento:</label>
-                <input class="entrada" type="text" id="nombreEvento" name="nombreEvento"
-                       placeholder="Ingrese el nombre del evento" required/>
+    <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
+    <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
+    <form class="formulario" th:action="@{/Ferias/Guardar_Feria}" th:object="${feria}" method="post" enctype="multipart/form-data">
+        <div class="contenido">
+            <h2 class="titulo">Crear Feria</h2>
+            <div class="crearFeria">
+                <div class="nombreFeria">
+                    <label for="nombre">Nombre de la feria:</label>
+                    <input type="text" name="nombre" id="nombre" required>
+                </div>
+                <div class="descripcion">
+                    <label for="descripcion">Descripcion de la feria:</label>
+                    <textarea name="descripcion" id="descripcion" required></textarea>
+                </div>
+                <div class="archivoProyecto">
+                    <label for="imagenFeria">Imagen proyecto:</label>
+                    <input type="file" name="imagenFeria" id="imagenFeria">
+                    <button type="button" class="examinar" id="examinar">Examinar</button>
+                </div>
+                <div class="area">
+                    <label>Areas:</label>
+                    <div id="areas">
 
-                <label for="descripcionEvento">Descripción del Evento:</label>
-                <textarea class="entrada" id="descripcionEvento" name="descripcionEvento"
-                          placeholder="Ingrese la descripción del evento" required></textarea>
-
-                <div class="subirImagen">
-                    <label for="imagenEvento">Subir imagen:</label>
-                    <input type="file" id="imagenEvento" name="imagenEvento" class="input-file" required />
-                    <button class="btn-examinar" type="button">Examinar</button>
+                    </div>
+                    <button type="button" class="btnArea" id="btnArea" onclick="addArea()">Añadir area</button>
                 </div>
 
-                <div class="botones">
-                    <button id="cancelarBtn">Cancelar</button>
-                    <button id="guardarBtn">Guardar</button>
-                </div>
-            </form>
+            </div>
         </div>
-    </div>
+        <script type="text/javascript">
+            let areaIndex = 0;
+            function addArea() {
+                const areasDiv = document.getElementById('areas');
+                const newAreaDiv = document.createElement('div');
+                newAreaDiv.innerHTML = `
+                    <div>
+                        <input type="text" name="area[${areaIndex}]" id="area[${areaIndex}]">
+                        <a href=""><img th:src="@{/img/botonX.png}" ></a><br>
+                    </div>
+                `;
+                areasDiv.appendChild(newAreaDiv);
+                areaIndex++;
+            }
+        </script>
+        <div class="botones">
+            <button type="button" id="cancelarBtn">Cancelar</button>
+            <button id="registrarBtn">Registrar</button>
+        </div>
+    </form>
 </div>
-<script th:src="@{/js/script.js}"></script>
+<script th:src="@{/js/registro.js}"></script>
+
+<script th:src="@{/js/menu.js}"></script>
 </body>
 </html>

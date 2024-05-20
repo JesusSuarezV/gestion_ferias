@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Proyecto</title>
+    <link rel="stylesheet" href="../css/cuadricula.css">
+    <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styleProyecto.css">
+</head>
+<body>
+<div class="contenedor">
+    <iframe class="header" src="../views/navbar.html"></iframe>
+    <iframe class="menu" src="../views/menu.html"></iframe>
+    <div class="contenido">
+        <h2 class="titulo">Registrar Proyecto</h2>
+        <div class="registrarProyecto">
+            <div class="nombreProyecto">
+                <label for="nombreProyecto">Nombre del proyecto:</label>
+                <input type="text" name="nombreProyecto" id="nombreProyecto" required>
+            </div>
+            <div class="descripcion">
+                <label for="descripcion">Descripcion:</label>
+                <input type="text" name="descripcion" id="descripcion" required>
+            </div>
+            <div class="eventoInscrito">
+                <label for="eventoInscrito">Evento Inscrito</label>
+                <input type="text" name="eventoInscrito" id="eventoInscrito" required>
+            </div>
+            <div class="asignatura">
+                <label for="asignatura">Asignatura:</label>
+                <input type="text" name="asignatura" id="asignatura" required>
+            </div>
+            <div class="semillero">
+                <label for="semillero">Semillero:</label>
+                <input type="text" name="semillero" id="semillero" required>
+            </div>
+            <div class="areaEstudio">
+                <label for="areaEstudio">Áreas de estudio:</label>
+                <input type="text" name="areaEstudio" id="areaEstudio" required>
+            </div>
+            <div class="urlVideo">
+                <label for="url">URL video:</label>
+                <input type="text" name="url" id="url">
+            </div>
+            <div class="archivoProyecto">
+                <label for="archivo">Archivo proyecto:</label>
+                <input type="file" name="archivo" id="archivo">
+                <button class="examinar">Examinar</button>
+            </div>
+            <div class="integrante">
+                <label for="integrantes">Integrantes</label>
+                <button class="btnIntegrantes" id="btnIntegrante">Añadir Integrante</button>
+                <div class="modal_container" id="modal-container">
+                    <div class="modal">
+                        <h1>Correo del nuevo integrante:</h1>
+                        <input type="email" name="correoIntegrante" id="correoIntegrante">
+                        <div class="botones">
+                            <button id="cancelarBtnAgregar">Cancelar</button>
+                            <button id="agregarBtn">Agregar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="botones">
+                <button id="cancelarBtn">Cancelar</button>
+                <button id="registrarBtn">Registrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../js/registro.js"></script>
+</body>
+</html>

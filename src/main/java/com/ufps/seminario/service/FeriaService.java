@@ -6,11 +6,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface FeriaService {
-    public void guardarFeria(Feria feria);
+    public Feria guardarFeria(Feria feria);
 
     public Feria obtenerFeria(int id);
 
-    public Page listarMisFerias(Usuario usuario, String nombre, Pageable pageable);
+    public Page<Feria> listarMisFerias(Usuario usuario, String keyword, int pageNumber, int pageSize);
 
     public void ocultarFeria(int id);
 }

@@ -1,8 +1,8 @@
 .contenido {
-
   border-bottom: 1px solid #002948;
   margin-top: 30px;
   margin-left: 60px;
+  height: max-content;
 }
 
 .titulo {
@@ -28,18 +28,32 @@
   margin: 0;
   /* bdosrcdmer: 60px;   */
 }
-
 .cua {
   font-weight: bold;
   color: #002948;
   display: flex;
   align-items: center;
 }
+.noProyect{
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center;
+  color: #4F6E85;
+
+}
+.siProyect {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+
+}
 
 .cuadro {
+  display: flex;
+  flex-direction: column;
   background-color: rgb(148, 167, 182, 0.41);
-  border: 2px solid #94A7B6;
-  border-radius: 10px;
+  box-shadow: 1px 1px 4px #002948;
+  border-radius: 30px;
   padding: 20px;
   width: 300px;
   margin-top: 20px;
@@ -56,70 +70,40 @@
   text-align: left;
   margin-left: 10px;
 }
+
 .calificacion {
-  display:flex;
+  display: flex;
   align-items: center;
+  font-size: 18px;
 }
+
 .botones {
-  display:flex;
+  display: flex;
   align-items: center;
   text-align: center;
   margin-top: 20px;
-  display: flex;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
-
-.botones {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-    text-align: center;
-}
-
-.botones a {
-    margin: 12px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    padding: 5px 10px;
-    background-color: #002948;
-    color: rgb(255, 255, 255);
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-.botones a:hover {
-    background-color: #0056b3;
-}
-
 
 .eliminar,
-.editar, .verProyecto {
+.editar,
+.verProyecto {
   text-align: center;
   padding: 10px 20px;
   border: none;
   border-radius: 20px;
   cursor: pointer;
+  color: white;
+  margin: 12px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-size: 18px;
+  background-color: #002948;
+  width: 120px;
 }
 
-.eliminar {
-  color: rgb(255, 255, 255);
-  margin: 12px;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  background-color: #002948;
-}
-.editar {
-  color: rgb(255, 255, 255);
-  margin: 12px;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  background-color: #002948;
-}
 .verProyecto {
-  color: rgb(255, 255, 255);
-  margin: 12px;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  background-color: #002948;
+  width: 150px;
 }
+

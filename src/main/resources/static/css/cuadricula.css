@@ -28,6 +28,7 @@ body {
     grid-column: 1;
     grid-row: 2;
     border-style: none;
+    height: auto;
 }
 
 .contenido {
@@ -39,8 +40,7 @@ body {
 
 /*Registro exitoso*/
 
-
-.ventanita {
+.ventanita-inicio-sesion {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -50,27 +50,15 @@ body {
     padding: 5px;
     border-radius: 10px;
     color: white;
+    background-color: rgb(58, 141, 58);
+}
+
+.ventana-emergente {
     position: absolute;
     bottom: 10px;
     right: 10px;
 }
 
-.ventana-verde {
-    background-color: rgb(58, 141, 58); /* Color verde */
-}
-
-.ventana-roja {
-    background-color: rgb(204, 0, 0); /* Color rojo */
-}
-
-.ventana-azul {
-    background-color: rgb(0, 102, 204); /* Color azul */
-}
-
-.contenedor.active .ventanita {
+.contenedor.active .ventana-emergente{
     display: none;
 }
-
-.close:hover {
-        cursor: pointer; /* Cambiar el cursor a pointer */
-    }

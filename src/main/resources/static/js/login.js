@@ -11,7 +11,3 @@ loginBtn.addEventListener('click', () => {
     container.classList.remove("active");
 });
 
-function closeNotification(notificationId) {
-    var notification = document.getElementById(notificationId);
-    notification.style.display = "none";}
-
