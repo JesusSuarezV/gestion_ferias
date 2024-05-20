@@ -1,0 +1,10 @@
+.contenido{
+    padding: 20px 50px;
+}
+
+.item{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: stretch;
+}

@@ -1,0 +1,152 @@
+input[type="file"] {
+  display: none;
+}
+
+.contenido {
+  margin-top: 30px;
+  margin-left: 100px;
+}
+
+.titulo {
+  margin-top: 25px;
+  color: #002948;
+}
+
+.registrarProyecto {
+  border: 3px solid #4F6E85;
+  padding: 20px;
+  width: 800px;
+  margin-top: 20px;
+  color: #002948;
+}
+
+.botones {
+  margin-top: 20px;
+  text-align: right;
+}
+
+button {
+  padding: 8px 20px;
+  margin-right: 10px;
+}
+
+button:last-child {
+  margin-right: 0;
+}
+
+.registrarProyecto input {
+  width: 70%;
+  background: #D9D9D9;
+  padding: 8px;
+  border-radius: 20px;
+  border: none;
+  margin-left: 10px;
+  margin-bottom: 20px;
+
+}
+
+.archivoProyecto {
+  margin-bottom: 20px;
+}
+
+.archivoProyecto .examinar {
+  display: inline-block;
+  padding: auto;
+  background-color: #D9D9D9;
+  color: #002948;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+  border: none;
+  margin-left: 20px;
+}
+
+.integrante {
+  margin-bottom: 50px;
+}
+
+.integrante button {
+  display: inline-block;
+  padding: auto;
+  background-color: #D9D9D9;
+  color: #002948;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+  border: none;
+  margin-left: 20px;
+}
+
+.botones button {
+  display: inline-block;
+  padding: auto;
+  background-color: #002948;
+  color: white;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.descripcion label {
+  margin-right: 75px;
+}
+
+.eventoInscrito label {
+  margin-right: 55px;
+}
+
+.asignatura label {
+  margin-right: 80px;
+}
+
+.semillero label {
+  margin-right: 95px;
+}
+
+.areaEstudio label {
+  margin-right: 35px;
+}
+
+.urlVideo label {
+  margin-right: 90px;
+}
+
+.archivoProyecto label {
+  margin-right: 25px;
+}
+
+.integrante label {
+  margin-right: 70px;
+}
+
+.modal {
+  background-color: white;
+  padding: 30px 50px;
+  border-radius: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.modal h1 {
+  font-size: 30px;
+}
+
+.modal_container {
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.3);
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  /* Asegura que la ventana emergente esté fija en la pantalla */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.show {
+  pointer-events: auto;
+  opacity: 1;
+}

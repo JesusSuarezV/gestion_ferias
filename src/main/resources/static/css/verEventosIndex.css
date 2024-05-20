@@ -1,0 +1,220 @@
+* {
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin: 0;
+    padding: 0;
+    font-family: 'League Spartan';
+}
+
+body {
+    background-color: #ECECEC;
+}
+
+/*Estilos para el index*/
+
+.nav-menu {
+    background-color: #4F6E85;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 40px 10px;
+    align-items: center;
+    color: white;
+    font-size: larger;
+}
+
+.lista-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+}
+
+.lista-nav a {
+    color: white;
+}
+
+.lista-nav li {
+    padding-left: 60px;
+}
+
+.lista-nav li a:hover {
+    cursor: pointer;
+    color: #182835;
+    transition: 300ms;
+}
+
+.texto-buscar {
+    background-color: white;
+    border: none;
+    height: 25px;
+    font-size: 18px;
+    width: 92%;
+    border-radius: 10px;
+    letter-spacing: 1.5px;
+}
+
+.busqueda {
+    display: flex;
+    padding: 3px;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: white;
+    width: 60%;
+    border-radius: 35px;
+}
+
+.busqueda img {
+    height: 25px;
+    width: auto;
+}
+
+.contenedor {
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+.titulo {
+    width: 80%;
+    margin-top: 30px;
+}
+
+.ferias {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 30px;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.cuadro {
+    height: 230px;
+    width: 350px;
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: #182835;
+}
+
+.info-feria {
+    display: flex;
+    flex-direction: column;
+    height: 40%;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.boton-ver-feria {
+    width: 120px;
+    height: 30px;
+    border: none;
+    background-color: #002948;
+    color: white;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.imagen {
+    height: 60%;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.imagen img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+}
+
+.info-feria h3 {
+    font-size: 18px;
+}
+
+/*Ver proyectos*/
+
+.contenedor-2{
+    display: grid;
+    grid-template-columns: 70% 30%; 
+    width: 80%;
+    column-gap: 35px;
+    height: 100vh;
+}
+
+.rectangulo{
+    background-color: #D9D9D9;
+    width: 95%;
+    height: fit-content;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    border-radius: 18px;
+    display: none;
+}
+
+.texto{
+    font-size: 20px;
+}
+
+.cuadro-descripcion{
+    display: flex;
+    justify-content: center;
+}
+
+.descripcion{
+    background-color: white;
+    margin-top: 30px;
+    width: fit-content;
+    height: fit-content;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.descripcion-feria{
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.titulo-feria{
+    font-size: 19px;
+}
+
+.paginacion {
+    grid-area: paginacion;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.paginacion button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: none;
+    height: 40px;
+    width: 40px;
+    background-color: #D9D9D9;
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+.paginacion button.active {
+    background-color: #6A8BA4;
+    color: white;
+}

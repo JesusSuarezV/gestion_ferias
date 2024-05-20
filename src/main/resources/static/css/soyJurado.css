@@ -1,0 +1,88 @@
+* {
+    text-decoration: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin: 0;
+    padding: 0;
+    font-family: 'League Spartan';
+}
+
+.titulo {
+    margin-top: 50px;
+    margin-left: 40px;
+    color: #002948;
+}
+
+h3 {
+    color: #4F6E85;
+}
+
+.aviso {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+}
+
+.pote1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.rectangulo {
+    background-color: rgb(148, 167, 182, 0.41);
+    color: #002948;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    
+}
+
+.nombre {
+    font-weight: bold;
+    font-size: 30px;
+}
+
+/* .tipo, .fechaIn, .fechaFi,.fechaLim{} */
+.informacion {
+    padding: 10px;
+}
+
+.fecha-limi td {
+    padding-top: 20px;
+}
+
+.rectangulo img {
+    padding: 10px;
+    width: 150px;
+    height: 150px;
+}
+
+.boton {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.boton button{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+.ver-evento {
+    
+    padding: 10px 35px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    color: white;
+    background-color: #002948;
+}

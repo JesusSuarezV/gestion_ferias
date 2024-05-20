@@ -1,0 +1,191 @@
+* {
+    font-family: 'League Spartan', sans-serif;
+  }
+  
+  input[type="file"] {
+      display: none;
+    }
+  
+    .nombreProyecto::before,
+    .descripcion::before,
+    .objetivo::before,
+    .feriaInscrita::before,
+    .areaEstudio::before {
+      content: '*';
+      color: red;
+      margin-right: 10px;
+      font-weight: bold;
+      font-size: 25px;
+    }
+  
+    .contenido {
+      margin-top: 30px;
+      margin-left: 100px;
+  }
+  
+  .titulo {
+      margin-top: 25px;
+      color: #002948;
+    }
+  
+    .editarProyecto {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      border: 3px solid #4F6E85;
+      padding: 20px;
+      width: 70%;
+      margin-top: 20px;
+      color: #002948;
+    }
+  
+  .editarProyecto input {
+      font-size: 18px;
+      width: 70%;
+      background: #D9D9D9;
+      padding: 10px;
+      border-radius: 20px;
+      border: none;
+      margin-left: 10px;
+      margin-bottom: 20px;
+  }
+
+  .editarProyecto textarea{
+    font-size: 18px;
+    width: 70%;
+    height: 40px;
+    background: #D9D9D9;
+    border-radius: 20px;
+    border: none;
+    padding: 5px;
+    margin-left: 15px;
+    margin-bottom: 20px;
+    vertical-align: text-top;
+  }
+  
+  .archivoProyecto{
+      margin-bottom: 20px;
+  }
+  
+  .archivoProyecto button{
+      padding: 15px 30px;
+      background-color: #D9D9D9;
+      color: #002948;
+      font-weight: bold;
+      border-radius: 50px;
+      cursor: pointer;
+      border: none;
+      margin-left: 20px;
+      font-size: 15px
+  }
+  
+  .integrante input, .area input{
+    width: 30%;
+    padding: 10px;
+  }
+  
+  
+.integrante button{
+    padding: auto;
+    background-color: #D9D9D9;
+    color: #002948;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    border: none;
+    margin-left: 20px;
+    padding: 10px 15px;
+    margin-left: 50px;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+  
+.area button{
+    padding: auto;
+    background-color: #D9D9D9;
+    color: #002948;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    border: none;
+    margin-left: 20px;
+    padding: 10px 15px;
+    margin-left: 50px;
+    font-size: 15px;
+}
+  
+  .nombreProyecto label{
+    margin-right: auto;
+  }
+  
+  .descripcion label {
+      margin-right: 70px;
+  }
+  
+  .objetivo label{
+      margin-right: 90px;
+  }
+  
+  .feriaInscrita label{
+      margin-right: 60px;
+  }
+  
+  .areaEstudio label{
+      margin-right:  75px;
+  }
+  
+  .areaEstudio label{
+      margin-right: 35px;
+  }
+  
+  .urlVideo label{
+    margin-left: 25px;
+    margin-right: 90px;
+  }
+  
+  .archivoProyecto label{
+      margin-right: 25px;
+      margin-left: 25px;
+  }
+  
+  .integrante label{
+      margin-right: 75px;
+      margin-left: 25px;
+  
+  }
+  
+  .integrante img, .area img{
+    width: 50px;
+    vertical-align: middle;
+  }
+  
+  .integrante button{
+    margin-left: 210px;
+  }
+  
+  .area label{
+    margin-right: 115px;
+    margin-left: 25px;
+  }
+  
+  .area button{
+    margin-left: 210px;
+  }
+  
+  .botones{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .botones button{
+    padding: 10px 20px;
+    background-color: #002948;
+    color: white;
+    border-radius: 50px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 15px;
+    margin-bottom: 20px;
+  }

@@ -1,0 +1,76 @@
+.contenido {
+    margin-top: 30px;
+    margin-left: 60px;
+}
+
+.titulo {
+    margin-top: 25px;
+    color: #002948;
+}
+
+.rubrica{
+    display: grid;
+    border: 3px solid #4F6E85;
+    padding: 20px;
+    width: 800px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+.itemRubrica {
+    display: grid;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.elemento{
+    margin-bottom: 7px;
+}
+
+.itemRubrica label{
+    margin-right: 20px;
+    display: inline-block;
+    max-width: 100%; /* asegura que no se extienda más allá del contenedor */
+}
+
+.itemRubrica input{
+    background-color: #D9D9D9; /* Color de fondo gris */
+    padding: 8px;
+    border-radius: 20px; /* Radio del borde del input */
+    border: none;
+    width: 70%;
+    margin-right: 20px;
+}
+
+
+.buttonAgregar{
+    justify-self: end; 
+}
+
+.buttonAgregar button{
+    display: inline-block;  
+    padding: 10px 20px;
+    background-color: #D9D9D9;
+    color: #002948;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    border: none;
+}
+
+.botones{
+    display: inline;
+}
+
+.botones button{
+
+    padding: 10px 20px;
+    display: inline-block;
+    background-color: #002948;
+    color: white;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
