@@ -1,12 +1,8 @@
 package com.ufps.seminario.controller;
 
-import com.ufps.seminario.service.VersionService;
+import com.ufps.seminario.entity.*;
+import com.ufps.seminario.service.*;
 import org.apache.commons.io.FilenameUtils;
-import com.ufps.seminario.entity.Feria;
-import com.ufps.seminario.entity.Version;
-import com.ufps.seminario.service.FeriaService;
-import com.ufps.seminario.service.SesionService;
-import com.ufps.seminario.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,10 +12,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
-@RequestMapping("/Ferias/{idFeria}/Versiones")
+@RequestMapping("/version")
 public class VersionController {
     @Autowired
     UsuarioService usuarioService;
@@ -33,108 +31,272 @@ public class VersionController {
     @Autowired
     VersionService versionService;
 
-    @GetMapping()
-    public String verVersiones(Model model, @PathVariable int idFeria, @RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "1") int page) {
-        String username = sesionService.getUsernameFromSession();
-        Feria feria = feriaService.obtenerFeria(idFeria);
+    @Autowired
+    ProyectoService proyectoService;
 
-        Page<Version> versiones = versionService.listarVersiones(feria, PageRequest.of(page - 1, 3));
+    @Autowired
+    AreaService areaService;
 
-        model.addAttribute("username", username);
-        model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
-        model.addAttribute("feria", feria);
-        model.addAttribute("versiones", versiones);
+    @Autowired
+    IntegranteService integranteService;
 
-        return "verVersiones";
+    @Autowired
+    AuspiciadorService auspiciadorService;
 
-    }
+    @Autowired
+    CriterioService criterioService;
 
-    @GetMapping("/Crear_Version")
-    public String crearVersion(Model model, @PathVariable int idFeria) {
-
-
-        String username = sesionService.getUsernameFromSession();
-        model.addAttribute("username", username);
-        model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
-        model.addAttribute(feriaService.obtenerFeria(idFeria));
-        return "crearVersion";
-    }
-
-    @GetMapping("/{id}/Editar_Version")
-    public String editarFeria(Model model, @PathVariable int id) {
-        String username = sesionService.getUsernameFromSession();
-        model.addAttribute("username", username);
-        model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
-
-        model.addAttribute("version", versionService.obtenerVersion(id));
-        return "editarVersion";
-    }
-
-    @PostMapping("/Guardar_Version")
-    public String guardarVersion(@PathVariable int idFeria, @RequestParam("versionEvento") int versionEvento,
-                                 @RequestParam("puntaje") int puntaje,
-                                 @RequestParam("fechaInicio") LocalDate fechaInicio,
-                                 @RequestParam("fechaLimite") LocalDate fechaLimite,
-                                 @RequestParam("fechaCierre") LocalDate fechaCierre,
-                                 @RequestParam("formatoProyecto") MultipartFile formatoProyecto) {
+    @GetMapping("/{idVersion}")
+    public String verVersion(Model model, @PathVariable int idVersion) {
         try {
-            Version version = new Version();
-
-            version.setFeria(feriaService.obtenerFeria(idFeria));
-            version.setNumero(versionEvento);
-            version.setAprobacion(puntaje);
-            version.setArchivoConentType(FilenameUtils.getExtension(formatoProyecto.getOriginalFilename()));
-            version.setArchivo(formatoProyecto.getBytes());
-            version.setFechaInicio(fechaInicio);
-            version.setFechaCierre(fechaLimite);
-            version.setFechaLimite(fechaCierre);
-            version.setCierre(false);
-            versionService.guardarVersion(version);
-
-
-            return "redirect:/Ferias/{idFeria}/Versiones";
+            String username = sesionService.getUsernameFromSession();
+            model.addAttribute("username", username);
+            model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
+            Version version = versionService.obtenerVersion(idVersion);
+            model.addAttribute("version", version);
+            List<Proyecto> proyectos = proyectoService.obtenerProyectosPorVersion(version);
+            model.addAttribute("proyectos", proyectos);
+            return "version"; //Luego miro esto
         } catch (Exception e) {
-
-            return "redirect:/Inicio?error";
+            return "redirect:/version";
         }
-
-
     }
 
-    @PostMapping("/{id}/Actualizar_Version")
-    public String actualizarVersion(@PathVariable int id, @RequestParam("versionEvento") int versionEvento,
-                                  @RequestParam("puntaje") int puntaje,
-                                  @RequestParam("fechaInicio") LocalDate fechaInicio,
-                                  @RequestParam("fechaLimite") LocalDate fechaLimite,
-                                  @RequestParam("fechaCierre") LocalDate fechaCierre,
-                                  @RequestParam("formatoProyecto") MultipartFile formatoProyecto) {
+    @GetMapping("/{idVersion}/registrar")
+    public String registrarAVersion(Model model, @PathVariable int idVersion) {
         try {
-            Version version = versionService.obtenerVersion(id);
-            version.setNumero(versionEvento);
-            version.setAprobacion(puntaje);
-            version.setFechaInicio(fechaInicio);
-            version.setFechaLimite(fechaLimite);
-            version.setFechaCierre(fechaCierre);
+            String username = sesionService.getUsernameFromSession();
+            model.addAttribute("username", username);
+            model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
+            Version version = versionService.obtenerVersion(idVersion);
+            model.addAttribute("version", version);
+            return "version"; //Luego miro esto
+        } catch (Exception e) {
+            return "redirect:/version";
+        }
+    }
 
+    @PostMapping("/{idVersion}/registrar")
+    public String registrarAVersion(@ModelAttribute Proyecto proyecto, @PathVariable int idVersion,
+                                    @RequestParam Map<String, String> requestParams,
+                                    @RequestParam("archivoProyecto") MultipartFile archivoProyecto) {
+        try {
+            String username = sesionService.getUsernameFromSession();
+            Usuario creadorProyecto = usuarioService.obtenerUsuarioPorUsername(username);
+            Version version = versionService.obtenerVersion(idVersion);
+            //Crear proyecto
+            proyecto.setArchivo(archivoProyecto.getBytes());
+            proyecto.setVersion(version);
+            proyecto.setFechaRegistro(LocalDate.now());
+            Proyecto proyectoCreado = proyectoService.guardarProyecto(proyecto);
 
-            if (formatoProyecto != null && !formatoProyecto.isEmpty()) {
-
-                version.setArchivoConentType(FilenameUtils.getExtension(formatoProyecto.getOriginalFilename()));
-                version.setArchivo(formatoProyecto.getBytes());
+            //Asignar areas y crear integrantes
+            for (Map.Entry<String, String> entry : requestParams.entrySet()) {
+                String llave = entry.getKey();
+                String nombre = entry.getValue();
+                if (nombre != null && !nombre.isEmpty()) {
+                    if (llave.startsWith("integrante")) { //Crear Integrante
+                        Integrante integrante = new Integrante();
+                        integrante.setEnabled(true); //OJO esto toca mirarlo con TOKEN
+                        integrante.setCorreoRegistro(nombre);
+                        try {
+                            Usuario usuario = usuarioService.obtenerUsuarioPorUsername(nombre);
+                            integrante.setUsuario(usuario);
+                        } catch (Exception e) {
+                            //Nada xd
+                        }
+                        integrante.setProyecto(proyectoCreado);
+                        integranteService.guardarIntegrante(integrante);
+                    } else if (llave.startsWith("area")) { //Asignar Area
+                        int idArea = Integer.parseInt(llave.substring(5, llave.length() - 1));
+                        Area area = areaService.obtenerArea(idArea);
+                        proyectoCreado.getAreas().add(area);
+                    }
+                }
             }
 
-            versionService.guardarVersion(version);
+            //Agregar creador como integrante
+            Integrante integrante = new Integrante();
+            integrante.setEnabled(true); //OJO esto toca mirarlo con TOKEN
+            integrante.setCorreoRegistro(creadorProyecto.getUsername());
+            integrante.setUsuario(creadorProyecto);
+            integrante.setProyecto(proyectoCreado);
+            integranteService.guardarIntegrante(integrante);
 
-            return "redirect:/Ferias/{idFeria}/Versiones";
+            //Actualizar proyecto
+            proyectoService.guardarProyecto(proyectoCreado);
+
+            return "version"; //Luego miro esto
         } catch (Exception e) {
-
-            return "redirect:/Inicio?error";
+            return "redirect:/version";
         }
     }
 
-    @GetMapping("/{id}/Eliminar_Version")
-    public String eliminarVersion(@PathVariable int id){
-        versionService.ocultarVersion(id);
-        return "redirect:/Ferias/{idFeria}/Versiones";
+
+    @GetMapping("/ferias_inscritas")
+    public String verFeriasInscritas(Model model) {
+        return "redirect:/version/ferias_inscritas/search";
     }
+
+    @GetMapping("/ferias_inscritas/search")
+    public String searchFeriasInscritas(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
+        try {
+            String username = sesionService.getUsernameFromSession();
+            model.addAttribute("username", username);
+            model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
+            List<Version> versiones = versionService.obtenerVersionesPorIntegranteYDisponibles(username, keyword, LocalDate.now());
+            model.addAttribute("versiones", versiones);
+            return "version"; //Luego miro esto
+        } catch (Exception e) {
+            return "redirect:/version";
+        }
+    }
+
+
+    @GetMapping("/ferias_finalizadas")
+    public String searchFeriasFinalizadas(Model model) {
+        return "redirect:/version_finalizadas/search";
+    }
+
+    @GetMapping("/ferias_finalizadas/search")
+    public String searchFeriasFinalizadas(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
+        try {
+            String username = sesionService.getUsernameFromSession();
+            model.addAttribute("username", username);
+            model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
+            List<Version> versiones = versionService.obtenerVersionesPorIntegranteYCerradas(username, keyword, LocalDate.now());
+            model.addAttribute("versiones", versiones);
+            return "version"; //Luego miro esto
+        } catch (Exception e) {
+            return "redirect:/version";
+        }
+    }
+
+    @GetMapping("/{idVersion}/editar")
+    public String editarVersion(Model model, @PathVariable int idVersion) {
+        try {
+            String username = sesionService.getUsernameFromSession();
+            model.addAttribute("username", username);
+            model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
+            Version version = versionService.obtenerVersion(idVersion);
+            Feria feria = version.getFeria();
+            model.addAttribute("version", version);
+            model.addAttribute("feria", feria);
+            List<Auspiciador> auspiciadores = auspiciadorService.obtenerAuspiciadorPorVersion(version);
+            model.addAttribute("auspiciadores", auspiciadores);
+            return "version"; //Luego miro esto
+        } catch (Exception e) {
+            return "redirect:/version";
+        }
+    }
+
+    @PostMapping("/{idVersion}/editar")
+    public String crearVersionFeria(Model model, @PathVariable int idVersion, @ModelAttribute Version version,
+                                    @RequestParam Map<String, String> requestParams,
+                                    @RequestParam("formatoVersion") MultipartFile formatoVersion) {
+        try {
+            String username = sesionService.getUsernameFromSession();
+            Feria feria = feriaService.obtenerFeriaByVersion(idVersion);
+            version.setArchivo(formatoVersion.getBytes());
+            version.setFeria(feria);
+            version.setEnabled(true);
+            int cantidadDisponible = versionService.obtenerCantidadDisponiblePorFeriayFecha(feria, version.getFechaInicio());
+            if (cantidadDisponible == 0) {
+                version.setNumero(versionService.obtenerVersionesPorFeria(feria).size());
+                Version versionCreada = versionService.guardarVersion(version);
+                for (Map.Entry<String, String> entry : requestParams.entrySet()) {
+                    String llave = entry.getKey();
+                    String nombre = entry.getValue();
+                    if (llave != null && !llave.isEmpty() && nombre != null && !nombre.isEmpty()) {
+                        if (llave.startsWith("auspiciadores")) {
+                            Auspiciador auspiciador = new Auspiciador();
+                            auspiciador.setVersion(versionCreada);
+                            auspiciador.setEnabled(true);
+                            auspiciador.setNombre(nombre);
+                            auspiciadorService.guardarAuspiciador(auspiciador);
+                        } else if (llave.startsWith("version_auspiciadores_delete")) {
+                            String pref = "version_auspiciadores_delete[";
+                            int id = Integer.parseInt(llave.substring(pref.length(), llave.length() - 1));
+                            auspiciadorService.eliminarAuspiciadorPorId(id);
+                        }
+                    }
+                }
+            } else {
+                return "error y pantalla versiones";
+            }
+            return "verFeria";
+        } catch (Exception e) {
+            return "redirect:/version";
+        }
+    }
+
+    @GetMapping("/{idVersion}/rubrica/editar")
+    public String editarRubrica(Model model, @PathVariable int idVersion) {
+        try {
+            String username = sesionService.getUsernameFromSession();
+            model.addAttribute("username", username);
+            model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
+
+            Version version = versionService.obtenerVersion(idVersion);
+            List<Criterio> criterios = criterioService.obtenerCriterioPorVersion(version);
+            model.addAttribute("criterios", criterios);
+            return "version"; //revisar
+        } catch (Exception e) {
+            return "lament"; //revisar
+        }
+    }
+
+    @PostMapping("/{idVersion}/rubrica/editar")
+    public String editarRubrica(Model model, @PathVariable int idVersion,
+                                @RequestParam Map<String, String> requestParams) {
+        try {
+            String username = sesionService.getUsernameFromSession();
+            model.addAttribute("username", username);
+            model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
+            Version version = versionService.obtenerVersion(idVersion);
+            for (Map.Entry<String, String> entry : requestParams.entrySet()) {
+                String llave = entry.getKey();
+                String valor = entry.getKey();
+                if (llave != null && !llave.isEmpty()) {
+                    String prefijoViejos = "criterio_item[";
+                    String prefijoNuevos = "item[";
+
+                    String prefNivel = "criterio_nivel[";
+
+
+                    if (llave.startsWith(prefijoViejos)) {
+                        int idCriterio = Integer.parseInt(llave.substring(prefijoViejos.length(), llave.length() - 1));
+
+                        String llaveNivel = "criterio_nivel["
+                                + Integer.toString(idCriterio) + "]";
+                        int valorNivel = Integer.parseInt(requestParams.get(llaveNivel));
+
+                        Criterio criterio = criterioService.obtenerCriterioPorId(idCriterio);
+                        criterio.setNombre(valor);
+                        criterio.setValor(valorNivel);
+                        criterio.setEnabled(true);
+                        criterio.setVersion(version);
+                        criterioService.guardarCriterio(criterio);
+                    } else if (llave.startsWith(prefijoNuevos)) {
+                        int idCriterio = Integer.parseInt(llave.substring(prefijoNuevos.length(), llave.length() - 1));
+
+                        String llaveNivel = "nivel["
+                                + idCriterio + "]";
+                        int valorNivel = Integer.parseInt(requestParams.get(llaveNivel));
+
+                        Criterio criterio = new Criterio();
+                        criterio.setNombre(valor);
+                        criterio.setValor(valorNivel);
+                        criterio.setEnabled(true);
+                        criterio.setVersion(version);
+                        criterioService.guardarCriterio(criterio);
+                    }
+                }
+            }
+            return "version"; //revisar
+        } catch (Exception e) {
+            return "lament"; //revisar
+        }
+    }
+
 }

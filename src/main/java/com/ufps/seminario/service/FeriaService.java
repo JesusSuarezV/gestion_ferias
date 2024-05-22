@@ -13,4 +13,6 @@ public interface FeriaService {
     public Page<Feria> listarMisFerias(Usuario usuario, String keyword, int pageNumber, int pageSize);
 
     public void ocultarFeria(int id);
+
+    public Feria obtenerFeriaByVersion(int idVersion);
 }

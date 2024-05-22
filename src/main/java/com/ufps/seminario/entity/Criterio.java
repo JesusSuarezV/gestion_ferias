@@ -15,7 +15,7 @@ public class Criterio {
     private String nombre;
     private int valor;
     @ManyToOne
-    @JoinColumn(name = "feria_id")
-    private Feria feria; //Versiones
+    @JoinColumn(name = "version_id")
+    private Version version;
     private boolean enabled;
 }

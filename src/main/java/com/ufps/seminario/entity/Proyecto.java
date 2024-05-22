@@ -22,8 +22,8 @@ public class Proyecto {
     private byte[] archivo;
     private String url;
     @ManyToOne
-    @JoinColumn(name = "feria_id")
-    private Feria feria;
+    @JoinColumn(name = "version_id")
+    private Version version;
     private boolean estado;
     private LocalDate fechaRegistro;
     @ManyToMany(fetch = FetchType.EAGER)
@@ -43,4 +43,5 @@ public class Proyecto {
     private List<Area> areas = new ArrayList<>();
 
     private boolean enabled;
+    private float calificacion;
 }

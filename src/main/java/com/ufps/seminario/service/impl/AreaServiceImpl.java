@@ -29,6 +29,13 @@ public class AreaServiceImpl implements AreaService {
 
     @Override
     public List<Area> obtenerAreasPorFeria(Feria feria) {
-        return areaRepository.findAllByFeria(feria);
+        return areaRepository.findAllByFeriaAndEnabled(feria, true);
+    }
+
+    @Override
+    public void desactivarAreaPorId(int id) {
+        Area area = areaRepository.getReferenceById(id);
+        area.setEnabled(false);
+        areaRepository.save(area);
     }
 }

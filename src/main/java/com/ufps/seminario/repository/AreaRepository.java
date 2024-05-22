@@ -10,4 +10,5 @@ import java.util.List;
 public interface AreaRepository extends JpaRepository<Area, Integer> {
 
     List<Area> findAllByFeria(Feria feria);
+    List<Area> findAllByFeriaAndEnabled(Feria feria, boolean enabled);
 }

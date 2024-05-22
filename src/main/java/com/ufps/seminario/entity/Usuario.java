@@ -28,5 +28,12 @@ public class Usuario {
     @OneToMany (mappedBy = "creador", cascade = CascadeType.ALL)
     private List<Feria> misFerias = new ArrayList<>();
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "jurado_proyecto",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "proyecto_id")
+    )
+    private List<Proyecto> proyectosCalificar = new ArrayList<>();
     private boolean enabled;
 }

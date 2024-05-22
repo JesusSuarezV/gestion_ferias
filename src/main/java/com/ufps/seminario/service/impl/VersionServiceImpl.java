@@ -1,23 +1,84 @@
 package com.ufps.seminario.service.impl;
 
-import com.ufps.seminario.entity.Feria;
-import com.ufps.seminario.entity.Version;
+import com.ufps.seminario.entity.*;
+import com.ufps.seminario.repository.IntegranteRepository;
 import com.ufps.seminario.repository.VersionRepository;
+import com.ufps.seminario.service.IntegranteService;
 import com.ufps.seminario.service.VersionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class VersionServiceImpl implements VersionService {
-@Autowired
+    @Autowired
     VersionRepository versionRepository;
+    @Autowired
+    IntegranteRepository integranteRepository;
     @Override
-    public void guardarVersion(Version version) {
+    public Version guardarVersion(Version version) {
         version.setEnabled(true);
-        versionRepository.save(version);
+        return versionRepository.save(version);
     }
+
+    @Override
+    public List<Version> obtenerVersionesPorIntegranteYDisponibles(String correo, String keyword, LocalDate fecha) {
+
+        List<Integrante> inscripciones = integranteRepository.findByCorreoRegistro(correo);
+
+        List<Integer> ids = new ArrayList<>();
+        for(Integrante integranteLista: inscripciones){
+            String nombre = integranteLista.getProyecto().getNombre();
+            LocalDate fechaCierre = integranteLista.getProyecto().getVersion().getFechaCierre();
+            if((keyword == null || keyword.isEmpty()  || nombre.contains(keyword)) && !fecha.isAfter(fechaCierre)){
+                ids.add(integranteLista.getProyecto().getId());
+            }
+        }
+
+        return versionRepository.findByIdIn(ids);
+    }
+
+    @Override
+    public List<Version> obtenerVersionesPorIntegranteYCerradas(String correo, String keyword, LocalDate fecha) {
+
+        List<Integrante> inscripciones = integranteRepository.findByCorreoRegistro(correo);
+        List<Integer> ids = new ArrayList<>();
+
+        for(Integrante integranteLista: inscripciones){
+            String nombre = integranteLista.getProyecto().getNombre();
+            LocalDate fechaCierre = integranteLista.getProyecto().getVersion().getFechaCierre();
+            if((keyword == null || keyword.isEmpty()  || nombre.contains(keyword)) && fecha.isAfter(fechaCierre)){
+                ids.add(integranteLista.getProyecto().getId());
+            }
+        }
+
+        return versionRepository.findByIdIn(ids);
+    }
+
+    @Override
+    public List<Version> obtenerVersionesPorJurado(Usuario usuario) {
+        List<Integer> ids = new ArrayList<>();
+        for(Proyecto proyecto: usuario.getProyectosCalificar()){
+            ids.add(proyecto.getVersion().getId());
+        }
+        return versionRepository.findByIdIn(ids);
+    }
+
+    @Override
+    public List<Version> obtenerVersionesPorFeria(Feria feria) {
+        return versionRepository.findByFeriaAndEnabledOrderByFechaInicioDesc(feria, true);
+    }
+
+    @Override
+    public int obtenerCantidadDisponiblePorFeriayFecha(Feria feria, LocalDate now) {
+        return versionRepository.findByFeriaAndFechaCierreAfter(feria, now).size();
+    }
+
 
     @Override
     public Page<Version> listarVersiones(Feria feria, Pageable pageable) {

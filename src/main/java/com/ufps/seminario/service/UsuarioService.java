@@ -7,5 +7,5 @@ public interface UsuarioService {
 
     public int obtenerId(String correo);
 
-    Usuario obtenerUsuarioPorUsername(String username);
+    Usuario obtenerUsuarioPorUsername(String username); 
 }
