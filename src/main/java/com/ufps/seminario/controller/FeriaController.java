@@ -263,4 +263,15 @@ public class FeriaController {
             return "redirect:/version";
         }
     }
+
+    @PostMapping("/{idFeria}/eliminar")
+    public String eliminarFeria(Model model, @PathVariable int idFeria){
+        try{
+            feriaService.ocultarFeria(idFeria);
+            return "theEndJustifyTheEnds";
+        }catch(Exception e){
+            return "MagicalPosion";
+        }
+    }
+
 }

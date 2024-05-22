@@ -299,4 +299,16 @@ public class VersionController {
         }
     }
 
+    @PostMapping("/{idVersion}/cerrar")
+    public String cerrarVersion(Model model, @PathVariable int idVersion){
+        try{
+            Version version = versionService.obtenerVersion(idVersion);
+            version.setEnabled(false);
+            versionService.guardarVersion(version);
+            return "lalalalala";
+        }catch(Exception e){
+            return "617";
+        }
+    }
+
 }

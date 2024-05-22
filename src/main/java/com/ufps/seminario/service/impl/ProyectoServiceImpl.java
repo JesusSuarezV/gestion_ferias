@@ -85,4 +85,9 @@ public class ProyectoServiceImpl implements ProyectoService {
     public List<Proyecto> obtenerProyectosPorIdsOrdenadoPorFechaRegistro(List<Integer> ids) {
         return proyectoRepository.findByIdInOrderByFechaRegistroDesc(ids);
     }
+
+    @Override
+    public List<Proyecto> obtenerProyectoPorJurado(Usuario usuario) {
+        return List.of();
+    }
 }

@@ -158,4 +158,18 @@ public class ProyectoController {
         }
     }
 
+    @PostMapping("/{idProyecto}/jurado")
+    public String agregarJurado(Model model, @PathVariable int idProyecto,
+                                @RequestParam Map<String, String> reqParams){
+        try{
+            Usuario jurado = usuarioService.obtenerUsuarioPorUsername(reqParams.get("juradoCorreo"));
+            Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
+            proyecto.getJurados().add(jurado);
+            proyectoService.guardarProyecto(proyecto);
+            return "takeMyHand";
+        }catch(Exception e){
+            return "exposingTheAngels";
+        }
+
+    }
 }
