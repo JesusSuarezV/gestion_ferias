@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -18,4 +19,6 @@ public interface VersionRepository extends JpaRepository<Version, Integer> {
     List<Version> findByIdIn(List<Integer> id);
     List<Version> findByFeriaAndEnabledOrderByFechaInicioDesc(Feria feria, boolean enabled);
     List<Version> findByFeriaAndFechaCierreAfter(Feria feria, LocalDate now);
+
+    List<Version> findByFeriaAndCierreAndFechaCierreAfter(Feria feria, boolean cierre, LocalDate now);
 }

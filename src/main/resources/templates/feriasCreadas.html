@@ -17,7 +17,15 @@
     <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
     <div class="contenido">
         <h1 class="titulo">Ferias creadas</h1>
-        <div class="ferias">
+        <div th:if="${#lists.isEmpty(ferias)}" class="ferias">
+            <h3>No hay ferias creadas.</h3>
+            <div class="CrearEvento">
+                <a th:href="'/ferias/crear'">
+                    <button>Crea evento</button>
+                </a>
+            </div>
+        </div>
+        <div th:if="${not #lists.isEmpty(ferias)}" class="ferias">
             <tr th:each="feria : ${ferias}">
                 <div class="cuadro">
                     <div class="top">

@@ -56,9 +56,9 @@ public class VersionController {
             model.addAttribute("version", version);
             List<Proyecto> proyectos = proyectoService.obtenerProyectosPorVersion(version);
             model.addAttribute("proyectos", proyectos);
-            return "version"; //Luego miro esto
+            return "verInfoVersion";
         } catch (Exception e) {
-            return "redirect:/version";
+            return "redirect:/version/ferias_disponibles";
         }
     }
 
@@ -133,6 +133,25 @@ public class VersionController {
     }
 
 
+    @GetMapping("/ferias_disponibles")
+    public String searchFeriasDisponibles(Model model) {
+        return "redirect:/version/ferias_disponibles/search";
+    }
+
+    @GetMapping("/ferias_disponibles/search")
+    public String searchFeriasDisponibles(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
+        try {
+            String username = sesionService.getUsernameFromSession();
+            model.addAttribute("username", username);
+            model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
+            List<Version> versiones = versionService.obtenerVersionesDisponibles(keyword, LocalDate.now());
+            model.addAttribute("versiones", versiones);
+            return "catalogoDeFerias";
+        } catch (Exception e) {
+            return "redirect:/";
+        }
+    }
+
     @GetMapping("/ferias_inscritas")
     public String verFeriasInscritas(Model model) {
         return "redirect:/version/ferias_inscritas/search";
@@ -155,7 +174,7 @@ public class VersionController {
 
     @GetMapping("/ferias_finalizadas")
     public String searchFeriasFinalizadas(Model model) {
-        return "redirect:/version_finalizadas/search";
+        return "redirect:/version/ferias_finalizadas/search";
     }
 
     @GetMapping("/ferias_finalizadas/search")
@@ -166,9 +185,9 @@ public class VersionController {
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             List<Version> versiones = versionService.obtenerVersionesPorIntegranteYCerradas(username, keyword, LocalDate.now());
             model.addAttribute("versiones", versiones);
-            return "version"; //Luego miro esto
+            return "feriasFinalizadas";
         } catch (Exception e) {
-            return "redirect:/version";
+            return "redirect:/";
         }
     }
 
@@ -306,7 +325,7 @@ public class VersionController {
     public String cerrarVersion(Model model, @PathVariable int idVersion){
         try{
             Version version = versionService.obtenerVersion(idVersion);
-            version.setEnabled(false);
+            version.setCierre(true);
             versionService.guardarVersion(version);
             return "redirect:/ferias/"+version.getFeria().getId()+"/version";
         }catch(Exception e){

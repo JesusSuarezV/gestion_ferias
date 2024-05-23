@@ -26,4 +26,6 @@ public interface VersionService {
     public List<Version> obtenerVersionesPorFeria(Feria feria);
 
     public int obtenerCantidadDisponiblePorFeriayFecha(Feria feria, LocalDate now);
+
+    List<Version> obtenerVersionesDisponibles(String keyword, LocalDate now);
 }

@@ -16,7 +16,13 @@
     <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
     <div class="contenido">
         <h2 class="titulo">Versiones de ferias creadas</h2>
-        <div class="contenedorCua">
+        <div th:if="${#lists.isEmpty(versiones)}" class="contenedorCua">
+            <h3>No hay versiones de ferias creadas.</h3>
+            <div class="CrearEvento">
+                <a th:href="'/ferias/' + ${feria.id} + '/version/crear'"><button>Crea evento</button></a>
+            </div>
+        </div>
+        <div th:if="${not #lists.isEmpty(versiones)}" class="contenedorCua">
             <div class="cuadro" th:each="version : ${versiones}">
                 <div class="textos">
                     <h2 th:text="${feria.nombre} + '  V.'+ ${version.numero}"></h2>
@@ -40,24 +46,6 @@
                     <form method="post" th:action="@{/version/{idVersion}/cerrar(idVersion=${version.id})}" enctype="multipart/form-data">
                         <button class="cerrar">Cerrar Feria</button>
                     </form>
-                </div>
-
-            </div>
-            <div class="cuadro">
-                <div class="textos">
-                    <h2>Feria de proyecto de aula V.2</h2>
-                    <p>
-                        Tipo: Proyectos de aula<br>
-                        Fecha inicio: 19/03/2024<br>
-                        Fecha fin: 19/05/2024<br>
-                        Fecha limite de inscripción 8/05/2024<br>
-                    </p>
-                </div>
-                <img class="fotito" th:src="@{/img/presentacion.png}" alt="Imagen pequeña">
-                <div class="botones">
-                    <button class="editar">Editar</button>
-                    <button class="eliminar">Eliminar</button>
-                    <button class="cerrar">Cerrar feria</button>
                 </div>
 
             </div>

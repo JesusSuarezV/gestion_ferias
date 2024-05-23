@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ferias finalizadas</title>
+    <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/cuadricula.css}" />
+    <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/css/feriasIncritas.css}" />
+    <link rel="stylesheet" th:href="@{/css/soyJurado.css}" />
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+
+<body>
+    <div class="contenedor" id="contenedor">
+        <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
+        <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
+        <div class="contenido">
+            <h2 class="titulo">Ferias finalizadas</h2>
+            <div th:if="${#lists.isEmpty(versiones)}" class="noFerias">
+                <h3 class="no-ferias-creadas">No se han creado ferias.
+            </div>
+            <div th:if="${not #lists.isEmpty(versiones)}" class="ferias-creadas">
+                <form class="buscador" th:action="@{/ferias_finalizadas/search}" method="get">
+                    <div class="busqueda">
+                        <input class="texto-buscar" type="text" name="keyword" placeholder="Ingrese su consulta"/>
+                    </div>
+                    <div class="imagen-lupa">
+                        <a><img th:src="@{/img/search_47686.png}" alt=""></a>
+                    </div>
+                </form>
+
+                <div class="pote1">
+                    <div class="rectangulo">
+                        <div class="textos">
+                            <table class="informacion">
+                                <tr>
+                                    <div class="nombre">Feria Proyecto de aula V.2</div>
+                                </tr>
+                                <tr>
+                                    <td>Fecha inicio:</td>
+                                    <td class="fecha-inicio">10/0111/11000</td>
+
+                                </tr>
+                                <tr>
+                                    <td>Fecha Final:</td>
+                                    <td class="fecha-final">10/0111/11000</td>
+                                </tr>
+                                <tr class="fecha-limi">
+                                    <td>Fecha Limite de inscripción:</td>
+                                    <td class="fecha-limite">100/1010/1000</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="photo">
+                            <img class="img" th:src="@{/img/presentacion.png}" alt="Imagen pequeña">
+                        </div>
+                        <div class="boton">
+                            <button class="ver-evento">Ver ranking</button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/js/menu.js}"></script>
+    <script>
+        //Despliegue del menu principal
+        let listElements = document.querySelectorAll('.lista-item');
+
+        listElements.forEach(listElement => {
+            listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
+                listElement.classList.toggle('arrow'); //agrega la clase arrow
+                let menu = listElement.nextElementSibling;
+                menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+            });
+        });
+
+        //ejecutar funcion con click
+        document.getElementById('btn-open').addEventListener("click", open_close_menu);
+
+    </script>
+</body>
+
+</html>

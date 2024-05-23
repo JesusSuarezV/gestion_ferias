@@ -76,7 +76,21 @@ public class VersionServiceImpl implements VersionService {
 
     @Override
     public int obtenerCantidadDisponiblePorFeriayFecha(Feria feria, LocalDate now) {
-        return versionRepository.findByFeriaAndFechaCierreAfter(feria, now).size();
+        return versionRepository.findByFeriaAndCierreAndFechaCierreAfter(feria, false, now).size();
+    }
+
+    @Override
+    public List<Version> obtenerVersionesDisponibles(String keyword, LocalDate now) {
+        List<Version> versiones = versionRepository.findAll();
+        List<Version> versionesDisponibles = new ArrayList<>();
+        for(Version version: versiones){
+            LocalDate fechaLimite = version.getFechaLimite();
+            String nombre = version.getFeria().getNombre();
+            if((keyword == null || keyword.isEmpty()  || nombre.contains(keyword)) && !now.isAfter(fechaLimite)){
+                versionesDisponibles.add(version);
+            }
+        }
+        return versionesDisponibles;
     }
 
 
