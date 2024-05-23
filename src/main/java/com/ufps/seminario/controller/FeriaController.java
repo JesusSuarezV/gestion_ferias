@@ -151,10 +151,9 @@ public class FeriaController {
                 }
             }
 
-            return "redirect:/Ferias/Mis_Ferias?exito"; // Redirecciona a una página de éxito
+            return "redirect:/ferias/mis_ferias?exito";
         } catch (Exception e) {
-
-            return "redirect:/Inicio?error";
+            return "redirect:/ferias/mis_ferias?error";
         }
     }
 

@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Feria</title>
-    <link rel="stylesheet" th:href="@{/css/cuadricula.css}">
+    <link rel="stylesheet" href="../css/cuadricula.css">
     <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/crearFeria.css}">
-
-    <script src="https://kit.fontawesome.com/43d3343120.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="stylesheet" href="../css/crearFeria.css">
+    <link rel="stylesheet" href="../css/estilos.css">
 </head>
+
 <body>
-<div class="contenedor">
+<div class="contenedor" id="contenedor">
     <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
     <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
-    <form class="formulario" th:action="@{/Ferias/Guardar_Feria}" th:object="${feria}" method="post" enctype="multipart/form-data">
-        <div class="contenido">
+    <div class="contenido">
+        <form class="formulario" th:action="@{/ferias/crear}" th:object="${feria}" method="post" enctype="multipart/form-data">
             <h2 class="titulo">Crear Feria</h2>
             <div class="crearFeria">
                 <div class="nombreFeria">
@@ -28,43 +28,100 @@
                     <textarea name="descripcion" id="descripcion" required></textarea>
                 </div>
                 <div class="archivoProyecto">
-                    <label for="imagenFeria">Imagen proyecto:</label>
-                    <input type="file" name="imagenFeria" id="imagenFeria">
-                    <button type="button" class="examinar" id="examinar">Examinar</button>
+                    <label for="imagenFeria">Imagen de la feria:</label>
+                    <input type="file" name="imagenFeria" id="imagenFeria" accept="image/*">
                 </div>
                 <div class="area">
-                    <label>Areas:</label>
-                    <div id="areas">
-
-                    </div>
-                    <button type="button" class="btnArea" id="btnArea" onclick="addArea()">Añadir area</button>
+                    <table id="areas">
+                        <tr>
+                            <td><label>Areas:</label></td>
+                            <td>
+                                <button type="button" class="btnArea" id="btnArea" onclick="addArea()">Añadir area</button>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-
             </div>
-        </div>
-        <script type="text/javascript">
-            let areaIndex = 0;
-            function addArea() {
-                const areasDiv = document.getElementById('areas');
-                const newAreaDiv = document.createElement('div');
-                newAreaDiv.innerHTML = `
-                    <div>
-                        <input type="text" name="area[${areaIndex}]" id="area[${areaIndex}]">
-                        <a href=""><img th:src="@{/img/botonX.png}" ></a><br>
-                    </div>
-                `;
-                areasDiv.appendChild(newAreaDiv);
-                areaIndex++;
-            }
-        </script>
-        <div class="botones">
-            <button type="button" id="cancelarBtn">Cancelar</button>
-            <button id="registrarBtn">Registrar</button>
-        </div>
-    </form>
+            <div class="botones">
+                <a href="/ferias/mis_ferias"><button type="button" id="cancelarBtn">Cancelar</button></a>
+                <button id="registrarBtn">Registrar</button>
+            </div>
+        </form>
+    </div>
 </div>
 <script th:src="@{/js/registro.js}"></script>
 
 <script th:src="@{/js/menu.js}"></script>
+<script>
+    //Despliegue del menu principal
+    let listElements = document.querySelectorAll('.lista-item');
+
+    listElements.forEach(listElement => {
+        listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
+            listElement.classList.toggle('arrow'); //agrega la clase arrow
+            let menu = listElement.nextElementSibling;
+            menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+        });
+    });
+
+    //ejecutar funcion con click
+    document.getElementById('btn-open').addEventListener("click", open_close_menu);
+
+</script>
+<script>
+    //Se verifica que la extensión sea correcta.
+    document.getElementById('archivo').addEventListener('change', function(event) { //Este ID es del boton, entonces si se cambia arriba, se debe cambiar aquí también
+        const fileInput = event.target;
+        const filePath = fileInput.value;
+        const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+
+        if (!allowedExtensions.exec(filePath)) {
+            alert("Por favor, seleccione un archivo de imagen válido.");
+            fileInput.value = '';
+            return false;
+        }
+    });
+</script>
+<script type="text/javascript">
+    let areaIndex = 0;
+    function addArea() {
+        const areasDiv = document.getElementById('areas');
+        const newAreaDiv = document.createElement('tr');
+        newAreaDiv.id = "area["+areaIndex+"]";
+        newAreaDiv.innerHTML = `
+            <td></td>
+            <td>
+                <input type="text" name="area[${areaIndex}]">
+                <button type="button" class="btnClear" onclick="eliminarComponente2('area[${areaIndex}]')">
+                    X
+                </button><br>
+            </td>
+        `;
+        areasDiv.appendChild(newAreaDiv);
+        areaIndex++;
+    }
+    function eliminarComponente(id) {
+        var componente = document.getElementById('['+id+']');
+        if (componente) {
+            componente.remove();
+        }
+        const areasDiv = document.getElementById('areasEliminadas');
+        const newAreaDiv = document.createElement('tr');
+        newAreaDiv.id = "feria_area_delete[${id}]";
+        newAreaDiv.innerHTML = `
+            <td>
+                <input type="hidden" name="feria_area_delete[${id}]" id="feria_area_delete[${id}]">
+            </td>
+        `;
+        areasDiv.appendChild(newAreaDiv);
+    }
+    function eliminarComponente2(id) {
+        var componente = document.getElementById(id);
+        if (componente) {
+            componente.remove();
+        }
+    }
+</script>
 </body>
+
 </html>
