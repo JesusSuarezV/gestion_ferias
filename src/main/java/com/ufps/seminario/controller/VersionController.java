@@ -184,14 +184,14 @@ public class VersionController {
             model.addAttribute("feria", feria);
             List<Auspiciador> auspiciadores = auspiciadorService.obtenerAuspiciadorPorVersion(version);
             model.addAttribute("auspiciadores", auspiciadores);
-            return "version"; //Luego miro esto
+            return "editarVersionFeria"; //Luego miro esto
         } catch (Exception e) {
-            return "redirect:/version";
+            return "redirect:/mis_ferias";
         }
     }
 
     @PostMapping("/{idVersion}/editar")
-    public String crearVersionFeria(Model model, @PathVariable int idVersion, @ModelAttribute Version version,
+    public String editarVersionFeria(Model model, @PathVariable int idVersion, @ModelAttribute Version version,
                                     @RequestParam Map<String, String> requestParams,
                                     @RequestParam("formatoVersion") MultipartFile formatoVersion) {
         try {
@@ -199,9 +199,12 @@ public class VersionController {
             Feria feria = feriaService.obtenerFeriaByVersion(idVersion);
             version.setArchivo(formatoVersion.getBytes());
             version.setFeria(feria);
-            version.setEnabled(true);
+            version.setId(idVersion);
             int cantidadDisponible = versionService.obtenerCantidadDisponiblePorFeriayFecha(feria, version.getFechaInicio());
-            if (cantidadDisponible == 0) {
+            boolean fechasCorrectas =
+                    !version.getFechaInicio().isAfter(version.getFechaLimite())
+                            && !version.getFechaLimite().isAfter(version.getFechaCierre());
+            if (fechasCorrectas) {
                 version.setNumero(versionService.obtenerVersionesPorFeria(feria).size());
                 Version versionCreada = versionService.guardarVersion(version);
                 for (Map.Entry<String, String> entry : requestParams.entrySet()) {
@@ -222,11 +225,11 @@ public class VersionController {
                     }
                 }
             } else {
-                return "error y pantalla versiones";
+                return "redirect:/version/"+idVersion+"/editar?error";
             }
-            return "verFeria";
+            return "redirect:/ferias/"+feria.getId()+"/version";
         } catch (Exception e) {
-            return "redirect:/version";
+            return "redirect:/version/"+idVersion+"/editar?error";
         }
     }
 
