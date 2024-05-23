@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ferias creadas</title>
+    <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/cuadricula.css}" />
+    <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/css/feriasCreadas.css}" />
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+<div class="contenedor" id="contenedor">
+    <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
+    <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
+    <div class="contenido">
+        <h1 class="titulo">Ferias creadas</h1>
+        <div class="ferias">
+            <tr th:each="feria : ${ferias}">
+                <div class="cuadro">
+                    <div class="top">
+                        <img th:src="@{/ferias/imagen/{idFeria}(idFeria=${feria.id})}" alt="">
+                    </div>
+                    <div class="info">
+                        <p th:text="${feria.nombre}"></p>
+                        <div class="botones">
+                            <a th:href="'/ferias/' + ${feria.id} + '/editar'">
+                                <button class="edit">Editar</button>
+                            </a>
+                            <form method="post" th:action="@{/ferias/{idFeria}/eliminar(idFeria=${feria.id})}" enctype="multipart/form-data">
+                                <button class="delete">Eliminar</button>
+                            </form>
+                            <a th:href="'/ferias/' + ${feria.id} + '/version'">
+                                <button class="versiones">Versiones</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </tr>
+            <div class="CrearEvento">
+                <a th:href="'/ferias/crear'">
+                    <button>Crea evento</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/menu.js}"></script>
+<script>
+    //Despliegue del menu principal
+    let listElements = document.querySelectorAll('.lista-item');
+
+    listElements.forEach(listElement => {
+        listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
+            listElement.classList.toggle('arrow'); //agrega la clase arrow
+            let menu = listElement.nextElementSibling;
+            menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+        });
+    });
+
+    //ejecutar funcion con click
+    document.getElementById('btn-open').addEventListener("click", open_close_menu);
+
+</script>
+</body>
+
+</html>

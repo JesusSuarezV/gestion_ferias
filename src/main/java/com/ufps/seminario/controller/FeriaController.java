@@ -3,18 +3,22 @@ package com.ufps.seminario.controller;
 import com.ufps.seminario.entity.*;
 import com.ufps.seminario.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.*;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -74,7 +78,11 @@ public class FeriaController {
                                   @RequestParam(name = "size", defaultValue = "5") int size) {
         String username = sesionService.getUsernameFromSession();
 
-        List<Feria> ferias = usuarioService.obtenerUsuarioPorUsername(sesionService.getUsernameFromSession()).getMisFerias();
+        List<Feria> feriasTodas = usuarioService.obtenerUsuarioPorUsername(sesionService.getUsernameFromSession()).getMisFerias();
+        List<Feria> ferias = new ArrayList<>();
+        for(Feria feria: feriasTodas){
+            if(feria.isEnabled()) ferias.add(feria);
+        }
         Usuario usuario = usuarioService.obtenerUsuarioPorUsername(sesionService.getUsernameFromSession());
         Page<Feria> feriasPagina = feriaService.listarMisFerias(usuario, keyword, page, size);
         for(Feria feria:ferias){
@@ -90,7 +98,7 @@ public class FeriaController {
         model.addAttribute("ferias", ferias);
         //model.addAttribute("keyword", keyword);
 
-        return "verMisFerias";
+        return "feriasCreadas";
 
     }
 
@@ -150,14 +158,16 @@ public class FeriaController {
         }
     }
 
-    @PostMapping("/{id}/editar")
+    @PostMapping("/{idFeria}/editar")
     public String editarFeria(@ModelAttribute Feria feria, @RequestParam Map<String, String> requestParams,
-                                  @RequestParam("imagenFeria") MultipartFile imagen) {
+                                  @RequestParam("imagenFeria") MultipartFile imagen, @PathVariable int idFeria) {
         try {
-            feria.setImagen(imagen.getBytes());
-            feria.setFechaCreacion(LocalDate.now()); //ESTA FECHA IMPORTA PARA ALGO?????
+            if(imagen != null && imagen.getBytes().length > 0){
+                feria.setImagen(imagen.getBytes());
+            }
+            feria.setFechaCreacion(LocalDate.now());
             feria.setCreador(usuarioService.obtenerUsuarioPorUsername(sesionService.getUsernameFromSession()));
-
+            feria.setId(idFeria);
             Feria feriaCreada = feriaService.guardarFeria(feria);
             for (Map.Entry<String, String> entry : requestParams.entrySet()) {
                 String llave = entry.getKey();
@@ -179,17 +189,10 @@ public class FeriaController {
                     areaService.desactivarAreaPorId(idArea);
                 }
             }
-            return "redirect:/Ferias/Mis_Ferias?exito"; // Redirecciona a una página de éxito
+            return "redirect:/ferias/mis_ferias?exito";
         } catch (Exception e) {
-
-            return "redirect:/Inicio?error";
+            return "redirect:/ferias/mis_ferias?error";
         }
-    }
-
-    @GetMapping("/{id}/Elminar_Feria")
-    public String eliminarFeria(@PathVariable int id){
-        feriaService.ocultarFeria(id);
-        return "redirect:/Ferias/Mis_Ferias";
     }
 
     @GetMapping("/{id}")
@@ -207,11 +210,13 @@ public class FeriaController {
             String username = sesionService.getUsernameFromSession();
             model.addAttribute("username", username);
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
-            List<Version> versiones = versionService.obtenerVersionesPorFeria(feriaService.obtenerFeria(idFeria));
+            Feria feria = feriaService.obtenerFeria(idFeria);
+            List<Version> versiones = versionService.obtenerVersionesPorFeria(feria);
             model.addAttribute("versiones", versiones);
-            return "verFeria";
+            model.addAttribute("feria", feria);
+            return "versionFeriasCreadas";
         }catch(Exception e){
-            return "redirect:/version";
+            return "redirect:/ferias/mis_ferias?error";
         }
     }
 
@@ -222,9 +227,9 @@ public class FeriaController {
             model.addAttribute("username", username);
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             model.addAttribute("feria", feriaService.obtenerFeria(idFeria));
-            return "verFeria";
+            return "crearVersionFeria";
         }catch(Exception e){
-            return "redirect:/version";
+            return "redirect:/ferias/"+idFeria+"/version";
         }
     }
 
@@ -239,7 +244,11 @@ public class FeriaController {
             version.setFeria(feria);
             version.setEnabled(true);
             int cantidadDisponible= versionService.obtenerCantidadDisponiblePorFeriayFecha(feria, LocalDate.now());
-            if(cantidadDisponible == 0){
+            boolean fechasCorrectas =
+                    !version.getFechaInicio().isAfter(version.getFechaLimite())
+                && !version.getFechaLimite().isAfter(version.getFechaCierre());
+
+            if(cantidadDisponible == 0 && fechasCorrectas){
                 version.setNumero(versionService.obtenerVersionesPorFeria(feria).size()+1);
                 Version versionCreada = versionService.guardarVersion(version);
                 for (Map.Entry<String, String> entry : requestParams.entrySet()) {
@@ -256,11 +265,11 @@ public class FeriaController {
                     }
                 }
             }else{
-                return "error y pantalla versiones";
+                return "redirect:/ferias/"+idFeria+"/version/crear?error";
             }
-            return "verFeria";
+            return "redirect:/ferias/"+idFeria+"/version";
         }catch(Exception e){
-            return "redirect:/version";
+            return "redirect:/ferias/"+idFeria+"/version/crear?error";
         }
     }
 
@@ -268,9 +277,30 @@ public class FeriaController {
     public String eliminarFeria(Model model, @PathVariable int idFeria){
         try{
             feriaService.ocultarFeria(idFeria);
-            return "theEndJustifyTheEnds";
+            return "redirect:/ferias/mis_ferias";
         }catch(Exception e){
-            return "MagicalPosion";
+            return "redirect:/ferias/mis_ferias";
+        }
+    }
+
+    @GetMapping("/imagen/{idFeria}")
+    public ResponseEntity<byte[]> obtenerImagenFeria(@PathVariable int idFeria){
+        byte[] imageBytes = feriaService.obtenerFeria(idFeria).getImagen();
+
+        if (imageBytes == null || imageBytes.length == 0) {
+            imageBytes = obtenerImagenPredeterminada();
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "image/jpeg"); // Cambia a "image/png" o el tipo adecuado si es necesario
+        return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+    }
+
+    private byte[] obtenerImagenPredeterminada() {
+        try {
+            Resource resource = new ClassPathResource("static/img/img1.jpeg"); // Ruta a tu imagen predeterminada
+            return Files.readAllBytes(resource.getFile().toPath());
+        } catch (Exception e) {
+            return new byte[0];
         }
     }
 

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Version de la feria</title>
+    <link rel="stylesheet" th:href="@{/css/cuadricula.css}">
+    <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="stylesheet" th:href="@{/css/editarVersionFeria.css}">
+</head>
+<body>
+<div class="contenedor">
+    <div class="header"></div>
+    <div class="menu"></div>
+    <div class="contenido">
+        <form class="formulario" action="">
+            <h2 class="titulo">Editar Versión de la feria</h2>
+            <div class="crearVersionFeria">
+                <div class="grid-group">
+                    <div class="version">
+                        <label for="version">Versión:</label>
+                        <input type="text" name="version" id="version" required>
+                    </div>
+                    <div class="puntaje">
+                        <label for="puntaje">Puntaje mínimo para aprobar:</label>
+                        <input type="number" name="puntaje" id="puntaje" required>
+                    </div>
+                    <div class="fechaInicio">
+                        <label for="fechaInicio">Fecha de Inicio:</label>
+                        <input type="date" name="fechaInicio" id="fechaInicio">
+                    </div>
+                    <div class="fechaFin">
+                        <label for="fechaFin">Fecha de fin:</label>
+                        <input type="date" name="fechaFin" id="fechaFin" required>
+                    </div>
+                    <div class="fechacierreInscripciones">
+                        <label for="fechacierreInscripciones">Fecha cierre de inscripciones:</label>
+                        <input type="date" name="fechacierreInscripciones" id="fechacierreInscripciones" required>
+                    </div>
+                </div>
+                <div class="flex-group">
+                    <div class="formatoProyecto">
+                        <label for="formatoProyecto">Formato del proyecto:</label>
+                        <input type="file" name="formatoProyecto" id="formatoProyecto">
+                        <button class="examinar" id="examinar">Examinar</button>
+                    </div>
+                    <div class="rubrica">
+                        <label for="rubrica">Rúbrica de calificación:</label>
+                        <button class="crearRubrica" id="crearRubrica">Crear Rúbrica</button>
+                    </div>
+                    <div class="auspiciador">
+                        <label for="auspiciador">Auspiciador:</label>
+                        <input type="text" name="auspiciador" id="auspiciador" required>
+                        <a href=""><img th:src="@{/img/botonX.png}" ></a><br>
+                        <button class="btnAuspiciador" id="btnAuspiciador">Añadir Auspiciador</button>
+                    </div>
+                </div>
+            </div>
+            <div class="botones">
+                <button id="cancelarBtn">Cancelar</button>
+                <button id="registrarBtn">Registrar</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script th:src="@{/js/registro.js}"></script>
+</body>
+</html>

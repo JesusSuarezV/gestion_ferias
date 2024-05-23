@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Versiones ferias creadas</title>
+    <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/cuadricula.css}" />
+    <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/css/VersionFeriasCreadas.css}" />
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<div class="contenedor" id="contenedor">
+    <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
+    <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
+    <div class="contenido">
+        <h2 class="titulo">Versiones de ferias creadas</h2>
+        <div class="contenedorCua">
+            <div class="cuadro" th:each="version : ${versiones}">
+                <div class="textos">
+                    <h2 th:text="${feria.nombre} + '  V.'+ ${version.numero}"></h2>
+                    <p>
+                        <p th:text="'Fecha Inicio: '+ ${version.fechaInicio}"></p>
+                        <p th:text="'Fecha fin: '+ ${version.fechaCierre}"> </p>
+                        <p th:text="'Fecha Fecha limite de inscripción: '+ ${version.fechaLimite}"> </p>
+                    </p>
+                </div>
+                <img class="fotito" th:src="@{/img/presentacion.png}" alt="Imagen pequeña">
+                <div class="botones">
+                    <a th:href="'/version/' + ${version.id} + '/editar'">
+                        <button class="editar">Editar</button>
+                    </a>
+                    <a th:href="'/version/' + ${version.id} + '/rubrica/editar'">
+                        <button class="editar">Editar Rubrica</button>
+                    </a>
+                    <form method="post" th:action="@{/version/{idVersion}/eliminar(idVersion=${version.id})}" enctype="multipart/form-data">
+                        <button class="eliminar">Eliminar</button>
+                    </form>
+                    <form method="post" th:action="@{/version/{idVersion}/cerrar(idVersion=${version.id})}" enctype="multipart/form-data">
+                        <button class="cerrar">Cerrar Feria</button>
+                    </form>
+                </div>
+
+            </div>
+            <div class="cuadro">
+                <div class="textos">
+                    <h2>Feria de proyecto de aula V.2</h2>
+                    <p>
+                        Tipo: Proyectos de aula<br>
+                        Fecha inicio: 19/03/2024<br>
+                        Fecha fin: 19/05/2024<br>
+                        Fecha limite de inscripción 8/05/2024<br>
+                    </p>
+                </div>
+                <img class="fotito" th:src="@{/img/presentacion.png}" alt="Imagen pequeña">
+                <div class="botones">
+                    <button class="editar">Editar</button>
+                    <button class="eliminar">Eliminar</button>
+                    <button class="cerrar">Cerrar feria</button>
+                </div>
+
+            </div>
+            <div class="CrearEvento">
+                <a th:href="'/ferias/' + ${feria.id} + '/version/crear'"><button>Crea evento</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/menu.js}"></script>
+<script>
+    //Despliegue del menu principal
+    let listElements = document.querySelectorAll('.lista-item');
+
+    listElements.forEach(listElement => {
+        listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
+            listElement.classList.toggle('arrow'); //agrega la clase arrow
+            let menu = listElement.nextElementSibling;
+            menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+        });
+    });
+
+    //ejecutar funcion con click
+    document.getElementById('btn-open').addEventListener("click", open_close_menu);
+
+</script>
+</body>
+
+</html>

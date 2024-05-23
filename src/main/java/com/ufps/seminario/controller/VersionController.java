@@ -305,9 +305,20 @@ public class VersionController {
             Version version = versionService.obtenerVersion(idVersion);
             version.setEnabled(false);
             versionService.guardarVersion(version);
-            return "lalalalala";
+            return "redirect:/ferias/"+version.getFeria().getId()+"/version";
         }catch(Exception e){
-            return "617";
+            return "redirect:/ferias/mis_ferias?error";
+        }
+    }
+
+    @PostMapping("/{idVersion}/eliminar")
+    public String eliminarVersion(Model model, @PathVariable int idVersion){
+        try{
+            Version version = versionService.obtenerVersion(idVersion);
+            versionService.ocultarVersion(idVersion);
+            return "redirect:/ferias/"+version.getFeria().getId()+"/version";
+        }catch(Exception e){
+            return "redirect:/ferias/mis_ferias?error";
         }
     }
 

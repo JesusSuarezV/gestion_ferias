@@ -60,6 +60,11 @@ h3 {
     border-radius: 35px;
 }
 
+.busqueda input{
+    padding: 5px 10px;
+    font-size: 20px;
+}
+
 .imagen-lupa img {
     height: 25px;
     width: auto;
@@ -135,12 +140,14 @@ h3 {
     align-items: center;
     margin-top: 5px;
     margin-bottom: 5px;
-    width: 150px;
-    height: 40px;
+    margin-right: 10px;
+    /*width: 150px;
+    height: 40px;*/
     border-radius: 20px;
     cursor: pointer;
     color: white;
     background-color: #002948;
+    padding: 10px 20px;
 }
 
 .paginacion {

@@ -1,26 +1,34 @@
-<div class="cuerpo" id="cuerpo">
+<div class="menu" id="menu">
     <div class="user">
         <img class="imagen-user" th:src="@{/img/user.png}" alt="eventos">
         <div class="datos-user">
-            <a class="n-user" th:text="${username}"></a>
-            <a class="r-user" th:text="${role}"></a>
+            <a class="n-user">Nombre usuario</a>
+            <a class="r-user">Rol usuario</a>
         </div>
     </div>
-    <div clas="lista">
+    <div class="lista">
         <ul class="lista-principal" id="lista-close">
             <li class="elemento-1 elemento--click">
                 <div class="lista-item">
                     <div class="imagen-titulo">
                         <img class="imagen-item" th:src="@{/img/eventos.png}" alt="eventos">
-                        <a class="titulo-elemento-1">Ferias</a>
+                        <a class="titulo-elemento-1">Eventos</a>
                     </div>
                     <i class="fa-solid fa-angle-right list-arrow" style="color: black;"></i>
                 </div>
                 <ul class="lista-secundaria">
-                    <li class="elemento-2"><a href="/Ferias">Catálogo de ferias</a></li>
-                    <li class="elemento-2"><a href="#">Ferias inscritas</a></li>
-                    <li class="elemento-2"><a href="#">Ferias finalizadas</a></li>
-                    <li class="elemento-2"><a href="/Ferias/Mis_Ferias">Ferias creadas</a></li>
+                    <li class="elemento-2">
+                        <a href="/ferias" style="text-decoration: none;">Catálogo de eventos</a>
+                    </li>
+                    <li class="elemento-2">
+                        <a href="/version/ferias_inscritas" style="text-decoration: none;">Eventos inscritos</a>
+                    </li>
+                    <li class="elemento-2">
+                        <a href="/version/ferias_finalizadas" style="text-decoration: none;">Eventos finalizados</a>
+                    </li>
+                    <li class="elemento-2">
+                        <a href="/ferias/mis_ferias" style="text-decoration: none;">Eventos creados</a>
+                    </li>
                 </ul>
             </li>
             <li class="elemento-1 elemento--click">
@@ -32,8 +40,12 @@
                     <i class="fa-solid fa-angle-right list-arrow" style="color: black;"></i>
                 </div>
                 <ul class="lista-secundaria">
-                    <li class="elemento-2">Mis proyectos</li>
-                    <li class="elemento-2">Calificar proyectos</li>
+                    <li class="elemento-2">
+                        <a href="/proyecto/mis_proyectos" style="text-decoration: none;">Mis proyectos</a>
+                    </li>
+                    <li class="elemento-2">
+                        <a href="/calificaciones/jurado" style="text-decoration: none;">Calificar proyectos</a>
+                    </li>
                 </ul>
             </li>
             <li class="elemento-1 elemento--click">
@@ -45,7 +57,9 @@
                     <i class="fa-solid fa-angle-right list-arrow" style="color: black;"></i>
                 </div>
                 <ul class="lista-secundaria">
-                    <li class="elemento-2">Mis calificaciones</li>
+                    <li class="elemento-2">
+                        <a href="/calificaciones/mis_calificaciones" style="text-decoration: none;">Mis calificaciones</a>
+                    </li>
                 </ul>
             </li>
             <li class="elemento-1 elemento--click">
@@ -57,7 +71,9 @@
                     <i class="fa-solid fa-angle-right list-arrow" style="color: black;"></i>
                 </div>
                 <ul class="lista-secundaria">
-                    <li class="elemento-2">Aprobar proyectos</li>
+                    <li class="elemento-2">
+                        <a href="#" style="text-decoration: none;">Aprobar proyectos</a>
+                    </li>
                 </ul>
             </li>
             <li class="elemento-1 elemento--click">
@@ -69,7 +85,9 @@
                     <i class="fa-solid fa-angle-right list-arrow" style="color: black;"></i>
                 </div>
                 <ul class="lista-secundaria">
-                    <li class="elemento-2">Usarios</li>
+                    <li class="elemento-2">
+                        <a href="#" style="text-decoration: none;">Usuarios</a>
+                    </li>
                 </ul>
             </li>
         </ul>

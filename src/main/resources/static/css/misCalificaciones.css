@@ -1,0 +1,61 @@
+* {
+    font-family: 'League Spartan', sans-serif;
+}
+
+.titulo{
+    margin-left: 10%;
+    margin-top: 50px;
+    color: #002948;
+}
+
+
+.calificaciones-container {
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px auto; /* Center the container */
+    width: 80%; 
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead th {
+    background-color: #6A8BA4;
+    color: #002948;
+    padding: 15px;
+    border: 1px solid #002948;
+    text-align: center;
+    font-size: 25px;
+}
+
+tbody td {
+    padding: 15px;
+    border: 1px solid #002948;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #D9D9D9;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: white;
+}
+
+th, td {
+    text-align: left;
+}
+
+th:first-child, td:first-child {
+    width: 70%;
+}
+
+th:last-child, td:last-child {
+    width: 30%;
+}
+
+th, td:not(:last-child) {
+    border-right: 1px solid #002948;
+}
