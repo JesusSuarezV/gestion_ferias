@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver proyecto</title>
+    <link rel="stylesheet" th:href="@{/css/cuadricula.css}">
+    <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/verInfoPoryectos.css}">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<div class="contenedor" id="contenedor">
+    <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
+    <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
+    <div class="contenido">
+        <div class="contenido-proyecto">
+            <div class="nombre-proyecto">
+                <h2 th:text="${proyecto.nombre}">Juego 2D para desarrollar el pensamiento crítico y el pensamiento ágil</h2>
+            </div>
+            <div class="descripcion-proyecto">
+                <p th:text="${proyecto.descripcion}"> El juego 2D que estamos desarrollando es una herramienta educativa diseñada para cultivar el
+                    pensamiento crítico y ágil en los jugadores. A través de desafíos interactivos y situaciones
+                    problemáticas, los usuarios serán estimulados a analizar, evaluar y tomar decisiones rápidas en
+                    un entorno virtual. Desde resolver acertijos hasta tomar decisiones estratégicas, el juego
+                    proporciona una experiencia envolvente que promueve el desarrollo de habilidades cognitivas
+                    fundamentales.</p>
+            </div>
+            <div class="objetivo">
+                <h2>Objetivo:</h2>
+            </div>
+            <div class="descripcion-objetivo">
+                <p th:text="${proyecto.objetivos}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque molestie augue velit, nec
+                    tincidunt felis feugiat sagittis. Pellentesque fringilla justo in ipsum vehicula blandit.
+                    Vivamus ut bibendum ante.</p>
+            </div>
+            <div class="tabla-informacion">
+                <table class="tabla">
+                    <tr class="fila">
+                        <td class="columna-item">Feria inscrita:</td>
+                        <td class="columna-desc" th:text="${proyecto.version.feria.nombre} + ' ' + ${proyecto.version.numero}">Feria de proyectos de Aula v.1</td>
+                    </tr>
+                    <tr class="fila" th:if="${not #lists.isEmpty(areas)}">
+                        <td class="columna-item">Áreas de estudio:</td>
+                        <td class="columna-desc">
+                            <span th:each="area, iterStat : ${areas}" th:text="${area.nombre} + (iterStat.last ? '' : ', ')"></span>
+                        </td>
+                    </tr>
+                    <tr class="fila">
+                        <td class="columna-item">URL video:</td>
+                        <td class="columna-desc" th:if= "${proyecto.url == ''}"> No posee </td>
+                        <td class="columna-desc" th:if= "${proyecto.url != ''}" th:text="${proyecto.url}"></td>
+                    </tr>
+                    <tr class="fila" th:if="${not #lists.isEmpty(proyecto.archivo)}">
+                        <td class="columna-item">Archivo proyecto:</td>
+                        <td class="columna-desc" >
+                            <a th:href="@{/proyecto/archivo/{idProyecto}(idProyecto=${proyecto.id})}">
+                                <div class="boton-doc">
+                                    Descargar
+                                </div>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr class="fila" th:each="integrante, iterStat : ${integrantes}">
+                        <td class="columna-item" th:rowspan="${#lists.size(integrantes)}" th:if="${iterStat.first}">Integrantes: </td>
+                        <td class="columna-desc" th:text="${integrante.correoRegistro}"></td>
+                    </tr>
+                    <tr class="fila">
+                        <td class="columna-item">Calificación:</td>
+                        <td class="columna-desc" th:text="${proyecto.calificacion}"></td>
+                    </tr>
+                    <tr class="fila" id="mainRow" th:each="jurado, iterStat : ${jurados}">
+                        <td class="columna-item" th:rowspan="${#lists.size(jurados)}" th:if="${iterStat.first}">Jurados: </td>
+                        <td class="columna-desc columna-eliminar" th:text="${jurado.username}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/modal-2.js}"></script>
+<script th:src="@{/js/menu.js}"></script>
+<script>
+    //Despliegue del menu principal
+    let listElements = document.querySelectorAll('.lista-item');
+
+    listElements.forEach(listElement => {
+        listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
+            listElement.classList.toggle('arrow'); //agrega la clase arrow
+            let menu = listElement.nextElementSibling;
+            menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+        });
+    });
+
+    //ejecutar funcion con click
+    document.getElementById('btn-open').addEventListener("click", open_close_menu);
+
+</script>
+</body>
+
+</html>

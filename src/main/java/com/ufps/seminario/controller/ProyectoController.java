@@ -3,6 +3,10 @@ package com.ufps.seminario.controller;
 import com.ufps.seminario.entity.*;
 import com.ufps.seminario.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -150,9 +154,12 @@ public class ProyectoController {
             model.addAttribute("username", username);
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
+            List<Integrante> integrantes = integranteService.obtenerIntegrantePorProyecto(proyecto);
             model.addAttribute("proyecto", proyecto);
             model.addAttribute("jurados", proyecto.getJurados());
-            return "version";
+            model.addAttribute("areas", proyecto.getAreas());
+            model.addAttribute("integrantes", integrantes);
+            return "verInformacionProyecto";
         }catch(Exception e){
             return "redirect/mis_proyectos";
         }
@@ -171,5 +178,22 @@ public class ProyectoController {
             return "exposingTheAngels";
         }
 
+    }
+
+    @GetMapping("/archivo/{idProyecto}")
+    public ResponseEntity<ByteArrayResource> descargarPdf(@PathVariable int idProyecto) {
+        byte[] pdfData = proyectoService.obtenerProyectoPorId(idProyecto).getArchivo();
+
+        if (pdfData == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        ByteArrayResource resource = new ByteArrayResource(pdfData);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=document.pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .contentLength(pdfData.length)
+                .body(resource);
     }
 }
