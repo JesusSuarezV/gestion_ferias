@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jurado</title>
+    <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/cuadricula.css}" />
+    <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/css/soyJurado.css}" />
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<div class="contenedor" id="contenedor">
+    <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
+    <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
+    <div class="contenido">
+        <h2 class="titulo">¿Dónde soy jurado?</h2>
+        <h3 class="aviso" th:if="${#lists.isEmpty(versiones_jurado)}">No es jurado en ninguna feria.</h3>
+
+        <div class="pote1" th:if="${not #lists.isEmpty(versiones_jurado)}">
+            <div class="rectangulo" th:each="version : ${versiones_jurado}">
+                <div class="textos">
+                    <table class="informacion">
+                        <tr>
+                            <div class="nombre" th:text="${version.feria.nombre}">Feria Proyecto de aula V.2</div>
+                        </tr>
+                        <tr>
+                            <td>Fecha inicio:</td>
+                            <td class="fecha-inicio" th:text="${version.fechaInicio}"></td>
+
+                        </tr>
+                        <tr>
+                            <td>Fecha Final:</td>
+                            <td class="fecha-final" th:text="${version.fechaCierre}">10/0111/11000</td>
+                        </tr>
+                        <tr class="fecha-limi">
+                            <td>Fecha Limite:</td>
+                            <td class="fecha-limite" th:text="${version.fechaLimite}">100/1010/1000</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="photo">
+                    <img class="img" th:src="@{/img/presentacion.png}" alt="Imagen pequeña">
+                </div>
+                <div class="boton">
+                    <a th:href="'/calificaciones/jurado/version/' + ${version.id}">
+                        <button class="ver-evento">Ver evento</button>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/menu.js}"></script>
+<script>
+    //Despliegue del menu principal
+    let listElements = document.querySelectorAll('.lista-item');
+
+    listElements.forEach(listElement => {
+        listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
+            listElement.classList.toggle('arrow'); //agrega la clase arrow
+            let menu = listElement.nextElementSibling;
+            menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+        });
+    });
+
+    //ejecutar funcion con click
+    document.getElementById('btn-open').addEventListener("click", open_close_menu);
+
+</script>
+</body>
+
+</html>

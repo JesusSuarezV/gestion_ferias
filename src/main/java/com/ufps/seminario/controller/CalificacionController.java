@@ -58,9 +58,9 @@ public class CalificacionController {
             model.addAttribute("role", usuario.getRole().getNombre());
             List<Version> versiones = versionService.obtenerVersionesPorJurado(usuario);
             model.addAttribute("versiones_jurado", versiones);
-            return "version";
+            return "soyJurado";
         }catch(Exception e){
-            return "redirect:/version";
+            return "redirect:/";
         }
     }
 
