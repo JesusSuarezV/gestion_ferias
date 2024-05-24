@@ -35,7 +35,7 @@ public class ProyectoController {
     AreaService areaService;
 
     @GetMapping("/mis_proyectos")
-    public String verVersion(Model model) {
+    public String verMisProyectos(Model model) {
         try {
             String username = sesionService.getUsernameFromSession();
             List<Proyecto> proyectosActuales = proyectoService.obtenerProyectosActualesPorCorreo(username);
@@ -47,9 +47,9 @@ public class ProyectoController {
             model.addAttribute("proyectosActuales", proyectosActuales);
             model.addAttribute("proyectosPasados", proyectosPasados);
 
-            return "version"; //Luego miro esto
+            return "misProyectos";
         }catch (Exception e){
-            return "redirect:/version";
+            return "redirect:/";
         }
     }
 
