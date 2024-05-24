@@ -70,13 +70,43 @@
                         <td class="columna-item">Calificación:</td>
                         <td class="columna-desc" th:text="${proyecto.calificacion}"></td>
                     </tr>
-                    <tr class="fila" id="mainRow" th:each="jurado, iterStat : ${jurados}">
-                        <td class="columna-item" th:rowspan="${#lists.size(jurados)}" th:if="${iterStat.first}">Jurados: </td>
-                        <td class="columna-desc columna-eliminar" th:text="${jurado.username}"></td>
+                    <tr class="fila" id="mainRow"  th:each="jurado, iterStat : ${jurados}">
+                        <td class="columna-item" th:rowspan="${#lists.size(jurados) + 1}" th:if="${iterStat.first}">Jurados: </td>
+                        <td class="columna-desc columna-eliminar">
+                            <span th:text="${jurado.username}"></span>
+                            <form th:if="${rolObj.id != 1}" th:action="@{/proyecto/{idProyecto}/jurado/eliminar(idProyecto=${proyecto.id})}" method="post" enctype="multipart/form-data">
+                                <button class="eliminar">x</button>
+                                <input type="hidden" name="juradoCorreo" th:value="${jurado.username}">
+                            </form>
+                        </td>
+                    </tr>
+                    <tr class="fila" th:if="${rolObj.id != 1}">
+                        <td></td>
+                        <td class="columna-desc">
+                            <div class="boton-agregar">
+                                Asignar jurado
+                            </div>
+                        </td>
                     </tr>
                 </table>
             </div>
         </div>
+    </div>
+</div>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <form th:action="@{/proyecto/{idProyecto}/jurado(idProyecto=${proyecto.id})}" method="post" enctype="multipart/form-data">
+            <p>Correo del jurado:</p>
+            <input class="correo-jurado" type="email" name="juradoCorreo" id="juradoCorreo">
+            <div class="botones">
+                <div class="boton-a close">
+                    Cancelar
+                </div>
+                <div class="boton-a agregar">
+                    <button class="boton-a agregar">Agregar</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 <script th:src="@{/js/modal-2.js}"></script>

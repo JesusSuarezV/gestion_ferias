@@ -159,6 +159,7 @@ public class ProyectoController {
             model.addAttribute("jurados", proyecto.getJurados());
             model.addAttribute("areas", proyecto.getAreas());
             model.addAttribute("integrantes", integrantes);
+            model.addAttribute("rolObj", usuarioService.obtenerUsuarioPorUsername(username).getRole());
             return "verInformacionProyecto";
         }catch(Exception e){
             return "redirect/mis_proyectos";
@@ -173,9 +174,24 @@ public class ProyectoController {
             Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
             proyecto.getJurados().add(jurado);
             proyectoService.guardarProyecto(proyecto);
-            return "takeMyHand";
+            return "redirect:/proyecto/"+idProyecto+"?exito";
         }catch(Exception e){
-            return "exposingTheAngels";
+            return "redirect:/proyecto/"+idProyecto+"?error";
+        }
+
+    }
+
+    @PostMapping("/{idProyecto}/jurado/eliminar")
+    public String eliminarJurado(Model model, @PathVariable int idProyecto,
+                                @RequestParam Map<String, String> reqParams){
+        try{
+            Usuario jurado = usuarioService.obtenerUsuarioPorUsername(reqParams.get("juradoCorreo"));
+            Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
+            proyecto.getJurados().remove(jurado);
+            proyectoService.guardarProyecto(proyecto);
+            return "redirect:/proyecto/"+idProyecto+"?exito";
+        }catch(Exception e){
+            return "redirect:/proyecto/"+idProyecto+"?error";
         }
 
     }
