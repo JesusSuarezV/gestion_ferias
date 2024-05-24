@@ -42,10 +42,10 @@ public class CalificacionController {
             model.addAttribute("username", username);
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             List<Proyecto> proyectos = proyectoService.obtenerProyectosPorCorreoOrdenadosPorFechaRegistro(username);
-            model.addAttribute("proyectos", proyectos);
-            return "version";
+            model.addAttribute("proyectosCalificados", proyectos);
+            return "misCalificaciones";
         }catch(Exception e){
-            return "redirect:/version";
+            return "redirect:/";
         }
     }
 
