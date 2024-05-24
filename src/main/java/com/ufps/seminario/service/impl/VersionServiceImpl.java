@@ -33,10 +33,11 @@ public class VersionServiceImpl implements VersionService {
 
         List<Integer> ids = new ArrayList<>();
         for(Integrante integranteLista: inscripciones){
-            String nombre = integranteLista.getProyecto().getNombre();
+            String nombre = integranteLista.getProyecto().getVersion().getFeria().getNombre();
             LocalDate fechaCierre = integranteLista.getProyecto().getVersion().getFechaCierre();
-            if((keyword == null || keyword.isEmpty()  || nombre.contains(keyword)) && !fecha.isAfter(fechaCierre)){
-                ids.add(integranteLista.getProyecto().getId());
+            boolean cerrada = integranteLista.getProyecto().getVersion().isCierre();
+            if((keyword == null || keyword.isEmpty()  || nombre.contains(keyword)) && !fecha.isAfter(fechaCierre) && !cerrada){
+                ids.add(integranteLista.getProyecto().getVersion().getId());
             }
         }
 
@@ -50,10 +51,11 @@ public class VersionServiceImpl implements VersionService {
         List<Integer> ids = new ArrayList<>();
 
         for(Integrante integranteLista: inscripciones){
-            String nombre = integranteLista.getProyecto().getNombre();
+            String nombre = integranteLista.getProyecto().getVersion().getFeria().getNombre();
             LocalDate fechaCierre = integranteLista.getProyecto().getVersion().getFechaCierre();
-            if((keyword == null || keyword.isEmpty()  || nombre.contains(keyword)) && fecha.isAfter(fechaCierre)){
-                ids.add(integranteLista.getProyecto().getId());
+            boolean cerrada = integranteLista.getProyecto().getVersion().isCierre();
+            if((keyword == null || keyword.isEmpty()  || nombre.contains(keyword)) && (fecha.isAfter(fechaCierre) || cerrada)){
+                ids.add(integranteLista.getProyecto().getVersion().getId());
             }
         }
 

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ferias Finalizadas</title>
+    <title>Ferias Inscritas</title>
     <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
     <link rel="stylesheet" th:href="@{/css/cuadricula.css}" />
     <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet" />
@@ -18,12 +18,12 @@
     <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
     <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
     <div class="contenido">
-        <h2 class="titulo">Ferias Finalizadas</h2>
+        <h2 class="titulo">Ferias Inscritas</h2>
         <div th:if="${#lists.isEmpty(versiones)}" class="noFerias">
             <h3 class="no-ferias-creadas">No se han creado ferias.
         </div>
         <div th:if="${not #lists.isEmpty(versiones)}" class="ferias-creadas">
-            <form class="buscador" th:action="@{/version/ferias_finalizadas/search}" method="get">
+            <form class="buscador" th:action="@{/version/ferias_inscritas/search}" method="get">
                 <div class="busqueda">
                     <input class="texto-buscar" type="text" name="keyword" placeholder="Ingrese su consulta"/>
                 </div>

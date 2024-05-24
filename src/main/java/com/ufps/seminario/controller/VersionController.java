@@ -176,9 +176,9 @@ public class VersionController {
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             List<Version> versiones = versionService.obtenerVersionesPorIntegranteYDisponibles(username, keyword, LocalDate.now());
             model.addAttribute("versiones", versiones);
-            return "version"; //Luego miro esto
+            return "feriasInscritas"; //Luego miro esto
         } catch (Exception e) {
-            return "redirect:/version";
+            return "redirect:/";
         }
     }
 
