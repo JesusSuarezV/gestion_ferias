@@ -1,74 +1,157 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Proyecto</title>
-    <link rel="stylesheet" href="../css/cuadricula.css">
+    <link rel="stylesheet" th:href="@{/css/cuadricula.css}">
     <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet">
-    <link rel="stylesheet" href="../css/styleProyecto.css">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="stylesheet" th:href="@{/css/registrarProyecto.css}">
 </head>
 <body>
 <div class="contenedor">
-    <iframe class="header" src="../views/navbar.html"></iframe>
-    <iframe class="menu" src="../views/menu.html"></iframe>
+    <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
+    <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
     <div class="contenido">
-        <h2 class="titulo">Registrar Proyecto</h2>
-        <div class="registrarProyecto">
-            <div class="nombreProyecto">
-                <label for="nombreProyecto">Nombre del proyecto:</label>
-                <input type="text" name="nombreProyecto" id="nombreProyecto" required>
-            </div>
-            <div class="descripcion">
-                <label for="descripcion">Descripcion:</label>
-                <input type="text" name="descripcion" id="descripcion" required>
-            </div>
-            <div class="eventoInscrito">
-                <label for="eventoInscrito">Evento Inscrito</label>
-                <input type="text" name="eventoInscrito" id="eventoInscrito" required>
-            </div>
-            <div class="asignatura">
-                <label for="asignatura">Asignatura:</label>
-                <input type="text" name="asignatura" id="asignatura" required>
-            </div>
-            <div class="semillero">
-                <label for="semillero">Semillero:</label>
-                <input type="text" name="semillero" id="semillero" required>
-            </div>
-            <div class="areaEstudio">
-                <label for="areaEstudio">Áreas de estudio:</label>
-                <input type="text" name="areaEstudio" id="areaEstudio" required>
-            </div>
-            <div class="urlVideo">
-                <label for="url">URL video:</label>
-                <input type="text" name="url" id="url">
-            </div>
-            <div class="archivoProyecto">
-                <label for="archivo">Archivo proyecto:</label>
-                <input type="file" name="archivo" id="archivo">
-                <button class="examinar">Examinar</button>
-            </div>
-            <div class="integrante">
-                <label for="integrantes">Integrantes</label>
-                <button class="btnIntegrantes" id="btnIntegrante">Añadir Integrante</button>
-                <div class="modal_container" id="modal-container">
-                    <div class="modal">
-                        <h1>Correo del nuevo integrante:</h1>
-                        <input type="email" name="correoIntegrante" id="correoIntegrante">
-                        <div class="botones">
-                            <button id="cancelarBtnAgregar">Cancelar</button>
-                            <button id="agregarBtn">Agregar</button>
-                        </div>
-                    </div>
+        <form class="formulario" th:action="@{/version/{idVersion}/registrar(idVersion=${version.id})}" method="post" enctype="multipart/form-data">
+            <h2 class="titulo">Registrar Proyecto</h2>
+            <div class="editarProyecto">
+                <div class="nombreProyecto">
+                    <label for="nombre">Nombre del proyecto:</label>
+                    <textarea name="nombre" id="nombre" required></textarea>
+                </div>
+                <div class="descripcion">
+                    <label for="descripcion">Descripcion:</label>
+                    <textarea name="descripcion" id="descripcion" required></textarea>
+                </div>
+                <div class="objetivo">
+                    <label for="objetivos">Objetivo:</label>
+                    <textarea name="objetivos" id="objetivos" required></textarea>
+                </div>
+                <div class="urlVideo">
+                    <label for="url">URL video:</label>
+                    <input type="text" name="url" id="url">
+                </div>
+                <div class="archivoProyecto">
+                    <label for="archivoProyecto">Archivo proyecto:</label>
+                    <input type="file" name="archivoProyecto" id="archivoProyecto" accept="application/pdf">
+                </div>
+                <table class="integrante" id="integrantes">
+                    <tr>
+                        <td><label>Integrantes:</label></td>
+                        <td>
+                            <button type="button" class="btnIntegrantes" id="btnIntegrante" onclick="addIntegrante()">Añadir Integrante</button>
+                        </td>
+                    </tr>
+                </table>
+                <div class="area" th:if="${not #lists.isEmpty(areas)}">
+                    <label for="areasSelect">Areas:</label>
+                    <select id="areasSelect" >
+                        <option th:each="area : ${areas}" th:value="${area.id}" th:text="${area.nombre}"></option>
+                    </select>
+                    <button type="button" class="btnArea" id="btnArea" onclick="agregarArea()">Agregar área</button>
+                    <table id="areasSeleccionadas">
+
+                    </table>
+
                 </div>
             </div>
             <div class="botones">
                 <button id="cancelarBtn">Cancelar</button>
                 <button id="registrarBtn">Registrar</button>
             </div>
-        </div>
+        </form>
     </div>
 </div>
-<script src="../js/registro.js"></script>
+<script th:src="@{/js/registro.js}"></script>
+<script th:src="@{/js/menu.js}"></script>
+<script>
+    //Despliegue del menu principal
+    let listElements = document.querySelectorAll('.lista-item');
+
+    listElements.forEach(listElement => {
+        listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
+            listElement.classList.toggle('arrow'); //agrega la clase arrow
+            let menu = listElement.nextElementSibling;
+            menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+        });
+    });
+
+    //ejecutar funcion con click
+    document.getElementById('btn-open').addEventListener("click", open_close_menu);
+
+</script>
+<script>
+    //Se verifica que la extensión sea correcta.
+    document.getElementById('archivo').addEventListener('change', function(event) {
+        const fileInput = event.target;
+        const filePath = fileInput.value;
+        const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+
+        if (!allowedExtensions.exec(filePath)) {
+            alert("Por favor, seleccione un archivo de imagen válido.");
+            fileInput.value = '';
+            return false;
+        }
+    });
+</script>
+<script>
+    function agregarArea() {
+        let select = document.getElementById('areasSelect');
+        let selectedOption = select.options[select.selectedIndex];
+        let id = selectedOption.value;
+        let nombre = selectedOption.text;
+
+        let selectedAreas = document.getElementById('areasSeleccionadas');
+        let newArea = document.createElement('li');
+        newArea.textContent = nombre;
+        newArea.id = "area["+id+"]";
+
+        // Crear un botón para remover el área
+        let removeButton = document.createElement('button');
+        removeButton.textContent = 'Eliminar';
+        removeButton.type = 'button';
+        removeButton.class = 'btnArea';
+        removeButton.onclick = function() {
+            selectedAreas.removeChild(newArea);
+        };
+
+        newArea.appendChild(removeButton);
+        selectedAreas.appendChild(newArea);
+
+        // Agregar un campo oculto para enviar el ID al backend
+        let hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = "area["+id+"]";
+        hiddenInput.value = "area["+id+"]";
+        newArea.appendChild(hiddenInput);
+    }
+</script>
+<script type="text/javascript">
+    let integranteIndex = 0;
+    function addIntegrante() {
+        const areasDiv = document.getElementById('integrantes');
+        const newAreaDiv = document.createElement('tr');
+        newAreaDiv.id = "integrante["+integranteIndex+"]";
+        newAreaDiv.innerHTML = `
+            <td></td>
+            <td>
+                <input type="email" name="integrante[${integranteIndex}]">
+                <button type="button" class="btnClear" onclick="eliminarComponente2('integrante[${integranteIndex}]')">
+                    X
+                </button><br>
+            </td>
+        `;
+        areasDiv.appendChild(newAreaDiv);
+        integranteIndex++;
+    }
+    function eliminarComponente2(id) {
+        var componente = document.getElementById(id);
+        if (componente) {
+            componente.remove();
+        }
+    }
+</script>
 </body>
 </html>

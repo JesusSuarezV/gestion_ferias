@@ -1,5 +1,6 @@
 package com.ufps.seminario.service;
 
+import com.ufps.seminario.entity.Integrante;
 import com.ufps.seminario.entity.TokenUsuario;
 
 public interface TokenService {

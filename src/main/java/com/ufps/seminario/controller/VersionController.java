@@ -46,6 +46,12 @@ public class VersionController {
     @Autowired
     CriterioService criterioService;
 
+    @Autowired
+    TokenService tokenService;
+
+    @Autowired
+    TokenIntegranteService tokenIntegranteService;
+
     @GetMapping("/{idVersion}")
     public String verVersion(Model model, @PathVariable int idVersion) {
         try {
@@ -69,10 +75,12 @@ public class VersionController {
             model.addAttribute("username", username);
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             Version version = versionService.obtenerVersion(idVersion);
+            List<Area> areas = areaService.obtenerAreasPorFeria(version.getFeria());
             model.addAttribute("version", version);
-            return "version"; //Luego miro esto
+            model.addAttribute("areas", areas);
+            return "registrarProyecto"; //Luego miro esto
         } catch (Exception e) {
-            return "redirect:/version";
+            return "redirect:/version/"+idVersion;
         }
     }
 
@@ -97,7 +105,6 @@ public class VersionController {
                 if (nombre != null && !nombre.isEmpty()) {
                     if (llave.startsWith("integrante")) { //Crear Integrante
                         Integrante integrante = new Integrante();
-                        integrante.setEnabled(true); //OJO esto toca mirarlo con TOKEN
                         integrante.setCorreoRegistro(nombre);
                         try {
                             Usuario usuario = usuarioService.obtenerUsuarioPorUsername(nombre);
@@ -106,9 +113,11 @@ public class VersionController {
                             //Nada xd
                         }
                         integrante.setProyecto(proyectoCreado);
-                        integranteService.guardarIntegrante(integrante);
+                        Integrante integranteCreado = integranteService.guardarIntegrante(integrante);
+                        tokenIntegranteService.generarToken(integranteCreado);
                     } else if (llave.startsWith("area")) { //Asignar Area
-                        int idArea = Integer.parseInt(llave.substring(5, llave.length() - 1));
+                        String pref = "area[";
+                        int idArea = Integer.parseInt(llave.substring(pref.length(), llave.length() - 1));
                         Area area = areaService.obtenerArea(idArea);
                         proyectoCreado.getAreas().add(area);
                     }
@@ -117,7 +126,8 @@ public class VersionController {
 
             //Agregar creador como integrante
             Integrante integrante = new Integrante();
-            integrante.setEnabled(true); //OJO esto toca mirarlo con TOKEN
+            integrante.setEnabled(true); // el creador no tiene token
+            System.out.println("correo: "+creadorProyecto.getUsername());
             integrante.setCorreoRegistro(creadorProyecto.getUsername());
             integrante.setUsuario(creadorProyecto);
             integrante.setProyecto(proyectoCreado);
@@ -126,9 +136,10 @@ public class VersionController {
             //Actualizar proyecto
             proyectoService.guardarProyecto(proyectoCreado);
 
-            return "version"; //Luego miro esto
+            return "redirect:/version/"+idVersion+"?exito";
         } catch (Exception e) {
-            return "redirect:/version";
+            System.out.println("Error "+e.getMessage());
+            return "redirect:/version/"+idVersion+"?error";
         }
     }
 

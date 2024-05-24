@@ -39,7 +39,7 @@
                 </table>
             </div>
             <div class="calificar">
-                <a th:href="'/version/'+${version.id} + '/registar'">
+                <a th:href="'/version/'+${version.id} + '/registrar'">
                     <div class="boton-registrar">
                         Registrar Proyecto
                     </div>
@@ -55,7 +55,7 @@
                 <h3>No se han registrado proyectos</h3>
             </div>
             <div th:if="${not #lists.isEmpty(proyectos)}" class="proyectos">
-                <div class="cuadro" th:each="proyecto: proyectos">
+                <div class="cuadro" th:each="proyecto: ${proyectos}">
                     <div class="cua">
                         <img class="icon" th:src="@{/img/proyectt.png}">
                         <div class="txt" th:text="${proyecto.nombre}"></div>

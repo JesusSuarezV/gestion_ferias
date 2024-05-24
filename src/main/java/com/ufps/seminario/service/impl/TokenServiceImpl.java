@@ -1,5 +1,7 @@
 package com.ufps.seminario.service.impl;
 
+import com.ufps.seminario.entity.Integrante;
+import com.ufps.seminario.entity.TokenIntegrante;
 import com.ufps.seminario.entity.TokenUsuario;
 import com.ufps.seminario.repository.TokenUsuarioRepository;
 import com.ufps.seminario.service.TokenService;
