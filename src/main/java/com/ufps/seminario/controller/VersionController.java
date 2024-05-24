@@ -273,9 +273,10 @@ public class VersionController {
             Version version = versionService.obtenerVersion(idVersion);
             List<Criterio> criterios = criterioService.obtenerCriterioPorVersion(version);
             model.addAttribute("criterios", criterios);
-            return "version"; //revisar
+            model.addAttribute("version", version);
+            return "editarRubrica";
         } catch (Exception e) {
-            return "lament"; //revisar
+            return "redirect:/version/"+idVersion;
         }
     }
 
@@ -289,9 +290,9 @@ public class VersionController {
             Version version = versionService.obtenerVersion(idVersion);
             for (Map.Entry<String, String> entry : requestParams.entrySet()) {
                 String llave = entry.getKey();
-                String valor = entry.getKey();
+                String valor = entry.getValue();
                 if (llave != null && !llave.isEmpty()) {
-                    String prefijoViejos = "criterio_item[";
+                        String prefijoViejos = "criterio_item[";
                     String prefijoNuevos = "item[";
 
                     String prefNivel = "criterio_nivel[";
@@ -301,7 +302,7 @@ public class VersionController {
                         int idCriterio = Integer.parseInt(llave.substring(prefijoViejos.length(), llave.length() - 1));
 
                         String llaveNivel = "criterio_nivel["
-                                + Integer.toString(idCriterio) + "]";
+                                + idCriterio + "]";
                         int valorNivel = Integer.parseInt(requestParams.get(llaveNivel));
 
                         Criterio criterio = criterioService.obtenerCriterioPorId(idCriterio);
@@ -323,12 +324,18 @@ public class VersionController {
                         criterio.setEnabled(true);
                         criterio.setVersion(version);
                         criterioService.guardarCriterio(criterio);
+                    }else if(llave.startsWith("version_criterio_delete")){
+                        String pref = "version_criterio_delete[";
+                        int idCriterio = Integer.parseInt(llave.substring(pref.length(), llave.length() - 1));
+                        Criterio criterio = criterioService.obtenerCriterioPorId(idCriterio);
+                        criterio.setEnabled(false);
+                        criterioService.guardarCriterio(criterio);
                     }
                 }
             }
-            return "version"; //revisar
+            return "redirect:/version/"+idVersion+"/rubrica/editar";
         } catch (Exception e) {
-            return "lament"; //revisar
+            return "redirect:/version/"+idVersion;
         }
     }
 
