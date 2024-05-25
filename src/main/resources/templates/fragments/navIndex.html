@@ -2,7 +2,7 @@
     <nav class="nav-menu"> <!--Div de la barra de navegacion-->
         <a>Logo o nombre</a>
         <ul class="lista-nav">
-            <li><a href="/eventos" >Ferias</a></li>
+            <li><a href="/eventos/search" >Ferias</a></li>
             <li th:if="${role == 0}"><a href="/Iniciar_Sesion">Entrar</a></li>
             <li th:if="${role != 0}"><a href="/logout">Cerrar Sesión</a></li>
         </ul>

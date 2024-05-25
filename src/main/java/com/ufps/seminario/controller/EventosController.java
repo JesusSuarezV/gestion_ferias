@@ -58,7 +58,7 @@ public class EventosController {
 
     @GetMapping("/{idVersion}/proyectos")
     public String verProyectos(@PathVariable int idVersion){
-        return "redirect:/eventos/"+idVersion+"/proyectos";
+        return "redirect:/eventos/"+idVersion+"/proyectos/search";
     }
 
     @GetMapping("/{idVersion}/proyectos/search")
@@ -77,7 +77,7 @@ public class EventosController {
             model.addAttribute("proyectos", proyectos);
             return "verProyectosIndex";
         } catch (Exception e) {
-            return "redirect:/eventos";
+            return "redirect:/eventos/search";
         }
     }
 
