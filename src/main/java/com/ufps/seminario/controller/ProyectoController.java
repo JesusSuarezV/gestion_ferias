@@ -165,9 +165,9 @@ public class ProyectoController {
             Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
             proyecto.setEnabled(false);
             proyectoService.guardarProyecto(proyecto);
-            return "redirect:/mis_proyectos";
+            return "redirect:/proyecto/mis_proyectos";
         }catch(Exception e){
-            return "redirect:/mis_proyectos";
+            return "redirect:/proyecto/mis_proyectos";
         }
     }
 
