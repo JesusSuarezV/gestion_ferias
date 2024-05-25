@@ -88,7 +88,8 @@ public class VersionServiceImpl implements VersionService {
         for(Version version: versiones){
             LocalDate fechaLimite = version.getFechaLimite();
             String nombre = version.getFeria().getNombre();
-            if((keyword == null || keyword.isEmpty()  || nombre.toLowerCase().contains(keyword.toLowerCase())) && !now.isAfter(fechaLimite)){
+            boolean cerrada = version.isCierre();
+            if((keyword == null || keyword.isEmpty()  || nombre.toLowerCase().contains(keyword.toLowerCase())) && (!now.isAfter(fechaLimite) && !cerrada)){
                 versionesDisponibles.add(version);
             }
         }
