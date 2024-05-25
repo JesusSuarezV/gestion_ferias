@@ -96,6 +96,7 @@ public class VersionController {
             proyecto.setArchivo(archivoProyecto.getBytes());
             proyecto.setVersion(version);
             proyecto.setFechaRegistro(LocalDate.now());
+            proyecto.setEnabled(true);
             Proyecto proyectoCreado = proyectoService.guardarProyecto(proyecto);
 
             //Asignar areas y crear integrantes

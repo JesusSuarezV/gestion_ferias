@@ -45,7 +45,7 @@ public class ProyectoServiceImpl implements ProyectoService {
         for(Integrante integrante_proyecto: integrantes_proyecto){
             LocalDate fechaCierre = integrante_proyecto.getProyecto().getVersion().getFechaCierre();
             LocalDate now = LocalDate.now();
-            if(!now.isAfter(fechaCierre)){
+            if(!now.isAfter(fechaCierre) && integrante_proyecto.getProyecto().isEnabled()){
                 ids.add(integrante_proyecto.getProyecto().getId());
             }
         }
@@ -59,7 +59,7 @@ public class ProyectoServiceImpl implements ProyectoService {
         for(Integrante integrante_proyecto: integrantes_proyecto){
             LocalDate fechaCierre = integrante_proyecto.getProyecto().getVersion().getFechaCierre();
             LocalDate now = LocalDate.now();
-            if(now.isAfter(fechaCierre)){
+            if(now.isAfter(fechaCierre) && integrante_proyecto.getProyecto().isEnabled()){
                 ids.add(integrante_proyecto.getProyecto().getId());
             }
         }
@@ -76,7 +76,8 @@ public class ProyectoServiceImpl implements ProyectoService {
         List<Integrante> integrantes_proyecto =  integranteRepository.findByCorreoRegistro(correo);
         List<Integer> ids = new ArrayList<>();
         for(Integrante integrante_proyecto: integrantes_proyecto){
-            ids.add(integrante_proyecto.getProyecto().getId());
+            if(integrante_proyecto.getProyecto().isEnabled())
+                ids.add(integrante_proyecto.getProyecto().getId());
         }
         return obtenerProyectosPorIdsOrdenadoPorFechaRegistro(ids);
     }
