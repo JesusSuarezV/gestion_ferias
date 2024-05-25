@@ -37,7 +37,7 @@
                     <form th:action="@{/proyecto/{idProyecto}/eliminar(idProyecto=${proyecto.id})}" method="post" enctype="multipart/form-data">
                         <button class="eliminar" >Eliminar</button>
                     </form>
-                    <a th:href="'proyecto/' + ${proyecto.id} + '/editar'"><button type="button" class="editar">Editar</button></a>
+                    <a th:href="'/proyecto/' + ${proyecto.id} + '/editar'"><button type="button" class="editar">Editar</button></a>
                 </div>
             </div>
         </div>

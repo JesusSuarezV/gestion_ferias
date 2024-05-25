@@ -49,6 +49,7 @@ public class ProyectoController {
 
             return "misProyectos";
         }catch (Exception e){
+            System.out.println(e.getMessage());
             return "redirect:/";
         }
     }
@@ -63,11 +64,13 @@ public class ProyectoController {
             model.addAttribute("proyecto", proyecto);
             List<Integrante> integrantes = integranteService.obtenerIntegrantePorProyecto(proyecto);
             List<Area> areas = proyecto.getAreas();
+            List<Area> areasVersion = areaService.obtenerAreasPorFeria(proyecto.getVersion().getFeria());
             model.addAttribute("integrantes", integrantes);
             model.addAttribute("areas", areas);
-            return "version";
+            model.addAttribute("areasVersion", areasVersion);
+            return "editarProyecto";
         }catch(Exception e){
-            return "redirect/mis_proyectos";
+            return "redirect:/mis_proyectos";
         }
     }
 
@@ -79,7 +82,16 @@ public class ProyectoController {
 
             String username = sesionService.getUsernameFromSession();
             Usuario creadorProyecto = usuarioService.obtenerUsuarioPorUsername(username);
+            Proyecto proyectoOriginal = proyectoService.obtenerProyectoPorId(idProyecto);
+            proyecto.setVersion(proyectoOriginal.getVersion());
             proyecto.setArchivo(archivoProyecto.getBytes());
+            proyecto.setId(idProyecto);
+            proyecto.setFechaRegistro(proyectoOriginal.getFechaRegistro());
+            proyecto.setJurados(proyectoOriginal.getJurados());
+            proyecto.setAreas(proyectoOriginal.getAreas());
+            proyecto.setCalificacion(proyectoOriginal.getCalificacion());
+            proyecto.setEnabled(proyectoOriginal.isEnabled());
+            proyecto.setEstado(proyectoOriginal.isEstado());
             proyecto = proyectoService.guardarProyecto(proyecto);
 
             //Asignar areas y crear integrantes
@@ -141,9 +153,9 @@ public class ProyectoController {
             //Actualizar proyecto
             proyectoService.guardarProyecto(proyecto);
 
-            return "version"; //Luego miro esto
+            return "redirect:/proyecto/mis_proyectos";
         }catch (Exception e){
-            return "redirect:/version";
+            return "redirect:/proyecto/mis_proyectos";
         }
     }
 

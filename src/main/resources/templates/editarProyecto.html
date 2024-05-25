@@ -3,35 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar Proyecto</title>
+    <title>Editar Proyecto</title>
     <link rel="stylesheet" th:href="@{/css/cuadricula.css}">
     <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
-    <link rel="stylesheet" th:href="@{/css/registrarProyecto.css}">
+    <link rel="stylesheet" th:href="@{/css/editarProyecto.css}">
 </head>
 <body>
 <div class="contenedor">
     <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
     <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
     <div class="contenido">
-        <form class="formulario" th:object="${proyecto}" th:action="@{/version/{idVersion}/registrar(idVersion=${version.id})}" method="post" enctype="multipart/form-data">
-            <h2 class="titulo">Registrar Proyecto</h2>
+        <form class="formulario" th:object="${proyecto}" th:action="@{/proyecto/{idProyecto}/editar(idProyecto=${proyecto.id})}" method="post" enctype="multipart/form-data">
+            <h2 class="titulo">Editar Proyecto</h2>
             <div class="editarProyecto">
                 <div class="nombreProyecto">
                     <label for="nombre">Nombre del proyecto:</label>
-                    <textarea name="nombre" id="nombre" required></textarea>
+                    <textarea name="nombre" id="nombre" th:text="${proyecto.nombre}" required></textarea>
                 </div>
                 <div class="descripcion">
                     <label for="descripcion">Descripcion:</label>
-                    <textarea name="descripcion" id="descripcion" required></textarea>
+                    <textarea name="descripcion" id="descripcion" th:text="${proyecto.descripcion}" required></textarea>
                 </div>
                 <div class="objetivo">
                     <label for="objetivos">Objetivo:</label>
-                    <textarea name="objetivos" id="objetivos" required></textarea>
+                    <textarea name="objetivos" id="objetivos" th:text="${proyecto.objetivos}" required></textarea>
                 </div>
                 <div class="urlVideo">
                     <label for="url">URL video:</label>
-                    <input type="text" name="url" id="url">
+                    <input type="text" name="url" id="url" th:value="${proyecto.url}">
                 </div>
                 <div class="archivoProyecto">
                     <label for="archivoProyecto">Archivo proyecto:</label>
@@ -44,26 +44,49 @@
                             <button type="button" class="btnIntegrantes" id="btnIntegrante" onclick="addIntegrante()">Añadir Integrante</button>
                         </td>
                     </tr>
+                    <tr th:each="integrante : ${integrantes}" th:id="'integrante_back[' + ${integrante.id} +']'">
+                        <td></td>
+                        <td>
+                            <input type="email" name="old" th:value="${integrante.correoRegistro}" disabled>
+                            <button type="button" class="btnClear" th:onclick="'eliminarIntegrante(\'' + ${integrante.id} + '\')'">
+                                X
+                            </button><br>
+                        </td>
+                    </tr>
                 </table>
-                <div class="area" th:if="${not #lists.isEmpty(areas)}">
+                <table id="integrantesEliminados">
+
+                </table>
+                <div class="area" th:if="${not #lists.isEmpty(areasVersion)}">
                     <label for="areasSelect">Areas:</label>
                     <select id="areasSelect" >
-                        <option th:each="area : ${areas}" th:value="${area.id}" th:text="${area.nombre}"></option>
+                        <option th:each="area : ${areasVersion}" th:value="${area.id}" th:text="${area.nombre}"></option>
                     </select>
                     <button type="button" class="btnArea" id="btnArea" onclick="agregarArea()">Agregar área</button>
                     <table id="areasSeleccionadas">
+                        <tr th:each="area : ${areas}" th:id="'area_back[' + ${area.id} +']'">
+                            <td></td>
+                            <td>
+                                <li name="old" th:text="${area.nombre}"> </li>
+                                <button type="button" class="btnClear" th:onclick="'eliminarArea(\'' + ${area.id} + '\')'">
+                                    X
+                                </button><br>
+                            </td>
+                        </tr>
+                    </table>
+                    <table id="areasEliminadas">
 
                     </table>
-
                 </div>
             </div>
             <div class="botones">
-                <a th:href="'/version/' + ${version.id}"><button type="button" id="cancelarBtn">Cancelar</button></a>
+                <a href="/proyecto/mis_proyectos"><button type="button" id="cancelarBtn">Cancelar</button></a>
                 <button id="registrarBtn">Registrar</button>
             </div>
         </form>
     </div>
 </div>
+<script th:src="@{/js/editarProyecto.js}"></script>
 <script th:src="@{/js/registro.js}"></script>
 <script th:src="@{/js/menu.js}"></script>
 <script>
@@ -95,63 +118,6 @@
             return false;
         }
     });
-</script>
-<script>
-    function agregarArea() {
-        let select = document.getElementById('areasSelect');
-        let selectedOption = select.options[select.selectedIndex];
-        let id = selectedOption.value;
-        let nombre = selectedOption.text;
-
-        let selectedAreas = document.getElementById('areasSeleccionadas');
-        let newArea = document.createElement('li');
-        newArea.textContent = nombre;
-        newArea.id = "area["+id+"]";
-
-        // Crear un botón para remover el área
-        let removeButton = document.createElement('button');
-        removeButton.textContent = 'Eliminar';
-        removeButton.type = 'button';
-        removeButton.class = 'btnArea';
-        removeButton.onclick = function() {
-            selectedAreas.removeChild(newArea);
-        };
-
-        newArea.appendChild(removeButton);
-        selectedAreas.appendChild(newArea);
-
-        // Agregar un campo oculto para enviar el ID al backend
-        let hiddenInput = document.createElement('input');
-        hiddenInput.type = 'hidden';
-        hiddenInput.name = "area["+id+"]";
-        hiddenInput.value = "area["+id+"]";
-        newArea.appendChild(hiddenInput);
-    }
-</script>
-<script type="text/javascript">
-    let integranteIndex = 0;
-    function addIntegrante() {
-        const areasDiv = document.getElementById('integrantes');
-        const newAreaDiv = document.createElement('tr');
-        newAreaDiv.id = "integrante["+integranteIndex+"]";
-        newAreaDiv.innerHTML = `
-            <td></td>
-            <td>
-                <input type="email" name="integrante[${integranteIndex}]">
-                <button type="button" class="btnClear" onclick="eliminarComponente2('integrante[${integranteIndex}]')">
-                    X
-                </button><br>
-            </td>
-        `;
-        areasDiv.appendChild(newAreaDiv);
-        integranteIndex++;
-    }
-    function eliminarComponente2(id) {
-        var componente = document.getElementById(id);
-        if (componente) {
-            componente.remove();
-        }
-    }
 </script>
 </body>
 </html>
