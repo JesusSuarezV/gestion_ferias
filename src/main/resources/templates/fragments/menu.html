@@ -2,7 +2,7 @@
     <div class="user">
         <img class="imagen-user" th:src="@{/img/user.png}" alt="eventos">
         <div class="datos-user">
-            <a class="n-user">Nombre usuario</a>
+            <a class="n-user" th:text="${username}" >Nombre usuario</a>
             <a class="r-user">Rol usuario</a>
         </div>
     </div>

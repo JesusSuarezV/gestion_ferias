@@ -45,7 +45,7 @@ public class ProyectoServiceImpl implements ProyectoService {
         for(Integrante integrante_proyecto: integrantes_proyecto){
             LocalDate fechaCierre = integrante_proyecto.getProyecto().getVersion().getFechaCierre();
             LocalDate now = LocalDate.now();
-            if(!now.isAfter(fechaCierre)){
+            if(!now.isAfter(fechaCierre) && integrante_proyecto.getProyecto().isEnabled()){
                 ids.add(integrante_proyecto.getProyecto().getId());
             }
         }
@@ -59,7 +59,7 @@ public class ProyectoServiceImpl implements ProyectoService {
         for(Integrante integrante_proyecto: integrantes_proyecto){
             LocalDate fechaCierre = integrante_proyecto.getProyecto().getVersion().getFechaCierre();
             LocalDate now = LocalDate.now();
-            if(now.isAfter(fechaCierre)){
+            if(now.isAfter(fechaCierre) && integrante_proyecto.getProyecto().isEnabled()){
                 ids.add(integrante_proyecto.getProyecto().getId());
             }
         }
@@ -76,7 +76,8 @@ public class ProyectoServiceImpl implements ProyectoService {
         List<Integrante> integrantes_proyecto =  integranteRepository.findByCorreoRegistro(correo);
         List<Integer> ids = new ArrayList<>();
         for(Integrante integrante_proyecto: integrantes_proyecto){
-            ids.add(integrante_proyecto.getProyecto().getId());
+            if(integrante_proyecto.getProyecto().isEnabled())
+                ids.add(integrante_proyecto.getProyecto().getId());
         }
         return obtenerProyectosPorIdsOrdenadoPorFechaRegistro(ids);
     }
@@ -89,5 +90,17 @@ public class ProyectoServiceImpl implements ProyectoService {
     @Override
     public List<Proyecto> obtenerProyectoPorJurado(Usuario usuario) {
         return List.of();
+    }
+
+    @Override
+    public List<Proyecto> obtenerProyectosPorVersionYPalabra(Version version, String keyword) {
+        List<Proyecto> proy = obtenerProyectosPorVersion(version);
+        List<Proyecto> proyectos = new ArrayList<>();
+        for(Proyecto proyecto: proy){
+            if(keyword == null || keyword.isEmpty() || proyecto.getNombre().contains(keyword)){
+                proyectos.add(proyecto);
+            }
+        }
+        return proyectos;
     }
 }

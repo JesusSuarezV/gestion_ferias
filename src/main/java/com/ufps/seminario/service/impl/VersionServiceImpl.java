@@ -36,7 +36,7 @@ public class VersionServiceImpl implements VersionService {
             String nombre = integranteLista.getProyecto().getVersion().getFeria().getNombre();
             LocalDate fechaCierre = integranteLista.getProyecto().getVersion().getFechaCierre();
             boolean cerrada = integranteLista.getProyecto().getVersion().isCierre();
-            if((keyword == null || keyword.isEmpty()  || nombre.contains(keyword)) && !fecha.isAfter(fechaCierre) && !cerrada){
+            if((keyword == null || keyword.isEmpty()  || nombre.toLowerCase().contains(keyword.toLowerCase())) && !fecha.isAfter(fechaCierre) && !cerrada){
                 ids.add(integranteLista.getProyecto().getVersion().getId());
             }
         }
@@ -54,7 +54,7 @@ public class VersionServiceImpl implements VersionService {
             String nombre = integranteLista.getProyecto().getVersion().getFeria().getNombre();
             LocalDate fechaCierre = integranteLista.getProyecto().getVersion().getFechaCierre();
             boolean cerrada = integranteLista.getProyecto().getVersion().isCierre();
-            if((keyword == null || keyword.isEmpty()  || nombre.contains(keyword)) && (fecha.isAfter(fechaCierre) || cerrada)){
+            if((keyword == null || keyword.isEmpty()  || nombre.toLowerCase().contains(keyword.toLowerCase())) && (fecha.isAfter(fechaCierre) || cerrada)){
                 ids.add(integranteLista.getProyecto().getVersion().getId());
             }
         }
@@ -88,7 +88,8 @@ public class VersionServiceImpl implements VersionService {
         for(Version version: versiones){
             LocalDate fechaLimite = version.getFechaLimite();
             String nombre = version.getFeria().getNombre();
-            if((keyword == null || keyword.isEmpty()  || nombre.contains(keyword)) && !now.isAfter(fechaLimite)){
+            boolean cerrada = version.isCierre();
+            if((keyword == null || keyword.isEmpty()  || nombre.toLowerCase().contains(keyword.toLowerCase())) && (!now.isAfter(fechaLimite) && !cerrada)){
                 versionesDisponibles.add(version);
             }
         }

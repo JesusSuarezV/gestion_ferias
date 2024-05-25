@@ -159,6 +159,18 @@ public class ProyectoController {
         }
     }
 
+    @PostMapping("/{idProyecto}/eliminar")
+    public String eliminarProyecto(Model model, @PathVariable int idProyecto){
+        try{
+            Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
+            proyecto.setEnabled(false);
+            proyectoService.guardarProyecto(proyecto);
+            return "redirect:/proyecto/mis_proyectos";
+        }catch(Exception e){
+            return "redirect:/proyecto/mis_proyectos";
+        }
+    }
+
     @GetMapping("/{idProyecto}")
     public String verProyecto(Model model, @PathVariable int idProyecto){
         try{

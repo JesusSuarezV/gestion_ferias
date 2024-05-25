@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/verEventosIndex.css}">
+    <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
+    <title>Ver ferias</title>
+</head>
+
+<body>
+<div class="navegacion" th:insert="~{@{/fragments/navIndex.html}}"></div>
+<div class="contenedor">
+    <form class="busqueda" th:action="@{/eventos/search}" method="get">
+        <div class="busqueda">
+            <input class="texto-buscar" type="text" name="keyword" placeholder="Ingrese su consulta"/>
+        </div>
+        <div class="imagen-lupa">
+            <button><img th:src="@{/img/search_47686.png}" alt=""></button>
+        </div>
+    </form>
+    <h1 class="titulo">Ferias activas</h1>
+    <div class="ferias">
+        <div class = "info-contenido" th:if="${#lists.isEmpty(versiones)}">
+            <h3 class="aviso">No hay eventos abiertos</h3>
+        </div>
+        <div class="cuadro" th:each="version : ${versiones}" th:if="${not #lists.isEmpty(versiones)}">
+            <div class="imagen">
+                <img th:src="@{/ferias/imagen/{idFeria}(idFeria=${version.feria.id})}" alt="">
+            </div>
+            <div class="info-feria">
+                <h3><span th:text="${version.feria.nombre}"></span> V<span th:text="${version.numero}"></span></h3>
+                <a th:href="'/eventos/'+ ${version.id} + '/proyectos'"><button class="boton-ver-feria">Ver Evento</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/nav-index.js}"></script>
+</body>
+
+</html>

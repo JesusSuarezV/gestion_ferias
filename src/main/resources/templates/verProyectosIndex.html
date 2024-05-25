@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/verEventosIndex.css}">
+    <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
+    <title>Ver proyectos</title>
+</head>
+
+<body>
+<div class="navegacion" th:insert="~{@{/fragments/navIndex.html}}"></div>
+<div class="contenedor">
+    <form class="busqueda" th:action="@{/eventos/{idVersion}/proyectos/search(idVersion=${version.id})}" method="get">
+        <div class="busqueda">
+            <input class="texto-buscar" type="text" name="keyword" placeholder="Ingrese su consulta"/>
+        </div>
+        <div class="imagen-lupa">
+            <button><img th:src="@{/img/search_47686.png}" alt=""></button>
+        </div>
+    </form>
+    <div class="contenedor-2">
+        <div class="proyectos">
+            <h1 class="titulo">Proyectos inscritos</h1>
+            <div class="rectangulo" th:each="proyecto : ${proyectos}">
+                <p class="texto" th:text="${proyecto.nombre}">
+                    Plataforma Laboral Icarus: Aplicación web de
+                    gestión de bolsa de empleo para inmigrantes
+                    venezolanos en la ciudad de Cúcuta</p>
+            </div>
+            <div class="paginacion" id="paginacion"></div>
+        </div>
+        <div class="cuadro-descripcion">
+            <div class="descripcion">
+                <div class="titulo-feria">
+                    <h3><span th:text="${version.feria.nombre}"></span> V<span th:text="${version.numero}"></span></h3>
+                </div>
+                <div class="descripcion-feria">
+                    <p th:text="${version.feria.descripcion}">¡Bienvenidos a nuestra Feria de Proyectos de Aula! Aquí, nuestros brillantes estudiantes
+                        universitarios exhiben sus proyectos desarrollados en diversas materias. Desde innovadoras
+                        soluciones tecnológicas hasta investigaciones punteras, esta feria es un escaparate de
+                        creatividad y conocimiento. Únete a nosotros para explorar el ingenio y el esfuerzo de
+                        nuestros futuros líderes en un ambiente de aprendizaje dinámico e inspirador. ¡No te lo
+                        pierdas!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/nav-index.js}"></script>
+<script th:src="@{/js/paginacionIndex.js}"></script>
+</body>
+
+</html>
