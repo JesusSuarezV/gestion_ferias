@@ -91,10 +91,12 @@ h3 {
 }
 
 .ferias {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 30px;
+    box-sizing: border-box;
+    padding: 10px;
 }
 
 .rectangulo {
@@ -104,10 +106,11 @@ h3 {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-around;
     margin-top: 20px;
-    width: 80%;
-    height: 190px;
+    width: 500px;
+    padding: 5px;
+    height: 150px;
 }
 
 .nombre {
