@@ -20,7 +20,7 @@
     <div class="contenido">
         <h2 class="titulo">Ferias Finalizadas</h2>
         <div th:if="${#lists.isEmpty(versiones)}" class="noFerias">
-            <h3 class="no-ferias-creadas">No se han creado ferias.></h3>
+            <h3 class="no-ferias-creadas">No se han creado ferias.</h3>
         </div>
         <div th:if="${not #lists.isEmpty(versiones)}" class="ferias-creadas">
             <form class="buscador" th:action="@{/version/ferias_finalizadas/search}" method="get">

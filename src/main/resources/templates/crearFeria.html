@@ -12,84 +12,90 @@
 </head>
 
 <body>
-<div class="contenedor" id="contenedor">
-    <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
-    <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
-    <div class="contenido">
-        <form class="formulario" th:action="@{/ferias/crear}" th:object="${feria}" method="post" enctype="multipart/form-data">
-            <h2 class="titulo">Crear Feria</h2>
-            <div class="crearFeria">
-                <div class="nombreFeria">
-                    <label for="nombre">Nombre de la feria:</label>
-                    <input type="text" name="nombre" id="nombre" required>
+    <div class="contenedor" id="contenedor">
+        <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
+        <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
+        <div class="contenido">
+            <form class="formulario" th:action="@{/ferias/crear}" th:object="${feria}" method="post"
+                enctype="multipart/form-data">
+                <h2 class="titulo">Crear Feria</h2>
+                <div class="crearFeria">
+                    <div class="item">
+                        <div class="item-texto">
+                            <label for="nombre">Nombre de la feria:</label>
+                        </div>
+                        <input type="text" name="nombre" id="nombre" required>
+                    </div>
+                    <div class="item">
+                        <div class="item-texto">
+                            <label for="descripcion">Descripcion de la feria:</label>
+                        </div>
+                        <textarea name="descripcion" id="descripcion" required></textarea>
+                    </div>
+                    <div class="item archivo-examinar">
+                        <div class="item-texto">
+                            <label for="imagenFeria">Imagen de la feria:</label>
+                        </div>
+                        <input type="file" name="imagenFeria" id="imagenFeria" accept="image/*">
+                    </div>
+                    <div class="area">
+                        <label>Areas:</label>
+                        <table class="area-tabla" id="areas">
+                            <tr>
+                                <td>
+                                    <button type="button" class="btnArea" id="btnArea" onclick="addArea()">Añadir
+                                        area</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
-                <div class="descripcion">
-                    <label for="descripcion">Descripcion de la feria:</label>
-                    <textarea name="descripcion" id="descripcion" required></textarea>
+                <div class="botones">
+                    <a href="/ferias/mis_ferias"><button type="button" id="cancelarBtn">Cancelar</button></a>
+                    <button id="registrarBtn">Registrar</button>
                 </div>
-                <div class="archivoProyecto">
-                    <label for="imagenFeria">Imagen de la feria:</label>
-                    <input type="file" name="imagenFeria" id="imagenFeria" accept="image/*">
-                </div>
-                <div class="area">
-                    <table id="areas">
-                        <tr>
-                            <td><label>Areas:</label></td>
-                            <td>
-                                <button type="button" class="btnArea" id="btnArea" onclick="addArea()">Añadir area</button>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div class="botones">
-                <a href="/ferias/mis_ferias"><button type="button" id="cancelarBtn">Cancelar</button></a>
-                <button id="registrarBtn">Registrar</button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
-<script th:src="@{/js/registro.js}"></script>
+    <script th:src="@{/js/registro.js}"></script>
+    <script th:src="@{/js/menu.js}"></script>
+    <script>
+        //Despliegue del menu principal
+        let listElements = document.querySelectorAll('.lista-item');
 
-<script th:src="@{/js/menu.js}"></script>
-<script>
-    //Despliegue del menu principal
-    let listElements = document.querySelectorAll('.lista-item');
-
-    listElements.forEach(listElement => {
-        listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
-            listElement.classList.toggle('arrow'); //agrega la clase arrow
-            let menu = listElement.nextElementSibling;
-            menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+        listElements.forEach(listElement => {
+            listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
+                listElement.classList.toggle('arrow'); //agrega la clase arrow
+                let menu = listElement.nextElementSibling;
+                menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+            });
         });
-    });
 
-    //ejecutar funcion con click
-    document.getElementById('btn-open').addEventListener("click", open_close_menu);
+        //ejecutar funcion con click
+        document.getElementById('btn-open').addEventListener("click", open_close_menu);
 
-</script>
-<script>
-    //Se verifica que la extensión sea correcta.
-    document.getElementById('archivo').addEventListener('change', function(event) { //Este ID es del boton, entonces si se cambia arriba, se debe cambiar aquí también
-        const fileInput = event.target;
-        const filePath = fileInput.value;
-        const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+    </script>
+    <script>
+        //Se verifica que la extensión sea correcta.
+        document.getElementById('archivo').addEventListener('change', function (event) { //Este ID es del boton, entonces si se cambia arriba, se debe cambiar aquí también
+            const fileInput = event.target;
+            const filePath = fileInput.value;
+            const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
 
-        if (!allowedExtensions.exec(filePath)) {
-            alert("Por favor, seleccione un archivo de imagen válido.");
-            fileInput.value = '';
-            return false;
-        }
-    });
-</script>
-<script type="text/javascript">
-    let areaIndex = 0;
-    function addArea() {
-        const areasDiv = document.getElementById('areas');
-        const newAreaDiv = document.createElement('tr');
-        newAreaDiv.id = "area["+areaIndex+"]";
-        newAreaDiv.innerHTML = `
-            <td></td>
+            if (!allowedExtensions.exec(filePath)) {
+                alert("Por favor, seleccione un archivo de imagen válido.");
+                fileInput.value = '';
+                return false;
+            }
+        });
+    </script>
+    <script type="text/javascript">
+        let areaIndex = 0;
+        function addArea() {
+            const areasDiv = document.getElementById('areas');
+            const newAreaDiv = document.createElement('tr');
+            newAreaDiv.id = "area[" + areaIndex + "]";
+            newAreaDiv.innerHTML = `
             <td>
                 <input type="text" name="area[${areaIndex}]">
                 <button type="button" class="btnClear" onclick="eliminarComponente2('area[${areaIndex}]')">
@@ -97,31 +103,31 @@
                 </button><br>
             </td>
         `;
-        areasDiv.appendChild(newAreaDiv);
-        areaIndex++;
-    }
-    function eliminarComponente(id) {
-        var componente = document.getElementById('['+id+']');
-        if (componente) {
-            componente.remove();
+            areasDiv.appendChild(newAreaDiv);
+            areaIndex++;
         }
-        const areasDiv = document.getElementById('areasEliminadas');
-        const newAreaDiv = document.createElement('tr');
-        newAreaDiv.id = "feria_area_delete[${id}]";
-        newAreaDiv.innerHTML = `
+        function eliminarComponente(id) {
+            var componente = document.getElementById('[' + id + ']');
+            if (componente) {
+                componente.remove();
+            }
+            const areasDiv = document.getElementById('areasEliminadas');
+            const newAreaDiv = document.createElement('tr');
+            newAreaDiv.id = "feria_area_delete[${id}]";
+            newAreaDiv.innerHTML = `
             <td>
                 <input type="hidden" name="feria_area_delete[${id}]" id="feria_area_delete[${id}]">
             </td>
         `;
-        areasDiv.appendChild(newAreaDiv);
-    }
-    function eliminarComponente2(id) {
-        var componente = document.getElementById(id);
-        if (componente) {
-            componente.remove();
+            areasDiv.appendChild(newAreaDiv);
         }
-    }
-</script>
+        function eliminarComponente2(id) {
+            var componente = document.getElementById(id);
+            if (componente) {
+                componente.remove();
+            }
+        }
+    </script>
 </body>
 
 </html>

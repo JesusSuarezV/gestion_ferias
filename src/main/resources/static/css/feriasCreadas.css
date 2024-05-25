@@ -1,8 +1,18 @@
+* {
+    text-decoration: none;
+    list-style: none;
+    font-family: 'League Spartan';
+}
+
 .titulo {
     width: 50%;
     margin-top: 40px;
     margin-left: 40px;
     color: #002948;
+}
+
+h3 {
+    color: #4F6E85;
 }
 
 .ferias {
@@ -12,6 +22,12 @@
     grid-gap: 30px;
     box-sizing: border-box;
     padding: 10px;
+}
+
+.noFerias{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .no-ferias-creadas {

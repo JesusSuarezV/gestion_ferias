@@ -166,3 +166,33 @@
 .list-arrow {
     margin-left: 10px;
 }
+
+/*Registro exitoso*/
+
+.ventanita {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 25%;
+    height: 30px;
+    padding: 5px;
+    border-radius: 10px;
+    color: white;
+    background-color: rgb(58, 141, 58);
+}
+
+.ventanita {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.ventanita .close{
+    cursor: pointer;
+    font-size: 25px;
+}
+
+.contenedor.active .ventana-emergente{
+    display: none;
+}
