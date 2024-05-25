@@ -50,13 +50,14 @@
 }
 
 .menu{
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     width: 100%;
     margin: 0;
     padding: 0;
+    background-color: #f7f7f7;
 }
 
 .imagen-user{
