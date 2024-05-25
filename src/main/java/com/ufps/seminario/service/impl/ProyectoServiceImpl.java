@@ -91,4 +91,16 @@ public class ProyectoServiceImpl implements ProyectoService {
     public List<Proyecto> obtenerProyectoPorJurado(Usuario usuario) {
         return List.of();
     }
+
+    @Override
+    public List<Proyecto> obtenerProyectosPorVersionYPalabra(Version version, String keyword) {
+        List<Proyecto> proy = obtenerProyectosPorVersion(version);
+        List<Proyecto> proyectos = new ArrayList<>();
+        for(Proyecto proyecto: proy){
+            if(keyword == null || keyword.isEmpty() || proyecto.getNombre().contains(keyword)){
+                proyectos.add(proyecto);
+            }
+        }
+        return proyectos;
+    }
 }

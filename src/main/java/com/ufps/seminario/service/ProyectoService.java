@@ -18,4 +18,6 @@ public interface ProyectoService {
 
     public List<Proyecto> obtenerProyectosPorIdsOrdenadoPorFechaRegistro(List<Integer> ids);
     public List<Proyecto> obtenerProyectoPorJurado(Usuario usuario);
+
+    public List<Proyecto> obtenerProyectosPorVersionYPalabra(Version version, String keyword);
 }
