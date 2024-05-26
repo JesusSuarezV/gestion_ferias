@@ -11,7 +11,7 @@
     <link rel="stylesheet" th:href="@{/css/viewProyect.css}" />
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
 </head>
-
+ 
 <body>
 <div class="contenedor" id="contenedor">
     <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
@@ -27,11 +27,7 @@
             <div class="cuadro" th:each="proyecto : ${proyectosActuales}">
                 <div class="cua">
                     <img class="icon" th:src="@{/img/proyectt.png}">
-                    <div class="txt" th:text="${proyecto.nombre}">
-                        Driven
-                        Learning: an experience of
-                        colaboration University
-                        and Secundary Schooll</div>
+                    <div class="txt" th:text="${proyecto.nombre}"></div>
                 </div>
                 <div class="botones">
                     <form th:action="@{/proyecto/{idProyecto}/eliminar(idProyecto=${proyecto.id})}" method="post" enctype="multipart/form-data">

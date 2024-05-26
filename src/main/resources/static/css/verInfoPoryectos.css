@@ -13,7 +13,7 @@
     flex-direction: column;
     align-items: center;
 }
-
+ 
 .tabla {
     width: 100%;
     text-align: left;
@@ -234,14 +234,14 @@ hr {
     box-shadow: 1px 1px 4px #002948;
     border-radius: 30px;
     padding: 20px;
-    width: 300px;
+    width: 240px;
     margin-top: 20px;
 }
 
 .proyectos {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
+    gap: 20px;
 }
 
 .icon {
