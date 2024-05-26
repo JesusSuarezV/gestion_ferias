@@ -1,11 +1,9 @@
 package com.ufps.seminario.controller;
 
+import com.ufps.seminario.entity.Integrante;
 import com.ufps.seminario.entity.Proyecto;
 import com.ufps.seminario.entity.Version;
-import com.ufps.seminario.service.ProyectoService;
-import com.ufps.seminario.service.SesionService;
-import com.ufps.seminario.service.UsuarioService;
-import com.ufps.seminario.service.VersionService;
+import com.ufps.seminario.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +30,9 @@ public class EventosController {
 
     @Autowired
     UsuarioService usuarioService;
+
+    @Autowired
+    IntegranteService integranteService;
 
     @GetMapping("/")
     public String verEventos(){
@@ -93,8 +94,10 @@ public class EventosController {
             }
             Version version = versionService.obtenerVersion(idVersion);
             Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
+            List<Integrante> integrantes = integranteService.obtenerIntegrantePorProyecto(proyecto);
             model.addAttribute("version", version);
             model.addAttribute("proyecto", proyecto);
+            model.addAttribute("integrantes", integrantes);
             return "verInformacionProyectoIndex";
         } catch (Exception e) {
             return "redirect:/eventos/"+idVersion+"/proyectos";
