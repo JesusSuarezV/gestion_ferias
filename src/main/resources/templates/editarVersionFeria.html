@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,127 +8,144 @@
     <link rel="stylesheet" th:href="@{/css/cuadricula.css}">
     <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
-    <link rel="stylesheet" th:href="@{/css/editarVersionFeria.css}">
+    <link rel="stylesheet" th:href="@{/css/crearVersionFeria.css}">
 </head>
+
 <body>
-<div class="contenedor">
-    <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
-    <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
-    <div class="contenido">
-        <form class="formulario" th:action="@{/version/{idVersion}/editar(idVersion=${version.id})}" th:object="${version}" method="post" enctype="multipart/form-data">
-            <h2 class="titulo">Editar Versión de la feria</h2>
-            <div class="crearVersionFeria">
-                <div class="grid-group">
-                    <div class="version">
-                        <label for="numero">Versión:</label>
-                        <input type="number" name="numero" id="numero" th:value="${version.numero}" required>
+    <div class="contenedor">
+        <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
+        <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
+        <div class="contenido">
+            <form class="formulario" th:action="@{/version/{idVersion}/editar(idVersion=${version.id})}"
+                th:object="${version}" method="post" enctype="multipart/form-data">
+                <h2 class="titulo">Editar Versión de la feria</h2>
+                <div class="crearVersionFeria">
+                    <div class="grid-group">
+                        <div class="item">
+                            <div class="version-texto">
+                                <label for="numero">Versión:</label>
+                            </div>
+                            <input type="number" name="numero" id="numero" th:value="${version.numero}" required>
+                        </div>
+                        <div class="item">
+                            <div class="version-texto">
+                                <label for="aprobacion">Puntaje mínimo para aprobar:</label>
+                            </div>
+                            <input type="number" name="aprobacion" id="aprobacion" th:value="${version.aprobacion}"
+                                required>
+                        </div>
+                        <div class="item">
+                            <div class="version-texto">
+                                <label for="fechaInicio">Fecha de Inicio:</label>
+                            </div>
+                            <input type="date" name="fechaInicio" id="fechaInicio" th:value="${version.fechaInicio}"
+                                required>
+                        </div>
+                        <div class="item">
+                            <div class="version-texto">
+                                <label for="fechaCierre">Fecha de fin:</label>
+                            </div>
+                            <input type="date" name="fechaCierre" id="fechaCierre" th:value="${version.fechaCierre}"
+                                required>
+                        </div>
+                        <div class="item">
+                            <div class="version-texto">
+                                <label for="fechaLimite">Fecha cierre de inscripciones:</label>
+                            </div>
+                            <input type="date" name="fechaLimite" id="fechaLimite" th:value="${version.fechaLimite}"
+                                required>
+                        </div>
                     </div>
-                    <div class="puntaje">
-                        <label for="aprobacion">Puntaje mínimo para aprobar:</label>
-                        <input type="number" name="aprobacion" id="aprobacion" th:value="${version.aprobacion}"  required>
-                    </div>
-                    <div class="fechaInicio">
-                        <label for="fechaInicio">Fecha de Inicio:</label>
-                        <input type="date" name="fechaInicio" id="fechaInicio" th:value="${version.fechaInicio}" required>
-                    </div>
-                    <div class="fechaFin">
-                        <label for="fechaCierre">Fecha de fin:</label>
-                        <input type="date" name="fechaCierre" id="fechaCierre" th:value="${version.fechaCierre}" required>
-                    </div>
-                    <div class="fechacierreInscripciones">
-                        <label for="fechaLimite">Fecha cierre de inscripciones:</label>
-                        <input type="date" name="fechaLimite" id="fechaLimite" th:value="${version.fechaLimite}" required>
-                    </div>
-                </div>
-                <div class="flex-group">
                     <div class="formatoProyecto">
                         <label for="formatoVersion">Formato del proyecto:</label>
                         <input type="file" name="formatoVersion" id="formatoVersion" accept="application/pdf">
                     </div>
-                    <table id="auspiciadores" class="auspiciador">
-                        <tr>
-                            <td><label>Auspiciadores:</label></td>
-                            <td><button type="button"  class="btnAuspiciador" id="btnAuspiciador" onclick="addAuspiciador()">Añadir Auspiciador</button></td>
-                        </tr>
-                        <tr th:each="auspiciador : ${auspiciadores}" th:id="'['+${auspiciador.id}+']'">
-                            <td></td>
-                            <td>
-                                <input type="text" th:name="'['+${auspiciador.id}+']'"  th:value="${auspiciador.nombre}">
-                                <button type="button" class="btnClear" th:onclick="'eliminarComponente(\'' +${auspiciador.id} + '\')'">
-                                    X
-                                </button><br>
-                            </td>
-                        </tr>
-                    </table>
-                    <div id="auspiciadoresEliminados">
-
+                    <div class="area">
+                        <label>Auspiciador:</label>
+                        <table class="area-tabla" id="areas">
+                            <tr>
+                                <td>
+                                    <button type="button" class="btnArea" id="btnArea" onclick="addAuspiciador()">Añadir
+                                        auspiciador</button>
+                                </td>
+                            </tr>
+                            <tr th:each="auspiciador : ${auspiciadores}" th:id="'['+${auspiciador.id}+']'">
+                                <td>
+                                    <input type="text" th:name="'['+${auspiciador.id}+']'"
+                                        th:value="${auspiciador.nombre}">
+                                    <button type="button" class="btnClear"
+                                        th:onclick="'eliminarComponente(\'' +${auspiciador.id} + '\')'">
+                                        X
+                                    </button><br>
+                                </td>
+                            </tr>
+                        </table>
+                        <div id="auspiciadoresEliminados"></div>
                     </div>
-                </div>
-            </div>
-            <div class="botones">
-                <button id="cancelarBtn">Cancelar</button>
-                <button id="registrarBtn">Registrar</button>
-            </div>
-        </form>
+                    <div class="botones">
+                        <button id="cancelarBtn">Cancelar</button>
+                        <button id="registrarBtn">Guardar</button>
+                    </div>
+            </form>
+        </div>
     </div>
-</div>
-<script th:src="@{/js/menu.js}"></script>
-<script>
-    //Despliegue del menu principal
-    let listElements = document.querySelectorAll('.lista-item');
+    <script th:src="@{/js/menu.js}"></script>
+    <script>
+        //Despliegue del menu principal
+        let listElements = document.querySelectorAll('.lista-item');
 
-    listElements.forEach(listElement => {
-        listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
-            listElement.classList.toggle('arrow'); //agrega la clase arrow
-            let menu = listElement.nextElementSibling;
-            menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+        listElements.forEach(listElement => {
+            listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
+                listElement.classList.toggle('arrow'); //agrega la clase arrow
+                let menu = listElement.nextElementSibling;
+                menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+            });
         });
-    });
 
-    //ejecutar funcion con click
-    document.getElementById('btn-open').addEventListener("click", open_close_menu);
+        //ejecutar funcion con click
+        document.getElementById('btn-open').addEventListener("click", open_close_menu);
 
-</script>
-<script>
-let areaIndex = 0;
-function addAuspiciador() {
-    const areasDiv = document.getElementById('auspiciadores');
-    const newAreaDiv = document.createElement('tr');
-    newAreaDiv.id = "auspiciadores["+areaIndex+"]";
-    newAreaDiv.innerHTML = `
-        <td></td>
-        <td>
-            <input type="text" name="auspiciadores[${areaIndex}]">
-            <button type="button" class="btnClear" onclick="eliminarComponente2('auspiciadores[${areaIndex}]')">
-                X
-            </button><br>
-        </td>
-    `;
-    areasDiv.appendChild(newAreaDiv);
-    areaIndex++;
-}
-function eliminarComponente(id) {
-    var componente = document.getElementById('['+id+']');
-    if (componente) {
-        componente.remove();
-    }
-    const areasDiv = document.getElementById('auspiciadoresEliminados');
-    const newAreaDiv = document.createElement('tr');
-    newAreaDiv.id = "version_auspiciadores_delete[${id}]";
-    newAreaDiv.innerHTML = `
+    </script>
+    <script>
+        let areaIndex = 0;
+        function addAuspiciador() {
+            const areasDiv = document.getElementById('areas');
+            const newAreaDiv = document.createElement('tr');
+            newAreaDiv.id = "auspiciadores[" + areaIndex + "]";
+            newAreaDiv.innerHTML = `
+            <td>
+                <input type="text" name="auspiciadores[${areaIndex}]">
+                <button type="button" class="btnClear" onclick="eliminarComponente2('auspiciadores[${areaIndex}]')">
+                    X
+                </button><br>
+            </td>
+        `;
+            areasDiv.appendChild(newAreaDiv);
+            areaIndex++;
+        }
+        function eliminarComponente(id) {
+            var componente = document.getElementById('[' + id + ']');
+            if (componente) {
+                componente.remove();
+            }
+            const areasDiv = document.getElementById('auspiciadoresEliminados');
+            const newAreaDiv = document.createElement('tr');
+            newAreaDiv.id = "version_auspiciadores_delete[${id}]";
+            newAreaDiv.innerHTML = `
         <td>
             <input type="hidden" name="version_auspiciadores_delete[${id}]" id="version_auspiciadores_delete[${id}]">
         </td>
     `;
-    areasDiv.appendChild(newAreaDiv);
-}
-function eliminarComponente2(id) {
-    var componente = document.getElementById(id);
-    if (componente) {
-        componente.remove();
-    }
-}
-</script>
-<script th:src="@{/js/registro.js}"></script>
+            areasDiv.appendChild(newAreaDiv);
+        }
+        function eliminarComponente2(id) {
+            var componente = document.getElementById(id);
+            if (componente) {
+                componente.remove();
+            }
+        }
+    </script>
+    <script th:src="@{/js/registro.js}"></script>
 </body>
+
 </html>
