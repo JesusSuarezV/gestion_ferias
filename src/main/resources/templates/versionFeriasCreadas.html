@@ -54,13 +54,10 @@
                                 <a th:href="'/version/' + ${version.id} + '/rubrica/editar'">
                                     <button class="editar">Editar Rubrica</button>
                                 </a>
-                                <form method="post"
-                                    th:action="@{/version/{idVersion}/eliminar(idVersion=${version.id})}"
-                                    enctype="multipart/form-data">
+                                <form method="post" th:action="@{/version/{idVersion}/eliminar(idVersion=${version.id})}" enctype="multipart/form-data">
                                     <button class="eliminar">Eliminar</button>
                                 </form>
-                                <form method="post" th:action="@{/version/{idVersion}/cerrar(idVersion=${version.id})}"
-                                    enctype="multipart/form-data">
+                                <form th:if="${!version.cierre} and ${!version.fechaCierre.isBefore(#temporals.createNow().toLocalDate())}" method="post" th:action="@{/version/{idVersion}/cerrar(idVersion=${version.id})}" enctype="multipart/form-data">
                                     <button class="cerrar">Cerrar Feria</button>
                                 </form>
                             </div>
