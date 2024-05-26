@@ -68,7 +68,7 @@ public class VersionServiceImpl implements VersionService {
         List<Version> versionesTerminadas = new ArrayList<>();
         for(Version version: versiones){
             String nombre = version.getFeria().getNombre();
-            if(keyword == null || keyword.isEmpty()  || nombre.toLowerCase().contains(keyword.toLowerCase())){
+            if((keyword == null || keyword.isEmpty()  || nombre.toLowerCase().contains(keyword.toLowerCase()) && version.isEnabled())){
                 versionesTerminadas.add(version);
             }
         }
