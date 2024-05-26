@@ -82,10 +82,10 @@
                         </table>
                         <div id="auspiciadoresEliminados"></div>
                     </div>
-                </div>
-                <div class="botones">
-                    <button id="cancelarBtn">Cancelar</button>
-                    <button id="registrarBtn">Guardar</button>
+                    <div class="botones">
+                        <a th:href="'/ferias/' + ${feria.id} + '/version'"><button type="button"  id="cancelarBtn">Cancelar</button></a>
+                        <button id="registrarBtn">Guardar</button>
+                    </div>
                 </div>
             </form>
         </div>
