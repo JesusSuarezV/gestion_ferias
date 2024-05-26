@@ -263,6 +263,7 @@ public class VersionController {
             }
             return "redirect:/ferias/"+feria.getId()+"/version";
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return "redirect:/version/"+idVersion+"/editar?error";
         }
     }

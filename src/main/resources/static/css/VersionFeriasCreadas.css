@@ -19,6 +19,21 @@
   flex-direction: column;
 }
 
+.no-ferias-creadas{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.noFerias{
+  width: 90%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+
 .foto-boton {
   display: flex;
   flex-direction: column;
@@ -29,6 +44,7 @@
   margin-top: 50px;
   margin-left: 40px;
   color: #002948;
+  width: 100%;
 }
 
 h3 {
