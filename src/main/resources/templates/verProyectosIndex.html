@@ -24,10 +24,11 @@
         <div class="proyectos">
             <h1 class="titulo">Proyectos inscritos</h1>
             <div class="rectangulo" th:each="proyecto : ${proyectos}">
-                <p class="texto" th:text="${proyecto.nombre}">
+                <a th:href="'/eventos/' + ${version.id} + '/proyectos/' + ${proyecto.id}"><p class="texto" th:text="${proyecto.nombre}">
                     Plataforma Laboral Icarus: Aplicación web de
                     gestión de bolsa de empleo para inmigrantes
                     venezolanos en la ciudad de Cúcuta</p>
+                </a>
             </div>
             <div class="paginacion" id="paginacion"></div>
         </div>
@@ -48,7 +49,6 @@
         </div>
     </div>
 </div>
-<script th:src="@{/js/nav-index.js}"></script>
 <script th:src="@{/js/paginacionIndex.js}"></script>
 </body>
 

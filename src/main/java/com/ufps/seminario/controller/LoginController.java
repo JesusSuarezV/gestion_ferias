@@ -42,7 +42,7 @@ public class LoginController {
     }
     @GetMapping("/Iniciar_Sesion")
     public String verLogin(){
-        return "login.html";
+        return "login";
     }
     @PostMapping("/Registrarse")
     public String registro(@ModelAttribute Usuario usuario){
