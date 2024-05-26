@@ -7,7 +7,7 @@
     align-items: center;
 }
 
-.navegacion-index-2{
+.navegacion-index-2{ 
     background-color: #4F6E85;
     height: 35px;
     display: flex;
@@ -88,6 +88,11 @@
 
 .datos-user a{
     padding-left: 10px;
+}
+
+.n-user{
+    width: 160px;
+    overflow-wrap: break-word;
 }
 
 .lista-principal{
