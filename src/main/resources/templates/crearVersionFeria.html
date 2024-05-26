@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/crearVersionFeria.css}">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
-</head>
+</head> 
 <body>
     <div class="contenedor">
         <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
@@ -18,24 +18,34 @@
                     <h2 class="titulo">Crear versión de la feria</h2>
                     <div class="crearVersionFeria">
                         <div class="grid-group">
-                            <div class="version">
-                                <label for="numero">Versión:</label>
+                            <div class="item">
+                                <div class="version-texto">
+                                    <label for="numero">Versión:</label>
+                                </div>
                                 <input type="number" name="numero" id="numero" required>
                             </div>
-                            <div class="puntaje">
-                                <label for="aprobacion">Puntaje mínimo para aprobar:</label>
+                            <div class="item">
+                                <div class="version-texto">
+                                    <label for="aprobacion">Puntaje mínimo para aprobar:</label>
+                                </div>
                                 <input type="number" name="aprobacion" id="aprobacion" required>
                             </div>
-                            <div class="fechaInicio">
-                                <label for="fechaInicio">Fecha de Inicio:</label>
+                            <div class="item">
+                                <div class="version-texto">
+                                    <label for="fechaInicio">Fecha de Inicio:</label>
+                                </div>
                                 <input type="date" name="fechaInicio" id="fechaInicio" required>
                             </div>
-                            <div class="fechaFin">
-                                <label for="fechaCierre">Fecha de fin:</label>
+                            <div class="item">
+                                <div class="version-texto">
+                                    <label for="fechaCierre">Fecha de fin:</label>
+                                </div>
                                 <input type="date" name="fechaCierre" id="fechaCierre" required>
                             </div>
-                            <div class="fechacierreInscripciones">
-                                <label for="fechaLimite">Fecha cierre de inscripciones:</label>
+                            <div class="item">
+                                <div class="version-texto">
+                                    <label for="fechaLimite">Fecha cierre de inscripciones:</label>
+                                </div>
                                 <input type="date" name="fechaLimite" id="fechaLimite" required>
                             </div>
                     </div>

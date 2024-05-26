@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +9,9 @@
     <link rel="stylesheet" th:href="@{/css/cuadricula.css}">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
     <link rel="stylesheet" th:href="@{/css/styleEvento.css}">
-    <script src="https://kit.fontawesome.com/43d3343120.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet">
 </head>
+
 <body>
     <div class="contenedor">
         <div class="header" th:include="@{/fragments/navbar.html}"></div>
@@ -18,28 +19,38 @@
         <div class="contenido">
             <h2 class="titulo">Crear Versión del Evento</h2>
             <div class="crearVersion">
-                <form th:action="@{'/Ferias/' + ${feria.id} +'/Versiones/Guardar_Version'}" method="post" enctype="multipart/form-data">
-                <div class="inputGroup">
-                    <label for="versionEvento">Versión del Evento:</label>
-                    <input class="version" type="number" id="versionEvento" name="versionEvento"  required>
-                    <label for="versionEvento">Puntaje minimo para aprobar:</label>
-                    <input class="version" type="number" id="puntaje" name="puntaje"  required>
-                </div>
-                <div class="inputGroup">
-                    <label for="fechaInicio">Fecha de Inicio:</label>
-                    <input class="fechaInput" type="date" id="fechaInicio" name="fechaInicio" required>
-                    <label for="fechaCierre">Fecha de Cierre:</label>
-                    <input class="fechaInput" type="date" id="fechaCierre" name="fechaCierre" required>
-                </div>
-                <div class="inputGroup">
-                    <label for="fechaLimite">Fecha limite de Inscripciones:</label>
-                    <input class="fechaInput" type="date" id="fechaLimite" name="fechaLimite" required>
-                </div>
-                <div class="inputGroup">
-                    <label for="formatoProyecto">Formato del Proyecto:</label>
-                    <input type="file" id="formatoProyecto" name="formatoProyecto" accept=".pdf,.doc,.docx">
-                    <button class="examinar" id="examinarFormato">Examinar</button>
-                </div>
+                <form th:action="@{'/Ferias/' + ${feria.id} +'/Versiones/Guardar_Version'}" method="post"
+                    enctype="multipart/form-data">
+                    <div class="inputGroup">
+                        <div class="item">
+                            <label for="versionEvento">Versión del Evento:</label>
+                            <input class="version" type="number" id="versionEvento" name="versionEvento" required>
+                        </div>
+                        <div class="item">
+                            <label for="versionEvento">Puntaje minimo para aprobar:</label>
+                            <input class="version" type="number" id="puntaje" name="puntaje" required>
+                        </div>
+                    </div>
+                    <div class="inputGroup">
+                        <div class="item">
+                            <label for="fechaInicio">Fecha de Inicio:</label>
+                            <input class="fechaInput" type="date" id="fechaInicio" name="fechaInicio" required>
+                        </div>
+                        <div class="item">
+                            <label for="fechaCierre">Fecha de Cierre:</label>
+                            <input class="fechaInput" type="date" id="fechaCierre" name="fechaCierre" required>
+                        </div>
+                    </div>
+                    <div class="inputGroup">
+                        <div class="item">
+                            <label for="fechaLimite">Fecha limite de Inscripciones:</label>
+                            <input class="fechaInput" type="date" id="fechaLimite" name="fechaLimite" required>
+                        </div>
+                    </div>
+                    <div class="inputGroup">
+                        <label for="formatoProyecto">Formato del Proyecto:</label>
+                        <input type="file" id="formatoProyecto" name="formatoProyecto" accept=".pdf,.doc,.docx">
+                    </div>
             </div>
             <div class="botones">
                 <button id="cancelarBtn">Cancelar</button>
@@ -48,4 +59,5 @@
         </div>
     </div>
 </body>
+
 </html>

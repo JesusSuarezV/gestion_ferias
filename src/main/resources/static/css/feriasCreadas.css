@@ -19,9 +19,9 @@ h3 {
     margin-top: 50px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 30px;
+    grid-gap: 10px;
     box-sizing: border-box;
-    padding: 10px;
+    margin-left: 20px ;
 }
 
 .noFerias{
@@ -39,12 +39,11 @@ h3 {
 
 .cuadro {
     height: 260px;
-    width: 360px;
+    width: 330px;
     background-color: #ECECEC;
     border-radius: 30px;
     box-shadow: #182835;
     overflow: hidden;
-    margin-left: 20px;
     border: #002948;
 }
 
@@ -57,18 +56,18 @@ h3 {
 
 .botones {
     display: flex;
-    /* Utiliza Flexbox para el contenedor */
     justify-content: space-between;
-    /* Espacio igual entre los botones */
     align-items: center;
 }
 
 .botones button {
     margin: 3px;
-    /* Espaciado entre los botones */
     padding: 10px 30px;
-    /* Espaciado interno de los botones */
     border: none;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .edit,
@@ -81,6 +80,7 @@ h3 {
     background-color: #002948;
     cursor: pointer;
     border-radius: 20px;
+    font-size: 18px;
 }
 
 .top {
@@ -104,7 +104,7 @@ h3 {
     border: none;
     border-radius: 20px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 20px;
 }
 
 .CrearEvento {
@@ -114,6 +114,5 @@ h3 {
     z-index: 999;
     display: flex;
     justify-content: center;
-    /* Centra horizontalmente */
     align-items: center;
 }

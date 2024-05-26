@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,64 +8,74 @@
     <link rel="stylesheet" th:href="@{/css/cuadricula.css}">
     <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
-    <link rel="stylesheet" th:href="@{/css/editarFeria.css}">
+    <link rel="stylesheet" th:href="@{/css/crearFeria.css}">
 </head>
+
 <body>
-<div class="contenedor">
-    <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
-    <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
-    <div class="contenido">
-        <form class="formulario" th:action="@{/ferias/{idFeria}/editar(idFeria=${feria.id})}" th:object="${feria}" method="post" enctype="multipart/form-data">
-            <h2 class="titulo">Editar Feria</h2>
-            <div class="editarFeria">
-                <div class="nombreFeria">
-                    <label for="nombre">Nombre de la feria:</label>
-                    <input type="text" name="nombre" id="nombre"  th:value="${feria.nombre}" required>
+    <div class="contenedor">
+        <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
+        <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
+        <div class="contenido">
+            <form class="formulario" th:action="@{/ferias/{idFeria}/editar(idFeria=${feria.id})}" th:object="${feria}"
+                method="post" enctype="multipart/form-data">
+                <h2 class="titulo">Editar Feria</h2>
+                <div class="crearFeria">
+                    <div class="item">
+                        <div class="item-texto">
+                            <label for="nombre">Nombre de la feria:</label>
+                        </div>
+                        <input type="text" name="nombre" id="nombre" th:value="${feria.nombre}" required>
+                    </div>
+                    <div class="item">
+                        <div class="item-texto">
+                            <label for="descripcion">Descripcion de la feria:</label>
+                        </div>
+                        <textarea name="descripcion" id="descripcion" th:text="${feria.descripcion}"
+                            required></textarea>
+                    </div>
+                    <div class="item archivo-examinar">
+                        <div class="item-texto">
+                            <label for="imagenFeria">Imagen de la feria:</label>
+                        </div>
+                        <input type="file" name="imagenFeria" id="imagenFeria" accept="image/*">
+                    </div>
+                    <div class="area">
+                        <label>Areas:</label>
+                        <table class="area-tabla" id="areas">
+                            <tr>
+                                <td>
+                                    <button type="button" class="btnArea" id="btnArea" onclick="addArea()">Añadir
+                                        area</button>
+                                </td>
+                            </tr>
+                            <tr th:each="area : ${areas}" th:id="'['+${area.id}+']'">
+                                <td>
+                                    <input type="text" th:name="'['+${area.id}+']'" th:value="${area.nombre}">
+                                    <button type="button" class="btnClear"
+                                        th:onclick="'eliminarComponente(\'' +${area.id} + '\')'">
+                                        X
+                                    </button><br>
+                                </td>
+                            </tr>
+                        </table>
+                        <table id="areasEliminadas">
+                        </table>
+                    </div>
                 </div>
-                <div class="descripcion">
-                    <label for="descripcion">Descripcion de la feria:</label>
-                    <textarea name="descripcion" id="descripcion" th:text="${feria.descripcion}" required></textarea>
+                <div class="botones">
+                    <a href="/ferias/mis_ferias"><button type="button" id="cancelarBtn">Cancelar</button></a>
+                    <button id="registrarBtn">Guardar</button>
                 </div>
-                <div class="archivoProyecto">
-                    <label for="imagenFeria">Imagen de la feria:</label>
-                    <input type="file" name="imagenFeria" id="imagenFeria" accept="image/*">
-                </div>
-                <div class="area">
-                    <table id="areas">
-                        <tr>
-                            <td><label>Areas:</label></td>
-                            <td>
-                                <button type="button" class="btnArea" id="btnArea" onclick="addArea()">Añadir area</button>
-                            </td>
-                        </tr>
-                        <tr th:each="area : ${areas}" th:id="'['+${area.id}+']'">
-                            <td></td>
-                            <td>
-                                <input type="text" th:name="'['+${area.id}+']'"  th:value="${area.nombre}">
-                                <button type="button" class="btnClear" th:onclick="'eliminarComponente(\'' +${area.id} + '\')'">
-                                    X
-                                </button><br>
-                            </td>
-                        </tr>
-                    </table>
-                    <table id="areasEliminadas">
-                    </table>
-                </div>
-            </div>
-            <div class="botones">
-                <a href="/ferias/mis_ferias"><button type="button" id="cancelarBtn">Cancelar</button></a>
-                <button id="registrarBtn">Registrar</button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
-<script type="text/javascript">
-    let areaIndex = 0;
-    function addArea() {
-        const areasDiv = document.getElementById('areas');
-        const newAreaDiv = document.createElement('tr');
-        newAreaDiv.id = "area["+areaIndex+"]";
-        newAreaDiv.innerHTML = `
+    <script type="text/javascript">
+        let areaIndex = 0;
+        function addArea() {
+            const areasDiv = document.getElementById('areas');
+            const newAreaDiv = document.createElement('tr');
+            newAreaDiv.id = "area[" + areaIndex + "]";
+            newAreaDiv.innerHTML = `
             <td></td>
             <td>
                 <input type="text" name="area[${areaIndex}]">
@@ -73,48 +84,49 @@
                 </button><br>
             </td>
         `;
-        areasDiv.appendChild(newAreaDiv);
-        areaIndex++;
-    }
-    function eliminarComponente(id) {
-        var componente = document.getElementById('['+id+']');
-        if (componente) {
-            componente.remove();
+            areasDiv.appendChild(newAreaDiv);
+            areaIndex++;
         }
-        const areasDiv = document.getElementById('areasEliminadas');
-        const newAreaDiv = document.createElement('tr');
-        newAreaDiv.id = "feria_area_delete[${id}]";
-        newAreaDiv.innerHTML = `
+        function eliminarComponente(id) {
+            var componente = document.getElementById('[' + id + ']');
+            if (componente) {
+                componente.remove();
+            }
+            const areasDiv = document.getElementById('areasEliminadas');
+            const newAreaDiv = document.createElement('tr');
+            newAreaDiv.id = "feria_area_delete[${id}]";
+            newAreaDiv.innerHTML = `
             <td>
                 <input type="hidden" name="feria_area_delete[${id}]" id="feria_area_delete[${id}]">
             </td>
         `;
-        areasDiv.appendChild(newAreaDiv);
-    }
-    function eliminarComponente2(id) {
-        var componente = document.getElementById(id);
-        if (componente) {
-            componente.remove();
+            areasDiv.appendChild(newAreaDiv);
         }
-    }
-</script>
-<script src="@{/js/registro.js}"></script>
-<script th:src="@{/js/menu.js}"></script>
-<script>
-    //Despliegue del menu principal
-    let listElements = document.querySelectorAll('.lista-item');
+        function eliminarComponente2(id) {
+            var componente = document.getElementById(id);
+            if (componente) {
+                componente.remove();
+            }
+        }
+    </script>
+    <script src="@{/js/registro.js}"></script>
+    <script th:src="@{/js/menu.js}"></script>
+    <script>
+        //Despliegue del menu principal
+        let listElements = document.querySelectorAll('.lista-item');
 
-    listElements.forEach(listElement => {
-        listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
-            listElement.classList.toggle('arrow'); //agrega la clase arrow
-            let menu = listElement.nextElementSibling;
-            menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+        listElements.forEach(listElement => {
+            listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
+                listElement.classList.toggle('arrow'); //agrega la clase arrow
+                let menu = listElement.nextElementSibling;
+                menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+            });
         });
-    });
 
-    //ejecutar funcion con click
-    document.getElementById('btn-open').addEventListener("click", open_close_menu);
+        //ejecutar funcion con click
+        document.getElementById('btn-open').addEventListener("click", open_close_menu);
 
-</script>
+    </script>
 </body>
+
 </html>

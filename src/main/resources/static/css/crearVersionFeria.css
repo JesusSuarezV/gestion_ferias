@@ -2,10 +2,7 @@
     font-family: 'League Spartan', sans-serif;
   }
   
-input[type="file"] {
-    display: none;
-}
-
+ 
 .contenido {
     margin-top: 30px;
     margin-left: 100px;
@@ -19,7 +16,7 @@ input[type="file"] {
 .crearVersionFeria {
     border: 3px solid #4F6E85;
     padding: 20px;
-    width: 70%;
+    width: 80%;
     margin-top: 20px;
     color: #002948;
 }
