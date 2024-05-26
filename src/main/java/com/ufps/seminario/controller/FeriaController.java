@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -108,7 +109,7 @@ public class FeriaController {
     }
 
     @GetMapping("/{id}/editar")
-    public String editarFeria(Model model, @PathVariable int id) {
+    public String editarFeria(Model model, @PathVariable int id, RedirectAttributes redirectAttributes) {
         try{
             String username = sesionService.getUsernameFromSession();
             Usuario usuario = usuarioService.obtenerUsuarioPorUsername(username);
@@ -117,20 +118,22 @@ public class FeriaController {
 
             Feria feria = feriaService.obtenerFeria(id);
             if(usuario.getId() != feria.getCreador().getId()){
-                return "redirect:/Ferias/Mis_Ferias";
+                redirectAttributes.addFlashAttribute("error", "Algo falló");
+                return "redirect:/ferias/mis_ferias";
             }
             model.addAttribute("feria", feria);
             List<Area> areas = areaService.obtenerAreasPorFeria(feria);
             model.addAttribute("areas", areas);
             return "editarFeria";
         }catch (Exception e){
+            redirectAttributes.addFlashAttribute("error", "Algo falló");
             return "redirect:/mis_ferias";
         }
     }
 
     @PostMapping("/crear")
     public String crearFeria(@ModelAttribute Feria feria, @RequestParam Map<String, String> requestParams,
-                                 @RequestParam("imagenFeria") MultipartFile imagen) {
+                             @RequestParam("imagenFeria") MultipartFile imagen, RedirectAttributes redirectAttributes) {
         try {
             feria.setImagen(imagen.getBytes());
             feria.setFechaCreacion(LocalDate.now());
@@ -147,16 +150,18 @@ public class FeriaController {
                     areaService.guardarArea(area);
                 }
             }
-
-            return "redirect:/ferias/mis_ferias?exito";
+            redirectAttributes.addFlashAttribute("exito", "Feria creada exitosamente");
+            return "redirect:/ferias/mis_ferias";
         } catch (Exception e) {
-            return "redirect:/ferias/mis_ferias?error";
+            redirectAttributes.addFlashAttribute("error", "Algo falló en la creación");
+            return "redirect:/ferias/mis_ferias";
         }
     }
 
     @PostMapping("/{idFeria}/editar")
     public String editarFeria(@ModelAttribute Feria feria, @RequestParam Map<String, String> requestParams,
-                                  @RequestParam("imagenFeria") MultipartFile imagen, @PathVariable int idFeria) {
+                                  @RequestParam("imagenFeria") MultipartFile imagen, @PathVariable int idFeria,
+                              RedirectAttributes redirectAttributes) {
         try {
             if(imagen != null && imagen.getBytes().length > 0){
                 feria.setImagen(imagen.getBytes());
@@ -185,9 +190,11 @@ public class FeriaController {
                     areaService.desactivarAreaPorId(idArea);
                 }
             }
-            return "redirect:/ferias/mis_ferias?exito";
+            redirectAttributes.addFlashAttribute("exito", "Feria editada exitosamente");
+            return "redirect:/ferias/mis_ferias";
         } catch (Exception e) {
-            return "redirect:/ferias/mis_ferias?error";
+            redirectAttributes.addFlashAttribute("error", "Algo falló en la edición");
+            return "redirect:/ferias/mis_ferias";
         }
     }
 
@@ -201,7 +208,7 @@ public class FeriaController {
     }
 
     @GetMapping("/{idFeria}/version")
-    public String verVersionFeria(Model model, @PathVariable int idFeria){
+    public String verVersionFeria(Model model, @PathVariable int idFeria, RedirectAttributes redirectAttributes){
         try{
             String username = sesionService.getUsernameFromSession();
             model.addAttribute("username", username);
@@ -212,12 +219,13 @@ public class FeriaController {
             model.addAttribute("feria", feria);
             return "versionFeriasCreadas";
         }catch(Exception e){
-            return "redirect:/ferias/mis_ferias?error";
+            redirectAttributes.addFlashAttribute("error", "Algo falló al obtener las versiones de esta feria");
+            return "redirect:/ferias/mis_ferias";
         }
     }
 
     @GetMapping("/{idFeria}/version/crear")
-    public String crearVersionFeria(Model model, @PathVariable int idFeria){
+    public String crearVersionFeria(Model model, @PathVariable int idFeria, RedirectAttributes redirectAttributes){
         try{
             String username = sesionService.getUsernameFromSession();
             model.addAttribute("username", username);
@@ -225,6 +233,7 @@ public class FeriaController {
             model.addAttribute("feria", feriaService.obtenerFeria(idFeria));
             return "crearVersionFeria";
         }catch(Exception e){
+            redirectAttributes.addFlashAttribute("error", "Algo falló, intentelo de nuevo más tarde");
             return "redirect:/ferias/"+idFeria+"/version";
         }
     }
@@ -232,7 +241,8 @@ public class FeriaController {
     @PostMapping("/{idFeria}/version/crear")
     public String crearVersionFeria(Model model, @PathVariable int idFeria, @ModelAttribute Version version,
                                     @RequestParam Map<String, String> requestParams,
-                                    @RequestParam("formatoVersion") MultipartFile formatoVersion){
+                                    @RequestParam("formatoVersion") MultipartFile formatoVersion,
+                                    RedirectAttributes redirectAttributes){
         try{
             String username = sesionService.getUsernameFromSession();
             Feria feria = feriaService.obtenerFeria(idFeria);
@@ -261,16 +271,20 @@ public class FeriaController {
                     }
                 }
             }else{
-                return "redirect:/ferias/"+idFeria+"/version/crear?error";
+                if(cantidadDisponible != 0) redirectAttributes.addFlashAttribute("error", "Algo falló: Asegurese de que no existen versiones de esta feria abiertas");
+                else redirectAttributes.addFlashAttribute("error", "Fechas inconsistentes");
+                return "redirect:/ferias/"+idFeria+"/version/crear";
             }
+            redirectAttributes.addFlashAttribute("exito", "Versión creada exitosamente");
             return "redirect:/ferias/"+idFeria+"/version";
         }catch(Exception e){
-            return "redirect:/ferias/"+idFeria+"/version/crear?error";
+            redirectAttributes.addFlashAttribute("error", "Algo falló en la creación");
+            return "redirect:/ferias/"+idFeria+"/version/crear";
         }
     }
 
     @PostMapping("/{idFeria}/eliminar")
-    public String eliminarFeria(Model model, @PathVariable int idFeria){
+    public String eliminarFeria(Model model, @PathVariable int idFeria, RedirectAttributes redirectAttributes){
         try{
             feriaService.ocultarFeria(idFeria);
             List<Version> versiones = versionService.obtenerVersionesPorFeria(feriaService.obtenerFeria(idFeria));
@@ -279,8 +293,10 @@ public class FeriaController {
                 version.setCierre(true);
                 versionService.guardarVersion(version);
             }
+            redirectAttributes.addFlashAttribute("exito", "Feria eliminada exitosamente");
             return "redirect:/ferias/mis_ferias";
         }catch(Exception e){
+            redirectAttributes.addFlashAttribute("error", "Algo falló en la eliminación");
             return "redirect:/ferias/mis_ferias";
         }
     }

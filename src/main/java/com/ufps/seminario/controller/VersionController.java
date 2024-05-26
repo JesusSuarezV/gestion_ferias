@@ -2,17 +2,13 @@ package com.ufps.seminario.controller;
 
 import com.ufps.seminario.entity.*;
 import com.ufps.seminario.service.*;
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -71,6 +67,9 @@ public class VersionController {
     @GetMapping("/{idVersion}/registrar")
     public String registrarAVersion(Model model, @PathVariable int idVersion) {
         try {
+            if(versionService.estaCerrado(idVersion)){
+                throw new Exception();
+            }
             String username = sesionService.getUsernameFromSession();
             model.addAttribute("username", username);
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
@@ -89,6 +88,9 @@ public class VersionController {
                                     @RequestParam Map<String, String> requestParams,
                                     @RequestParam("archivoProyecto") MultipartFile archivoProyecto) {
         try {
+            if(versionService.estaCerrado(idVersion)){
+                throw new Exception();
+            }
             String username = sesionService.getUsernameFromSession();
             Usuario creadorProyecto = usuarioService.obtenerUsuarioPorUsername(username);
             Version version = versionService.obtenerVersion(idVersion);

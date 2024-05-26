@@ -109,6 +109,12 @@ public class VersionServiceImpl implements VersionService {
         return versionesDisponibles;
     }
 
+    @Override
+    public boolean estaCerrado(int idVersion) {
+        Version version = this.obtenerVersion(idVersion);
+        return LocalDate.now().isAfter(version.getFechaCierre()) || version.isCierre();
+    }
+
 
     @Override
     public Page<Version> listarVersiones(Feria feria, Pageable pageable) {

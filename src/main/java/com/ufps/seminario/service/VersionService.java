@@ -30,4 +30,6 @@ public interface VersionService {
     public int obtenerCantidadDisponiblePorFeriayFecha(Feria feria, LocalDate now);
 
     List<Version> obtenerVersionesDisponibles(String keyword, LocalDate now);
+
+    public boolean estaCerrado(int idVersion);
 }
