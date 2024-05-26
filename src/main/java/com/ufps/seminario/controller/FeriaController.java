@@ -76,13 +76,10 @@ public class FeriaController {
                                   @RequestParam(name = "keyword", required = false) String keyword,
                                   @RequestParam(name = "page", defaultValue = "1") int page,
                                   @RequestParam(name = "size", defaultValue = "5") int size) {
+
         String username = sesionService.getUsernameFromSession();
 
-        List<Feria> feriasTodas = usuarioService.obtenerUsuarioPorUsername(sesionService.getUsernameFromSession()).getMisFerias();
-        List<Feria> ferias = new ArrayList<>();
-        for(Feria feria: feriasTodas){
-            if(feria.isEnabled()) ferias.add(feria);
-        }
+        List<Feria> ferias = usuarioService.obtenerUsuarioPorUsername(sesionService.getUsernameFromSession()).getMisFerias();
         Usuario usuario = usuarioService.obtenerUsuarioPorUsername(sesionService.getUsernameFromSession());
         Page<Feria> feriasPagina = feriaService.listarMisFerias(usuario, keyword, page, size);
         for(Feria feria:ferias){
