@@ -7,7 +7,7 @@
 .titulo {
   margin-top: 25px;
   color: #002948;
-} 
+}
 
 .pasados {
   margin-top: 50px;
@@ -27,24 +27,28 @@
   margin: 0;
   /* bdosrcdmer: 60px;   */
 }
+
 .cua {
   font-weight: bold;
   color: #002948;
   display: flex;
   align-items: center;
 }
-.noProyect{
+
+.noProyect {
   display: flex;
-  justify-content: center; /* Centra horizontalmente */
+  justify-content: center;
+  /* Centra horizontalmente */
   align-items: center;
   color: #4F6E85;
 
 }
-.siProyect {
+
+.proyectos {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-
+  gap: 20px;
+  margin-bottom: 30px;
 }
 
 .cuadro {
@@ -54,7 +58,7 @@
   box-shadow: 1px 1px 4px #002948;
   border-radius: 30px;
   padding: 20px;
-  width: 300px;
+  width: 240px;
   margin-top: 20px;
 }
 
@@ -105,4 +109,3 @@
 .verProyecto {
   width: 150px;
 }
-

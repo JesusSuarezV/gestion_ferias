@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,68 +11,82 @@
     <link rel="stylesheet" th:href="@{/css/VersionFeriasCreadas.css}" />
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
 </head>
-<body>
-<div class="contenedor" id="contenedor">
-    <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
-    <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
-    <div class="contenido">
-        <h2 class="titulo">Versiones de ferias creadas</h2>
-        <div th:if="${#lists.isEmpty(versiones)}" class="contenedorCua">
-            <h3>No hay versiones de ferias creadas.</h3>
-            <div class="CrearEvento">
-                <a th:href="'/ferias/' + ${feria.id} + '/version/crear'"><button>Crea evento</button></a>
-            </div>
-        </div>
-        <div th:if="${not #lists.isEmpty(versiones)}" class="contenedorCua">
-            <div class="cuadro" th:each="version : ${versiones}">
-                <div class="textos">
-                    <h2 th:text="${feria.nombre} + '  V.'+ ${version.numero}"></h2>
-                    <p>
-                        <p th:text="'Fecha Inicio: '+ ${version.fechaInicio}"></p>
-                        <p th:text="'Fecha fin: '+ ${version.fechaCierre}"> </p>
-                        <p th:text="'Fecha Fecha limite de inscripción: '+ ${version.fechaLimite}"> </p>
-                    </p>
-                </div>
-                <img class="fotito" th:src="@{/img/presentacion.png}" alt="Imagen pequeña">
-                <div class="botones">
-                    <a th:href="'/version/' + ${version.id} + '/editar'">
-                        <button class="editar">Editar</button>
-                    </a>
-                    <a th:href="'/version/' + ${version.id} + '/rubrica/editar'">
-                        <button class="editar">Editar Rubrica</button>
-                    </a>
-                    <form method="post" th:action="@{/version/{idVersion}/eliminar(idVersion=${version.id})}" enctype="multipart/form-data">
-                        <button class="eliminar">Eliminar</button>
-                    </form>
-                    <form th:if="${!version.cierre} and ${!version.fechaCierre.isBefore(#temporals.createNow().toLocalDate())}" method="post" th:action="@{/version/{idVersion}/cerrar(idVersion=${version.id})}" enctype="multipart/form-data">
-                        <button class="cerrar">Cerrar Feria</button>
-                    </form>
-                </div>
 
+<body>
+    <div class="contenedor" id="contenedor">
+        <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
+        <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
+        <div class="contenido">
+            <div th:if="${#lists.isEmpty(versiones)}" class="noFerias">
+                <h3 class="no-ferias-creadas">No se han creado ferias.</h3>
+                <div class="CrearEvento">
+                    <a th:href="'/ferias/' + ${feria.id} + '/version/crear'"><button>Crea feria</button></a>
+                </div>
             </div>
-            <div class="CrearEvento">
-                <a th:href="'/ferias/' + ${feria.id} + '/version/crear'"><button>Crea evento</button></a>
+            <div class="info-contenido" th:if="${not #lists.isEmpty(versiones)}">
+                <h2 class="titulo">Versiones de ferias creadas</h2>
+                <div class="si-hay-proyectos">
+                    <form class="buscador" th:action="@{/version/ferias_finalizadas/search}" method="get">
+                        <div class="busqueda">
+                            <input class="texto-buscar" type="text" name="keyword" placeholder="Ingrese su consulta" />
+                        </div>
+                        <div class="imagen-lupa">
+                            <button><img th:src="@{/img/search_47686.png}" alt=""></button>
+                        </div>
+                    </form>
+                    <div class="ferias">
+                        <div class="rectangulo" th:each="version : ${versiones}">
+                            <div class="textos">
+                                <h2 th:text="${feria.nombre} + '  V.'+ ${version.numero}"></h2>
+                                <p>
+                                <p th:text="'Fecha Inicio: '+ ${version.fechaInicio}"></p>
+                                <p th:text="'Fecha fin: '+ ${version.fechaCierre}"> </p>
+                                <p th:text="'Fecha Fecha limite de inscripción: '+ ${version.fechaLimite}"> </p>
+                                </p>
+                            </div>
+                            <div class="photo">
+                                <img class="img" th:src="@{/img/presentacion.png}" alt="Imagen pequeña">
+                            </div>
+                            <div class="botones">
+                                <a th:href="'/version/' + ${version.id} + '/editar'">
+                                    <button class="editar">Editar</button>
+                                </a>
+                                <a th:href="'/version/' + ${version.id} + '/rubrica/editar'">
+                                    <button class="editar">Editar Rubrica</button>
+                                </a>
+                                <form method="post" th:action="@{/version/{idVersion}/eliminar(idVersion=${version.id})}" enctype="multipart/form-data">
+                                    <button class="eliminar">Eliminar</button>
+                                </form>
+                                <form th:if="${!version.cierre} and ${!version.fechaCierre.isBefore(#temporals.createNow().toLocalDate())}" method="post" th:action="@{/version/{idVersion}/cerrar(idVersion=${version.id})}" enctype="multipart/form-data">
+                                    <button class="cerrar">Cerrar Feria</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="CrearEvento">
+                        <a th:href="'/ferias/' + ${feria.id} + '/version/crear'"><button>Crea feria</button></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<script th:src="@{/js/menu.js}"></script>
-<script>
-    //Despliegue del menu principal
-    let listElements = document.querySelectorAll('.lista-item');
+    <script th:src="@{/js/menu.js}"></script>
+    <script>
+        //Despliegue del menu principal
+        let listElements = document.querySelectorAll('.lista-item');
 
-    listElements.forEach(listElement => {
-        listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
-            listElement.classList.toggle('arrow'); //agrega la clase arrow
-            let menu = listElement.nextElementSibling;
-            menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+        listElements.forEach(listElement => {
+            listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
+                listElement.classList.toggle('arrow'); //agrega la clase arrow
+                let menu = listElement.nextElementSibling;
+                menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+            });
         });
-    });
 
-    //ejecutar funcion con click
-    document.getElementById('btn-open').addEventListener("click", open_close_menu);
+        //ejecutar funcion con click
+        document.getElementById('btn-open').addEventListener("click", open_close_menu);
 
-</script>
+    </script>
 </body>
 
 </html>
