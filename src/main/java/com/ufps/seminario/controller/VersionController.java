@@ -211,6 +211,9 @@ public class VersionController {
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             Version version = versionService.obtenerVersion(idVersion);
             Feria feria = version.getFeria();
+            if(!version.getFeria().getCreador().getUsername().equals(username)){
+                throw new Exception("No es el creador de esta feria");
+            }
             model.addAttribute("version", version);
             model.addAttribute("feria", feria);
             List<Auspiciador> auspiciadores = auspiciadorService.obtenerAuspiciadorPorVersion(version);
@@ -267,11 +270,16 @@ public class VersionController {
     @GetMapping("/{idVersion}/rubrica/editar")
     public String editarRubrica(Model model, @PathVariable int idVersion) {
         try {
+
             String username = sesionService.getUsernameFromSession();
             model.addAttribute("username", username);
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
 
             Version version = versionService.obtenerVersion(idVersion);
+
+            if(!version.getFeria().getCreador().getUsername().equals(username)){
+                throw new Exception("No es el creador de esta feria");
+            }
             List<Criterio> criterios = criterioService.obtenerCriterioPorVersion(version);
             model.addAttribute("criterios", criterios);
             model.addAttribute("version", version);
