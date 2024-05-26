@@ -22,7 +22,7 @@
         <hr class="linea">
         <div class="noProyect" th:if="${#lists.isEmpty(proyectosActuales)}">
             <h3 class="testo">No hay proyectos recientes.</h3>
-        </div>
+        </div> 
         <div class="proyectos" th:if="${not #lists.isEmpty(proyectosActuales)}">
             <div class="cuadro" th:each="proyecto : ${proyectosActuales}">
                 <div class="cua">

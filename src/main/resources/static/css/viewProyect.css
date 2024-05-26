@@ -18,7 +18,6 @@
 .actuales {
   margin-top: 50px;
   color: #002948;
-  margin-left: 30px;
 }
 
 .linea {
@@ -47,9 +46,11 @@
 .proyectos {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 10px;
   margin-bottom: 30px;
-}
+  width: 90%;
+  justify-items: center;
+} 
 
 .cuadro {
   display: flex;
@@ -65,13 +66,11 @@
 .icon {
   width: 80px;
   height: 80px;
-  margin: 0 auto 5px;
 }
 
 .txt {
-
   text-align: left;
-  margin-left: 10px;
+  width: 100%;
 }
 
 .calificacion {
@@ -98,14 +97,20 @@
   border-radius: 20px;
   cursor: pointer;
   color: white;
-  margin: 12px;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  font-size: 18px;
+  font-size: 16px;
   background-color: #002948;
-  width: 120px;
+  width: 100px;
 }
 
 .verProyecto {
   width: 150px;
+}
+
+.siProyect{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 30px;
+  width: 90%;
+  justify-items: center;
 }
