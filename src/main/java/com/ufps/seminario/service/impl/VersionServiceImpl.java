@@ -3,7 +3,6 @@ package com.ufps.seminario.service.impl;
 import com.ufps.seminario.entity.*;
 import com.ufps.seminario.repository.IntegranteRepository;
 import com.ufps.seminario.repository.VersionRepository;
-import com.ufps.seminario.service.IntegranteService;
 import com.ufps.seminario.service.VersionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -60,6 +59,20 @@ public class VersionServiceImpl implements VersionService {
         }
 
         return versionRepository.findByIdIn(ids);
+    }
+
+    @Override
+    public List<Version> obtenerVersionesCerradas(String keyword, LocalDate fecha) {
+
+        List<Version> versiones = versionRepository.findByCierreOrFechaCierreBefore(true, fecha);
+        List<Version> versionesTerminadas = new ArrayList<>();
+        for(Version version: versiones){
+            String nombre = version.getFeria().getNombre();
+            if(keyword == null || keyword.isEmpty()  || nombre.toLowerCase().contains(keyword.toLowerCase())){
+                versionesTerminadas.add(version);
+            }
+        }
+        return versionesTerminadas;
     }
 
     @Override

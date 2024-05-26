@@ -1,7 +1,6 @@
 package com.ufps.seminario.service;
 
 import com.ufps.seminario.entity.Feria;
-import com.ufps.seminario.entity.Integrante;
 import com.ufps.seminario.entity.Usuario;
 import com.ufps.seminario.entity.Version;
 import org.springframework.data.domain.Page;
@@ -22,6 +21,9 @@ public interface VersionService {
 
     public List<Version> obtenerVersionesPorIntegranteYDisponibles(String correo, String keyword, LocalDate fecha);
     public List<Version> obtenerVersionesPorIntegranteYCerradas(String correo, String keyword, LocalDate fecha);
+
+    List<Version> obtenerVersionesCerradas(String correo, LocalDate fecha);
+
     public List<Version> obtenerVersionesPorJurado(Usuario usuario);
     public List<Version> obtenerVersionesPorFeria(Feria feria);
 

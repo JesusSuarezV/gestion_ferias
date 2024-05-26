@@ -195,7 +195,7 @@ public class VersionController {
             String username = sesionService.getUsernameFromSession();
             model.addAttribute("username", username);
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
-            List<Version> versiones = versionService.obtenerVersionesPorIntegranteYCerradas(username, keyword, LocalDate.now());
+            List<Version> versiones = versionService.obtenerVersionesCerradas(keyword, LocalDate.now());
             model.addAttribute("versiones", versiones);
             return "feriasFinalizadas";
         } catch (Exception e) {
