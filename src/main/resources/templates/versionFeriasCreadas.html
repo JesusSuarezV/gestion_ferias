@@ -51,13 +51,17 @@
                                 <img class="img" th:src="@{/img/presentacion.png}" alt="Imagen pequeña">
                             </div>
                             <div class="botones">
-                                <a th:href="'/version/' + ${version.id} + '/editar'">
+                                <a th:href="'/version/' + ${version.id}">
+                                    <button class="editar">Ver versión</button>
+                                </a>
+                                <a th:if="${!version.cierre} and ${!version.fechaCierre.isBefore(#temporals.createNow().toLocalDate())}" th:href="'/version/' + ${version.id} + '/editar'">
                                     <button class="editar">Editar</button>
                                 </a>
-                                <a th:href="'/version/' + ${version.id} + '/rubrica/editar'">
+                                <a th:if="${!version.cierre} and ${!version.fechaCierre.isBefore(#temporals.createNow().toLocalDate())}" th:href="'/version/' + ${version.id} + '/rubrica/editar'">
                                     <button class="editar">Editar Rubrica</button>
                                 </a>
                                 <form method="post"
+                                      th:if="${!version.cierre} and ${!version.fechaCierre.isBefore(#temporals.createNow().toLocalDate())}"
                                     th:action="@{/version/{idVersion}/eliminar(idVersion=${version.id})}"
                                     enctype="multipart/form-data">
                                     <button class="eliminar">Eliminar</button>

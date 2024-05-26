@@ -38,7 +38,7 @@
                     </tr>
                 </table>
             </div>
-            <div class="calificar">
+            <div class="calificar" th:if="${!version.cierre} and ${!version.fechaCierre.isBefore(#temporals.createNow().toLocalDate())}">
                 <a th:href="'/version/'+${version.id} + '/registrar'">
                     <div class="boton-registrar">
                         Registrar Proyecto
