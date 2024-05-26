@@ -11,74 +11,83 @@
     <link rel="stylesheet" th:href="@{/css/viewProyect.css}" />
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
 </head>
- 
-<body> 
-<div class="contenedor" id="contenedor">
-    <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
-    <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
-    <div class="contenido">
-        <h2 class="titulo">Mis proyectos</h2>
-        <h3 class="actuales">Actuales</h3>
-        <hr class="linea">
-        <div class="noProyect" th:if="${#lists.isEmpty(proyectosActuales)}">
-            <h3 class="testo">No hay proyectos recientes.</h3>
-        </div> 
-        <div class="proyectos" th:if="${not #lists.isEmpty(proyectosActuales)}">
-            <div class="cuadro" th:each="proyecto : ${proyectosActuales}">
-                <div class="cua">
-                    <img class="icon" th:src="@{/img/proyectt.png}">
-                    <div class="txt" th:text="${proyecto.nombre}"></div>
-                </div>
-                <div class="botones">
-                    <form th:action="@{/proyecto/{idProyecto}/eliminar(idProyecto=${proyecto.id})}" method="post" enctype="multipart/form-data">
-                        <button class="eliminar" >Eliminar</button>
-                    </form>
-                    <a th:href="'/proyecto/' + ${proyecto.id} + '/editar'"><button type="button" class="editar">Editar</button></a>
+
+<body>
+    <div class="contenedor" id="contenedor">
+        <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
+        <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
+        <div class="contenido">
+            <h2 class="titulo">Mis proyectos</h2>
+            <h3 class="actuales">Actuales</h3>
+            <hr class="linea">
+            <div class="noProyect" th:if="${#lists.isEmpty(proyectosActuales)}">
+                <h3 class="testo">No hay proyectos recientes.</h3>
+            </div>
+            <div class="proyectos" th:if="${not #lists.isEmpty(proyectosActuales)}">
+                <div class="cuadro" th:each="proyecto : ${proyectosActuales}">
+                    <div class="cua">
+                        <img class="icon" th:src="@{/img/proyectt.png}">
+                        <div class="txt" th:text="${proyecto.nombre}"></div>
+                    </div>
+                    <div class="botones">
+                        <div class="top-botones">
+                            <form th:action="@{/proyecto/{idProyecto}/eliminar(idProyecto=${proyecto.id})}"
+                                method="post" enctype="multipart/form-data">
+                                <button class="eliminar">Eliminar</button>
+                            </form>
+                            <a th:href="'/proyecto/' + ${proyecto.id} + '/editar'"><button type="button"
+                                    class="editar">Editar</button></a>
+                        </div>
+                        <div class="txt-boton">
+                            <a th:href="'proyecto/' + ${proyecto.id}"><button class="verProyecto">Ver
+                                    proyecto</button></a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <h3 class="pasados">Pasados</h3>
-        <hr class="linea">
-        <div class="noProyect" th:if="${#lists.isEmpty(proyectosPasados)}">
-            <h3 class="testo">No hay proyectos pasados.</h3>
-        </div>
-        <div class="siProyect" th:if="${not #lists.isEmpty(proyectosPasados)}">
-            <div class="cuadro" th:each="proyecto : ${proyectosPasados}">
-                <div class="cua">
-                    <img class="icon" th:src="@{/img/proyectt.png}">
-                    <div class="txt" th:text="${proyecto.nombre}">
-                        Driven
-                        Learning: an experience of
-                        colaboration University
-                        and Secundary Schooll</div>
-                </div>
-                <div class="botones">
-                    <div class="calificacion">Calificación: <span th:text="${proyecto.calificacion}"></span></div>
-                    <div class="txt">
-                        <a th:href="'proyecto/' + ${proyecto.id}"><button class="verProyecto" >Ver proyecto</button></a>
+            <h3 class="pasados">Pasados</h3>
+            <hr class="linea">
+            <div class="noProyect" th:if="${#lists.isEmpty(proyectosPasados)}">
+                <h3 class="testo">No hay proyectos pasados.</h3>
+            </div>
+            <div class="siProyect" th:if="${not #lists.isEmpty(proyectosPasados)}">
+                <div class="cuadro" th:each="proyecto : ${proyectosPasados}">
+                    <div class="cua">
+                        <img class="icon" th:src="@{/img/proyectt.png}">
+                        <div class="txt" th:text="${proyecto.nombre}">
+                            Driven
+                            Learning: an experience of
+                            colaboration University
+                            and Secundary Schooll</div>
+                    </div>
+                    <div class="botones">
+                        <div class="calificacion">Calificación: <span th:text="${proyecto.calificacion}"></span></div>
+                        <div class="txt">
+                            <a th:href="'proyecto/' + ${proyecto.id}"><button class="verProyecto">Ver
+                                    proyecto</button></a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<script th:src="@{/js/menu.js}"></script>
-<script>
-    //Despliegue del menu principal
-    let listElements = document.querySelectorAll('.lista-item');
+    <script th:src="@{/js/menu.js}"></script>
+    <script>
+        //Despliegue del menu principal
+        let listElements = document.querySelectorAll('.lista-item');
 
-    listElements.forEach(listElement => {
-        listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
-            listElement.classList.toggle('arrow'); //agrega la clase arrow
-            let menu = listElement.nextElementSibling;
-            menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+        listElements.forEach(listElement => {
+            listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
+                listElement.classList.toggle('arrow'); //agrega la clase arrow
+                let menu = listElement.nextElementSibling;
+                menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+            });
         });
-    });
 
-    //ejecutar funcion con click
-    document.getElementById('btn-open').addEventListener("click", open_close_menu);
+        //ejecutar funcion con click
+        document.getElementById('btn-open').addEventListener("click", open_close_menu);
 
-</script>
+    </script>
 </body>
 
 </html>

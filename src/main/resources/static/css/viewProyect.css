@@ -82,11 +82,27 @@
 .botones {
   display: flex;
   align-items: center;
-  text-align: center;
   margin-top: 20px;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.top-botones{
+  display: flex;
+  align-items: center;
+  text-align: center;
   flex-direction: row;
   justify-content: space-evenly;
+  width: 100%;
 }
+
+.txt-boton{
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  justify-content: center;
+}
+
 
 .eliminar,
 .editar,
