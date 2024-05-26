@@ -22,7 +22,6 @@
             </div>
             <div class="info-contenido" th:if="${not #lists.isEmpty(versiones)}">
                 <h2 class="titulo">Ferias disponibles</h2>
-
                 <div class="si-hay-proyectos">
                     <form class="buscador" th:action="@{/version/ferias_disponibles/search}" method="get">
                         <div class="busqueda">
