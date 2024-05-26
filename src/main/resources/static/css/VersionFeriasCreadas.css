@@ -1,108 +1,167 @@
-*{
+* {
   text-decoration: none;
   list-style: none;
   margin: 0;
   padding: 0;
-  margin: 0;
-  padding: 0;
   font-family: 'League Spartan';
 }
+
+.contenido {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.info-contenido {
+  width: 90%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+
+.foto-boton {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
 .titulo {
   margin-top: 50px;
   margin-left: 40px;
   color: #002948;
 }
 
-.contenedorCua {
-  width: 80%;
-  /* Ancho deseado del contenedor */
-  margin: 0 auto;
-  /* Centra el contenedor horizontalmente */
-  padding: 20px;
-  /* Añade espacio alrededor del contenedor */
+h3 {
+  color: #4F6E85;
 }
 
-.cuadro {
-  background-color: rgb(148, 167, 182, 0.41);
-  color: #002948;
-  padding: 20px;
-  /* Espacio interno */
-  border-radius: 10px;
-  /* Bordes redondeados */
+.texto-buscar {
+  background-color: #D9D9D9;
+  border: none;
+  height: 25px;
+  font-size: 18px;
+  width: 100%;
+  border-radius: 30px;
+  letter-spacing: 1.5px;
+}
+
+.buscador {
+  margin-top: 30px;
   display: flex;
-  /* Para alinear los elementos internos */
+  padding: 3px;
+  flex-direction: row;
   align-items: center;
-  /* Alinea verticalmente */
+  justify-content: center;
+  width: 100%;
+  border-radius: 35px;
+}
+
+.busqueda {
+  display: flex;
+  padding: 3px;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 50%;
+  border-radius: 35px;
+}
+
+.busqueda input {
+  padding: 5px 10px;
+  font-size: 20px;
+}
+
+.imagen-lupa img {
+  height: 25px;
+  width: auto;
+}
+
+.imagen-lupa button {
+  background-color: #4F6E85;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  margin-left: 5px;
+  cursor: pointer;
+  border: none;
+}
+
+.aviso {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 50px;
 }
 
-.h2 {
-  font-weight: bold;
+.ferias {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 30px;
+  box-sizing: border-box;
 }
 
-.cuadro p {
-  margin-right: auto;
-  /* Empuja el texto a la izquierda */
-
-}
-
-.cuadro h2 {
-  margin-right: auto;
-
-}
-
-.cuadro img {
-  margin-left: 10px;
-  /* Espacio a la izquierda de la imagen */
-  width: 150px;
-  height: 150px;
-  margin: 0 auto 5px;
-}
-
-.cuadro button {
-  margin-left: 10px;
-  /* Espacio entre la imagen y los botones */
-  border-top: 20px;
-  border-bottom: 20px;
-}
-
-.botones {
+.rectangulo {
+  background-color: rgba(148, 167, 182, 0.41);
+  color: #002948;
+  border-radius: 40px;
   display: flex;
-  text-align: center;
-  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 480px;
+  padding: 5px;
+  height: 180px;
+}
+
+.nombre {
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.textos {
+  display: flex;
   flex-direction: column;
-  margin-right: 20px;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  height: 100%;
+  font-size: 18px;
+  margin-left: 10px;
+  width: 50%;
 }
 
-.editar {
-  margin-top: 5px;
-  margin-bottom: 5px;
+.fecha-limi td {
+  padding-top: 10px;
 }
 
-.eliminar {
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-.cerrar {
-  margin-top: 5px;
-  margin-bottom: 5px;
+.rectangulo img {
+  padding: 10px;
+  width: 90px;
+  height: auto;
+  margin: 0;
 }
 
-.editar,
-.eliminar,.cerrar {
-  padding: 10px 35px;
-  /* Espacio interno de los botones */
-  border: none;
-  /* Sin borde */
+.botones button {
+  display: flex;
+  justify-content: center;
+  font-size: 16px;
+  align-items: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 10px;
+  width: 110px;
+  height: 30px;
   border-radius: 20px;
-  /* Bordes redondeados */
   cursor: pointer;
-  /* Cambia el cursor al pasar sobre ellos */
-  color: rgb(255, 255, 255);
+  color: white;
   background-color: #002948;
-
+  border: none;
 }
-.CrearEvento button{
+
+.CrearEvento button {
   padding: 10px 35px;
   color: rgb(255, 255, 255);
   background-color: #002948;
@@ -111,6 +170,7 @@
   cursor: pointer;
   font-size: 16px;
 }
+
 .CrearEvento {
   position: fixed;
   bottom: 20px;
