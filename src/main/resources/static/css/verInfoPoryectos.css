@@ -1,3 +1,7 @@
+*{
+    font-family: 'League Spartan', sans-serif;
+  }  
+
 .contenido-proyecto {
     width: 80%;
     height: fit-content;
@@ -13,7 +17,7 @@
     flex-direction: column;
     align-items: center;
 }
- 
+
 .tabla {
     width: 100%;
     text-align: left;
@@ -46,7 +50,7 @@
     cursor: pointer;
 }
 
-.columna-desc a{
+.columna-desc a {
     text-decoration: none;
 }
 
@@ -61,7 +65,7 @@
 
 .nombre-proyecto {
     color: #002948;
-    
+
 }
 
 .proyecto {
@@ -179,6 +183,10 @@
     justify-content: space-evenly;
 }
 
+.contenido-modal{
+    width: 90%;
+}
+
 .modal-content p {
     font-size: 20px;
     width: 85%;
@@ -187,11 +195,12 @@
 .boton-a {
     color: white;
     background-color: #002948;
-    font-size: 20px;
-    width: 150px;
+    font-size: 18px;
+    width: 130px;
     height: 40px;
     border-radius: 20px;
     display: flex;
+    border: none;
     align-items: center;
     justify-content: center;
 }
@@ -213,7 +222,7 @@
 }
 
 .correo-jurado {
-    width: 85%;
+    width: 100%;
     height: 30px;
     font-size: 20px;
     border-radius: 20px;
@@ -233,6 +242,7 @@ hr {
     align-items: center;
 }
 
+
 .cuadro {
     display: flex;
     flex-direction: column;
@@ -242,24 +252,16 @@ hr {
     padding: 20px;
     width: 240px;
     margin-top: 20px;
-}  
-
-.proyectos {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-bottom: 30px;
-    justify-items: center;
 }
 
-.calificar a{
+
+.calificar a {
     text-decoration: none;
 }
 
 .icon {
     width: 80px;
     height: 80px;
-    margin: 0 auto 5px;
 }
 
 .txt {
@@ -267,7 +269,7 @@ hr {
     margin-left: 10px;
 }
 
-.boton-ver-proyecto {
+.verProyecto {
     text-align: center;
     padding: 10px 20px;
     border: none;
@@ -277,12 +279,22 @@ hr {
     font-size: 16px;
     background-color: #002948;
     width: 130px;
+    margin-top: 10px;
 }
 
-.no-hay-proyectos{
+.no-hay-proyectos {
     display: flex;
     justify-content: center;
     align-items: center;
     color: #4F6E85;
     font-size: 20px;
+}
+
+.siProyect {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+    width: 90%;
+    justify-items: center;
 }

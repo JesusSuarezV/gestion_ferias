@@ -10,7 +10,7 @@
     <link rel="stylesheet" th:href="@{/css/verInfoPoryectos.css}">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
 </head>
-<body>
+<body> 
 <div class="contenedor" id="contenedor">
     <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
     <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
@@ -54,14 +54,16 @@
             <div th:if="${#lists.isEmpty(proyectos)}" class="no-hay-proyectos">
                 <h3>No se han registrado proyectos</h3>
             </div>
-            <div th:if="${not #lists.isEmpty(proyectos)}" class="proyectos">
-                <div class="cuadro" th:each="proyecto: ${proyectos}">
+            <div class="siProyect" th:if="${not #lists.isEmpty(proyectos)}">
+                <div class="cuadro" th:each="proyecto : ${proyectos}">
                     <div class="cua">
                         <img class="icon" th:src="@{/img/proyectt.png}">
                         <div class="txt" th:text="${proyecto.nombre}"></div>
                     </div>
-                    <div class="botones">
-                        <a th:href="'/proyecto/'+${proyecto.id}"><button type="button" class="boton-ver-proyecto">Ver proyecto</button></a>
+                    <div class="botones-2">
+                        <div class="txt">
+                            <a th:href="'/proyecto/' + ${proyecto.id}"><button class="verProyecto">Ver proyecto</button></a>
+                        </div>
                     </div>
                 </div>
             </div>

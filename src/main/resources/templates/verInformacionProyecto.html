@@ -10,116 +10,126 @@
     <link rel="stylesheet" th:href="@{/css/verInfoPoryectos.css}">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
 </head>
+
 <body>
-<div class="contenedor" id="contenedor">
-    <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
-    <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
-    <div class="contenido">
-        <div class="contenido-proyecto">
-            <div class="nombre-proyecto">
-                <h2 th:text="${proyecto.nombre}"></h2>
-            </div>
-            <div class="descripcion-proyecto">
-                <p th:text="${proyecto.descripcion}"></p>
-            </div>
-            <div class="objetivo">
-                <h2>Objetivo:</h2>
-            </div>
-            <div class="descripcion-objetivo">
-                <p th:text="${proyecto.objetivos}"></p>
-            </div>
-            <div class="tabla-informacion">
-                <table class="tabla">
-                    <tr class="fila">
-                        <td class="columna-item">Feria inscrita:</td>
-                        <td class="columna-desc" th:text="${proyecto.version.feria.nombre} + ' ' + ${proyecto.version.numero}">Feria de proyectos de Aula v.1</td>
-                    </tr>
-                    <tr class="fila" th:if="${not #lists.isEmpty(areas)}">
-                        <td class="columna-item">Áreas de estudio:</td>
-                        <td class="columna-desc">
-                            <span th:each="area, iterStat : ${areas}" th:text="${area.nombre} + (iterStat.last ? ' ' : ', ')"></span>
-                        </td>
-                    </tr>
-                    <tr class="fila">
-                        <td class="columna-item">URL video:</td>
-                        <td class="columna-desc" th:if= "${proyecto.url == ''}"> No posee </td>
-                        <td class="columna-desc" th:if= "${proyecto.url != ''}" th:text="${proyecto.url}"></td>
-                    </tr>
-                    <tr class="fila" th:if="${not #lists.isEmpty(proyecto.archivo)}">
-                        <td class="columna-item">Archivo proyecto:</td>
-                        <td class="columna-desc" >
-                            <a th:href="@{/proyecto/archivo/{idProyecto}(idProyecto=${proyecto.id})}">
-                                <div class="boton-doc">
-                                    Descargar
+    <div class="contenedor" id="contenedor">
+        <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
+        <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
+        <div class="contenido">
+            <div class="contenido-proyecto">
+                <div class="nombre-proyecto">
+                    <h2 th:text="${proyecto.nombre}"></h2>
+                </div>
+                <div class="descripcion-proyecto">
+                    <p th:text="${proyecto.descripcion}"></p>
+                </div>
+                <div class="objetivo">
+                    <h2>Objetivo:</h2>
+                </div>
+                <div class="descripcion-objetivo">
+                    <p th:text="${proyecto.objetivos}"></p>
+                </div>
+                <div class="tabla-informacion">
+                    <table class="tabla">
+                        <tr class="fila">
+                            <td class="columna-item">Feria inscrita:</td>
+                            <td class="columna-desc"
+                                th:text="${proyecto.version.feria.nombre} + ' ' + ${proyecto.version.numero}">Feria de
+                                proyectos de Aula v.1</td>
+                        </tr>
+                        <tr class="fila" th:if="${not #lists.isEmpty(areas)}">
+                            <td class="columna-item">Áreas de estudio:</td>
+                            <td class="columna-desc">
+                                <span th:each="area, iterStat : ${areas}"
+                                    th:text="${area.nombre} + (iterStat.last ? ' ' : ', ')"></span>
+                            </td>
+                        </tr>
+                        <tr class="fila">
+                            <td class="columna-item">URL video:</td>
+                            <td class="columna-desc" th:if="${proyecto.url == ''}"> No posee </td>
+                            <td class="columna-desc" th:if="${proyecto.url != ''}" th:text="${proyecto.url}"></td>
+                        </tr>
+                        <tr class="fila" th:if="${not #lists.isEmpty(proyecto.archivo)}">
+                            <td class="columna-item">Archivo proyecto:</td>
+                            <td class="columna-desc">
+                                <a th:href="@{/proyecto/archivo/{idProyecto}(idProyecto=${proyecto.id})}">
+                                    <div class="boton-doc">
+                                        Descargar
+                                    </div>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr class="fila" th:each="integrante, iterStat : ${integrantes}">
+                            <td class="columna-item" th:rowspan="${#lists.size(integrantes)}" th:if="${iterStat.first}">
+                                Integrantes: </td>
+                            <td class="columna-desc" th:text="${integrante.correoRegistro}"></td>
+                        </tr>
+                        <tr class="fila">
+                            <td class="columna-item">Calificación:</td>
+                            <td class="columna-desc" th:text="${proyecto.calificacion}"></td>
+                        </tr>
+                        <tr class="fila" id="mainRow" th:each="jurado, iterStat : ${jurados}">
+                            <td class="columna-item" th:rowspan="${#lists.size(jurados) + 1}" th:if="${iterStat.first}">
+                                Jurados: </td>
+                            <td class="columna-desc columna-eliminar">
+                                <span th:text="${jurado.username}"></span>
+                                <form th:if="${rolObj.id != 1}"
+                                    th:action="@{/proyecto/{idProyecto}/jurado/eliminar(idProyecto=${proyecto.id})}"
+                                    method="post" enctype="multipart/form-data">
+                                    <button class="eliminar">x</button>
+                                    <input type="hidden" name="juradoCorreo" th:value="${jurado.username}">
+                                </form>
+                            </td>
+                        </tr>
+                        <tr class="fila" th:if="${rolObj.id != 1}">
+                            <td class="columna-desc">
+                                <div class="boton-agregar">
+                                    Asignar jurado
                                 </div>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="fila" th:each="integrante, iterStat : ${integrantes}">
-                        <td class="columna-item" th:rowspan="${#lists.size(integrantes)}" th:if="${iterStat.first}">Integrantes: </td>
-                        <td class="columna-desc" th:text="${integrante.correoRegistro}"></td>
-                    </tr>
-                    <tr class="fila">
-                        <td class="columna-item">Calificación:</td>
-                        <td class="columna-desc" th:text="${proyecto.calificacion}"></td>
-                    </tr>
-                    <tr class="fila" id="mainRow"  th:each="jurado, iterStat : ${jurados}">
-                        <td class="columna-item" th:rowspan="${#lists.size(jurados) + 1}" th:if="${iterStat.first}">Jurados: </td>
-                        <td class="columna-desc columna-eliminar">
-                            <span th:text="${jurado.username}"></span>
-                            <form th:if="${rolObj.id != 1}" th:action="@{/proyecto/{idProyecto}/jurado/eliminar(idProyecto=${proyecto.id})}" method="post" enctype="multipart/form-data">
-                                <button class="eliminar">x</button>
-                                <input type="hidden" name="juradoCorreo" th:value="${jurado.username}">
-                            </form>
-                        </td>
-                    </tr>
-                    <tr class="fila" th:if="${rolObj.id != 1}">
-                        <td></td>
-                        <td class="columna-desc">
-                            <div class="boton-agregar">
-                                Asignar jurado
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div id="myModal" class="modal">
-    <div class="modal-content">
-        <form th:action="@{/proyecto/{idProyecto}/jurado(idProyecto=${proyecto.id})}" method="post" enctype="multipart/form-data">
-            <p>Correo del jurado:</p>
-            <input class="correo-jurado" type="email" name="juradoCorreo" id="juradoCorreo">
-            <div class="botones">
-                <div class="boton-a close">
-                    Cancelar
-                </div>
-                <div class="boton-a agregar">
-                    <button class="boton-a agregar">Agregar</button>
-                </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="contenido-modal">
+                <form th:action="@{/proyecto/{idProyecto}/jurado(idProyecto=${proyecto.id})}" method="post"
+                    enctype="multipart/form-data">
+                    <p>Correo del jurado:</p>
+                    <input class="correo-jurado" type="email" name="juradoCorreo" id="juradoCorreo">
+                    <div class="botones">
+                        <div class="boton-a close">
+                            Cancelar
+                        </div>
+                        <div class="boton-a agregar">
+                            <button class="boton-a agregar">Agregar</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
-</div>
-<script th:src="@{/js/modal-2.js}"></script>
-<script th:src="@{/js/menu.js}"></script>
-<script>
-    //Despliegue del menu principal
-    let listElements = document.querySelectorAll('.lista-item');
+    <script th:src="@{/js/modal-2.js}"></script>
+    <script th:src="@{/js/menu.js}"></script>
+    <script>
+        //Despliegue del menu principal
+        let listElements = document.querySelectorAll('.lista-item');
 
-    listElements.forEach(listElement => {
-        listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
-            listElement.classList.toggle('arrow'); //agrega la clase arrow
-            let menu = listElement.nextElementSibling;
-            menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+        listElements.forEach(listElement => {
+            listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
+                listElement.classList.toggle('arrow'); //agrega la clase arrow
+                let menu = listElement.nextElementSibling;
+                menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+            });
         });
-    });
 
-    //ejecutar funcion con click
-    document.getElementById('btn-open').addEventListener("click", open_close_menu);
+        //ejecutar funcion con click
+        document.getElementById('btn-open').addEventListener("click", open_close_menu);
 
-</script>
+    </script>
 </body>
 
 </html>
