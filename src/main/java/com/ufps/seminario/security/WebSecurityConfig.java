@@ -50,7 +50,7 @@ public class WebSecurityConfig {
         httpSecurity.authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers("/js/**", "/css/**", "/img/**", "/Confirmacion/**").permitAll()
-                                .requestMatchers("/", "/Registrarse", "/Iniciar_Sesion", "/eventos", "/eventos/**", "/ferias/imagen/**").permitAll()
+                                .requestMatchers("/", "/Registrarse", "/Iniciar_Sesion", "/eventos", "/eventos/**", "/ferias/imagen/**", "/proyecto/archivo/**").permitAll()
                                 .requestMatchers("/personas/nueva").hasAnyAuthority("ADMIN","CREATOR")
                                 .requestMatchers("/personas/editar/*").hasAnyAuthority("ADMIN","EDITOR")
                                 .requestMatchers("/personas/eliminar/*").hasAnyAuthority("ADMIN")
