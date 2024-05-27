@@ -43,7 +43,7 @@
                         <td>
                             <button type="button" class="btnIntegrantes" id="btnIntegrante" onclick="addIntegrante()">Añadir Integrante</button>
                         </td>
-                    </tr>
+                    </tr> 
                     <tr th:each="integrante : ${integrantes}" th:id="'integrante_back[' + ${integrante.id} +']'">
                         <td></td>
                         <td>
