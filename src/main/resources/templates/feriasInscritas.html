@@ -34,7 +34,7 @@
                     <div class="ferias">
                         <div class="rectangulo" th:each="version : ${versiones}">
                             <div class="textos">
-                                <div class="nombre" th:text="${version.feria.nombre}"></div>
+                                <div class="nombre" th:text="${version.feria.nombre} + '  V.'+ ${version.numero}"></div>
                                 <table class="informacion">
                                     <tr>
                                         <td>Fecha inicio:</td>
