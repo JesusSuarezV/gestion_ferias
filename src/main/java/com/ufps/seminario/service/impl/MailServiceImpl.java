@@ -19,7 +19,7 @@ public class MailServiceImpl implements MailService {
 
         helper.setTo(destinatario);
         helper.setSubject(asunto);
-        helper.setText(cuerpo, true); // true para indicar que es HTML
+        helper.setText(cuerpo, true);
 
         javaMailSender.send(mensaje);
     }
