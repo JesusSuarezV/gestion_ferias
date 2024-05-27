@@ -45,7 +45,7 @@ public class ProyectoServiceImpl implements ProyectoService {
         for(Integrante integrante_proyecto: integrantes_proyecto){
             Version version = integrante_proyecto.getProyecto().getVersion();
             LocalDate now = LocalDate.now();
-            if(!(now.isAfter(version.getFechaCierre()) || version.isCierre()) && integrante_proyecto.getProyecto().isEnabled()){
+            if(integrante_proyecto.isEnabled() && !(now.isAfter(version.getFechaCierre()) || version.isCierre()) && integrante_proyecto.getProyecto().isEnabled()){
                 ids.add(integrante_proyecto.getProyecto().getId());
             }
         }
@@ -59,7 +59,7 @@ public class ProyectoServiceImpl implements ProyectoService {
         for(Integrante integrante_proyecto: integrantes_proyecto){
             Version version = integrante_proyecto.getProyecto().getVersion();
             LocalDate now = LocalDate.now();
-            if((now.isAfter(version.getFechaCierre()) || version.isCierre())  && integrante_proyecto.getProyecto().isEnabled()){
+            if(integrante_proyecto.isEnabled() && (now.isAfter(version.getFechaCierre()) || version.isCierre())  && integrante_proyecto.getProyecto().isEnabled()){
                 ids.add(integrante_proyecto.getProyecto().getId());
             }
         }
