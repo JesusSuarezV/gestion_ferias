@@ -17,24 +17,34 @@
         <form class="formulario" th:object="${proyecto}" th:action="@{/proyecto/{idProyecto}/editar(idProyecto=${proyecto.id})}" method="post" enctype="multipart/form-data">
             <h2 class="titulo">Editar Proyecto</h2>
             <div class="editarProyecto">
-                <div class="nombreProyecto">
-                    <label for="nombre">Nombre del proyecto:</label>
+                <div class="item">
+                    <div class="item-texto">
+                        <label for="nombre">Nombre del proyecto:</label>
+                    </div>
                     <textarea name="nombre" id="nombre" th:text="${proyecto.nombre}" required></textarea>
                 </div>
-                <div class="descripcion">
-                    <label for="descripcion">Descripcion:</label>
+                <div class="item">
+                    <div class="item-texto">
+                        <label for="descripcion">Descripcion:</label>
+                    </div>
                     <textarea name="descripcion" id="descripcion" th:text="${proyecto.descripcion}" required></textarea>
                 </div>
-                <div class="objetivo">
-                    <label for="objetivos">Objetivo:</label>
+                <div class="item">
+                    <div class="item-texto">
+                        <label for="objetivos">Objetivo:</label>
+                    </div>
                     <textarea name="objetivos" id="objetivos" th:text="${proyecto.objetivos}" required></textarea>
                 </div>
-                <div class="urlVideo">
-                    <label for="url">URL video:</label>
+                <div class="item">
+                    <div class="item-texto">
+                        <label for="url">URL video:</label>
+                    </div>
                     <input type="text" name="url" id="url" th:value="${proyecto.url}">
                 </div>
-                <div class="archivoProyecto">
-                    <label for="archivoProyecto">Archivo proyecto:</label>
+                <div class="item item">
+                    <div class="item-texto">
+                        <label for="archivoProyecto">Archivo proyecto:</label>
+                    </div>
                     <input type="file" name="archivoProyecto" id="archivoProyecto" accept="application/pdf">
                 </div>
                 <table class="integrante" id="integrantes">
