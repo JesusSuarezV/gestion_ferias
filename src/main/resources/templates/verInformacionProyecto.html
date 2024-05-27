@@ -81,7 +81,7 @@
                                 </form>
                             </td>
                         </tr>
-                        <tr class="fila" th:if="${rolObj.id != 1}">
+                        <tr class="fila" th:if="${rolObj.id != 1} and ${asignacion}">
                             <td class="columna-desc">
                                 <div class="boton-agregar">
                                     Asignar jurado
@@ -93,7 +93,7 @@
             </div>
         </div>
     </div>
-    <div id="myModal" class="modal">
+    <div id="myModal" class="modal" th:if="${rolObj.id != 1} and ${asignacion}">
         <div class="modal-content">
             <div class="contenido-modal">
                 <form th:action="@{/proyecto/{idProyecto}/jurado(idProyecto=${proyecto.id})}" method="post"

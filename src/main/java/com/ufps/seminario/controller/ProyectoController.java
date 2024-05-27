@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -184,6 +186,9 @@ public class ProyectoController {
             model.addAttribute("areas", proyecto.getAreas());
             model.addAttribute("integrantes", integrantes);
             model.addAttribute("rolObj", usuarioService.obtenerUsuarioPorUsername(username).getRole());
+            boolean ok = !proyecto.getVersion().isCierre() && proyecto.getVersion().isEnabled()
+            && !LocalDate.now().isBefore(proyecto.getVersion().getFechaCierre()) && proyecto.getVersion().getFeria().isEnabled();
+            model.addAttribute("asignacion", ok);
             return "verInformacionProyecto";
         }catch(Exception e){
             return "redirect/mis_proyectos";
