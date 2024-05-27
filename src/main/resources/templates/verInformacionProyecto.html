@@ -37,7 +37,7 @@
                     <tr class="fila" th:if="${not #lists.isEmpty(areas)}">
                         <td class="columna-item">Áreas de estudio:</td>
                         <td class="columna-desc">
-                            <span th:each="area, iterStat : ${areas}" th:text="${area.nombre} + (iterStat.last ? '' : ', ')"></span>
+                            <span th:each="area, iterStat : ${areas}" th:text="${area.nombre} + (iterStat.last ? ' ' : ', ')"></span>
                         </td>
                     </tr>
                     <tr class="fila">

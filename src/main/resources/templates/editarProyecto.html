@@ -76,24 +76,33 @@
                     </div>
                     <div class="area" th:if="${not #lists.isEmpty(areasVersion)}">
                         <label for="areasSelect">Areas:</label>
-                        <select id="areasSelect">
-                            <option th:each="area : ${areasVersion}" th:value="${area.id}" th:text="${area.nombre}">
-                            </option>
-                        </select>
-                        <button type="button" class="btnArea" id="btnArea" onclick="agregarArea()">Agregar área</button>
-                        <table class="areas-seleccionadas" id="areasSeleccionadas">
-                            <tr th:each="area : ${areas}" th:id="'area_back[' + ${area.id} +']'">
-                                <td>
-                                    <li name="old" th:text="${area.nombre}"> </li>
-                                    <button type="button" class="btnClear"
-                                        th:onclick="'eliminarArea(\'' + ${area.id} + '\')'">
-                                        X
-                                    </button><br>
-                                </td>
-                            </tr>
-                        </table>
-                        <table id="areasEliminadas">
-                        </table>
+                        <div class="elegir-area">
+                            <select class="areasSeleccion" id="areasSelect">
+                                <option th:each="area : ${areasVersion}" th:value="${area.id}" th:text="${area.nombre}">
+                                </option>
+                            </select>
+                            <div class="area-seleccionada">
+                                <table class="areas-seleccionadas" id="areasSeleccionadas">
+                                    <tr>
+                                        <td>
+                                            <button type="button" class="btnArea" id="btnArea"
+                                                onclick="agregarArea()">Agregar
+                                                área</button>
+                                        </td>
+                                    </tr>
+                                    <tr th:each="area : ${areas}" th:id="'area_back[' + ${area.id} +']'">
+                                        <td>
+                                            <h3 class="nombre-area" name="old" th:text="${area.nombre}"> </h3>
+                                            <button type="button" class="btnClear"
+                                                th:onclick="'eliminarArea(\'' + ${area.id} + '\')'">
+                                                X
+                                            </button><br>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table id="areasEliminadas"></table>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="botones">

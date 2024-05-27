@@ -6,20 +6,25 @@
         let nombre = selectedOption.text;
 
         let selectedAreas = document.getElementById('areasSeleccionadas');
-        let newArea = document.createElement('li');
-        newArea.textContent = nombre;
+        let newArea = document.createElement('tr');
+        let newTd = document.createElement('td');
+        let newText = document.createElement('h3');
+        newText.textContent = nombre;
+        newText.className = 'nombre-area';
         newArea.id = "area["+id+"]";
 
         // Crear un botón para remover el área
         let removeButton = document.createElement('button');
         removeButton.textContent = 'X';
         removeButton.type = 'button';
-        removeButton.class = 'btnArea';
+        removeButton.className = 'btnClear';
         removeButton.onclick = function() {
             selectedAreas.removeChild(newArea);
         };
 
-        newArea.appendChild(removeButton);
+        newTd.appendChild(newText);
+        newTd.appendChild(removeButton);
+        newArea.appendChild(newTd);
         selectedAreas.appendChild(newArea);
 
         // Agregar un campo oculto para enviar el ID al backend
