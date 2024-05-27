@@ -34,7 +34,6 @@
         const newAreaDiv = document.createElement('tr');
         newAreaDiv.id = "integrante["+areaIndex+"]";
         newAreaDiv.innerHTML = `
-            <td></td>
             <td>
                 <input type="text" name="integrante[${areaIndex}]">
                 <button type="button" class="btnClear" onclick="eliminarComponente2('integrante[${areaIndex}]')">

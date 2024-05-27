@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,127 +8,134 @@
     <link rel="stylesheet" th:href="@{/css/cuadricula.css}">
     <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
-    <link rel="stylesheet" th:href="@{/css/editarProyecto.css}">
+    <link rel="stylesheet" th:href="@{/css/registrarProyecto.css}">
 </head>
+
 <body>
-<div class="contenedor">
-    <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
-    <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
-    <div class="contenido">
-        <form class="formulario" th:object="${proyecto}" th:action="@{/proyecto/{idProyecto}/editar(idProyecto=${proyecto.id})}" method="post" enctype="multipart/form-data">
-            <h2 class="titulo">Editar Proyecto</h2>
-            <div class="editarProyecto">
-                <div class="item">
-                    <div class="item-texto">
-                        <label for="nombre">Nombre del proyecto:</label>
+    <div class="contenedor">
+        <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
+        <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
+        <div class="contenido">
+            <form class="formulario" th:object="${proyecto}"
+                th:action="@{/proyecto/{idProyecto}/editar(idProyecto=${proyecto.id})}" method="post"
+                enctype="multipart/form-data">
+                <h2 class="titulo">Editar Proyecto</h2>
+                <div class="editarProyecto">
+                    <div class="item">
+                        <div class="item-texto">
+                            <label for="nombre">Nombre del proyecto:</label>
+                        </div>
+                        <textarea name="nombre" id="nombre" th:text="${proyecto.nombre}" required></textarea>
                     </div>
-                    <textarea name="nombre" id="nombre" th:text="${proyecto.nombre}" required></textarea>
-                </div>
-                <div class="item">
-                    <div class="item-texto">
-                        <label for="descripcion">Descripcion:</label>
+                    <div class="item">
+                        <div class="item-texto">
+                            <label for="descripcion">Descripcion:</label>
+                        </div>
+                        <textarea name="descripcion" id="descripcion" th:text="${proyecto.descripcion}"
+                            required></textarea>
                     </div>
-                    <textarea name="descripcion" id="descripcion" th:text="${proyecto.descripcion}" required></textarea>
-                </div>
-                <div class="item">
-                    <div class="item-texto">
-                        <label for="objetivos">Objetivo:</label>
+                    <div class="item">
+                        <div class="item-texto">
+                            <label for="objetivos">Objetivo:</label>
+                        </div>
+                        <textarea name="objetivos" id="objetivos" th:text="${proyecto.objetivos}" required></textarea>
                     </div>
-                    <textarea name="objetivos" id="objetivos" th:text="${proyecto.objetivos}" required></textarea>
-                </div>
-                <div class="item">
-                    <div class="item-texto">
-                        <label for="url">URL video:</label>
+                    <div class="item">
+                        <div class="item-texto">
+                            <label for="url">URL video:</label>
+                        </div>
+                        <input type="text" name="url" id="url" th:value="${proyecto.url}">
                     </div>
-                    <input type="text" name="url" id="url" th:value="${proyecto.url}">
-                </div>
-                <div class="item item">
-                    <div class="item-texto">
-                        <label for="archivoProyecto">Archivo proyecto:</label>
+                    <div class="item item">
+                        <div class="item-texto">
+                            <label for="archivoProyecto">Archivo proyecto:</label>
+                        </div>
+                        <input type="file" name="archivoProyecto" id="archivoProyecto" accept="application/pdf">
                     </div>
-                    <input type="file" name="archivoProyecto" id="archivoProyecto" accept="application/pdf">
+                    <div class="integrantes">
+                        <label>Integrantes:</label>
+                        <table class="integrante" id="integrantes">
+                            <tr>
+                                <td>
+                                    <button type="button" class="btnIntegrantes" id="btnIntegrante"
+                                        onclick="addIntegrante()">Añadir Integrante</button>
+                                </td>
+                            </tr>
+                            <tr th:each="integrante : ${integrantes}"
+                                th:id="'integrante_back[' + ${integrante.id} +']'">
+                                <td>
+                                    <input type="email" name="old" th:value="${integrante.correoRegistro}" disabled>
+                                    <button type="button" class="btnClear"
+                                        th:onclick="'eliminarIntegrante(\'' + ${integrante.id} + '\')'">
+                                        X
+                                    </button><br>
+                                </td>
+                            </tr>
+                        </table>
+                        <table id="integrantesEliminados"></table>
+                    </div>
+                    <div class="area" th:if="${not #lists.isEmpty(areasVersion)}">
+                        <label for="areasSelect">Areas:</label>
+                        <select id="areasSelect">
+                            <option th:each="area : ${areasVersion}" th:value="${area.id}" th:text="${area.nombre}">
+                            </option>
+                        </select>
+                        <button type="button" class="btnArea" id="btnArea" onclick="agregarArea()">Agregar área</button>
+                        <table class="areas-seleccionadas" id="areasSeleccionadas">
+                            <tr th:each="area : ${areas}" th:id="'area_back[' + ${area.id} +']'">
+                                <td>
+                                    <li name="old" th:text="${area.nombre}"> </li>
+                                    <button type="button" class="btnClear"
+                                        th:onclick="'eliminarArea(\'' + ${area.id} + '\')'">
+                                        X
+                                    </button><br>
+                                </td>
+                            </tr>
+                        </table>
+                        <table id="areasEliminadas">
+                        </table>
+                    </div>
                 </div>
-                <table class="integrante" id="integrantes">
-                    <tr>
-                        <td><label>Integrantes:</label></td>
-                        <td>
-                            <button type="button" class="btnIntegrantes" id="btnIntegrante" onclick="addIntegrante()">Añadir Integrante</button>
-                        </td>
-                    </tr> 
-                    <tr th:each="integrante : ${integrantes}" th:id="'integrante_back[' + ${integrante.id} +']'">
-                        <td></td>
-                        <td>
-                            <input type="email" name="old" th:value="${integrante.correoRegistro}" disabled>
-                            <button type="button" class="btnClear" th:onclick="'eliminarIntegrante(\'' + ${integrante.id} + '\')'">
-                                X
-                            </button><br>
-                        </td>
-                    </tr>
-                </table>
-                <table id="integrantesEliminados">
-
-                </table>
-                <div class="area" th:if="${not #lists.isEmpty(areasVersion)}">
-                    <label for="areasSelect">Areas:</label>
-                    <select id="areasSelect" >
-                        <option th:each="area : ${areasVersion}" th:value="${area.id}" th:text="${area.nombre}"></option>
-                    </select>
-                    <button type="button" class="btnArea" id="btnArea" onclick="agregarArea()">Agregar área</button>
-                    <table id="areasSeleccionadas">
-                        <tr th:each="area : ${areas}" th:id="'area_back[' + ${area.id} +']'">
-                            <td></td>
-                            <td>
-                                <li name="old" th:text="${area.nombre}"> </li>
-                                <button type="button" class="btnClear" th:onclick="'eliminarArea(\'' + ${area.id} + '\')'">
-                                    X
-                                </button><br>
-                            </td>
-                        </tr>
-                    </table>
-                    <table id="areasEliminadas">
-
-                    </table>
+                <div class="botones">
+                    <a href="/proyecto/mis_proyectos"><button type="button" id="cancelarBtn">Cancelar</button></a>
+                    <button id="registrarBtn">Registrar</button>
                 </div>
-            </div>
-            <div class="botones">
-                <a href="/proyecto/mis_proyectos"><button type="button" id="cancelarBtn">Cancelar</button></a>
-                <button id="registrarBtn">Registrar</button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
-<script th:src="@{/js/editarProyecto.js}"></script>
-<script th:src="@{/js/registro.js}"></script>
-<script th:src="@{/js/menu.js}"></script>
-<script>
-    //Despliegue del menu principal
-    let listElements = document.querySelectorAll('.lista-item');
+    <script th:src="@{/js/editarProyecto.js}"></script>
+    <script th:src="@{/js/registro.js}"></script>
+    <script th:src="@{/js/menu.js}"></script>
+    <script>
+        //Despliegue del menu principal
+        let listElements = document.querySelectorAll('.lista-item');
 
-    listElements.forEach(listElement => {
-        listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
-            listElement.classList.toggle('arrow'); //agrega la clase arrow
-            let menu = listElement.nextElementSibling;
-            menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+        listElements.forEach(listElement => {
+            listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
+                listElement.classList.toggle('arrow'); //agrega la clase arrow
+                let menu = listElement.nextElementSibling;
+                menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+            });
         });
-    });
 
-    //ejecutar funcion con click
-    document.getElementById('btn-open').addEventListener("click", open_close_menu);
+        //ejecutar funcion con click
+        document.getElementById('btn-open').addEventListener("click", open_close_menu);
 
-</script>
-<script>
-    //Se verifica que la extensión sea correcta.
-    document.getElementById('archivo').addEventListener('change', function(event) {
-        const fileInput = event.target;
-        const filePath = fileInput.value;
-        const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+    </script>
+    <script>
+        //Se verifica que la extensión sea correcta.
+        document.getElementById('archivo').addEventListener('change', function (event) {
+            const fileInput = event.target;
+            const filePath = fileInput.value;
+            const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
 
-        if (!allowedExtensions.exec(filePath)) {
-            alert("Por favor, seleccione un archivo de imagen válido.");
-            fileInput.value = '';
-            return false;
-        }
-    });
-</script>
+            if (!allowedExtensions.exec(filePath)) {
+                alert("Por favor, seleccione un archivo de imagen válido.");
+                fileInput.value = '';
+                return false;
+            }
+        });
+    </script>
 </body>
+
 </html>
