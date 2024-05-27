@@ -81,19 +81,21 @@ public class FeriaController {
         String username = sesionService.getUsernameFromSession();
 
         List<Feria> ferias = usuarioService.obtenerUsuarioPorUsername(sesionService.getUsernameFromSession()).getMisFerias();
+        List<Feria> real = new ArrayList<>();
         Usuario usuario = usuarioService.obtenerUsuarioPorUsername(sesionService.getUsernameFromSession());
         Page<Feria> feriasPagina = feriaService.listarMisFerias(usuario, keyword, page, size);
         for(Feria feria:ferias){
-            System.out.println(feria.getNombre());
+            if(feria.isEnabled()) real.add(feria);
         }
 
         for(Feria feria:feriasPagina.getContent()){
             System.out.println(feria.getNombre());
         }
+
         model.addAttribute("username", username);
         model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
-        Collections.reverse(ferias);
-        model.addAttribute("ferias", ferias);
+        Collections.reverse(real);
+        model.addAttribute("ferias", real);
         //model.addAttribute("keyword", keyword);
 
         return "feriasCreadas";
