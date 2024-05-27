@@ -35,7 +35,10 @@ public class VersionServiceImpl implements VersionService {
             String nombre = integranteLista.getProyecto().getVersion().getFeria().getNombre();
             LocalDate fechaCierre = integranteLista.getProyecto().getVersion().getFechaCierre();
             boolean cerrada = integranteLista.getProyecto().getVersion().isCierre();
-            if((keyword == null || keyword.isEmpty()  || nombre.toLowerCase().contains(keyword.toLowerCase())) && !fecha.isAfter(fechaCierre) && !cerrada){
+            if((keyword == null || keyword.isEmpty()  || nombre.toLowerCase().contains(keyword.toLowerCase()))
+                    && !fecha.isAfter(fechaCierre)
+                    && !cerrada
+                    && integranteLista.getProyecto().getVersion().getFeria().isEnabled()){
                 ids.add(integranteLista.getProyecto().getVersion().getId());
             }
         }
@@ -53,7 +56,9 @@ public class VersionServiceImpl implements VersionService {
             String nombre = integranteLista.getProyecto().getVersion().getFeria().getNombre();
             LocalDate fechaCierre = integranteLista.getProyecto().getVersion().getFechaCierre();
             boolean cerrada = integranteLista.getProyecto().getVersion().isCierre();
-            if((keyword == null || keyword.isEmpty()  || nombre.toLowerCase().contains(keyword.toLowerCase())) && (fecha.isAfter(fechaCierre) || cerrada)){
+            if((keyword == null || keyword.isEmpty()  || nombre.toLowerCase().contains(keyword.toLowerCase()))
+                    && (fecha.isAfter(fechaCierre) || cerrada)
+                    && integranteLista.getProyecto().getVersion().getFeria().isEnabled()){
                 ids.add(integranteLista.getProyecto().getVersion().getId());
             }
         }
@@ -68,7 +73,8 @@ public class VersionServiceImpl implements VersionService {
         List<Version> versionesTerminadas = new ArrayList<>();
         for(Version version: versiones){
             String nombre = version.getFeria().getNombre();
-            if((keyword == null || keyword.isEmpty()  || nombre.toLowerCase().contains(keyword.toLowerCase()) && version.isEnabled())){
+            if((keyword == null || keyword.isEmpty()  || nombre.toLowerCase().contains(keyword.toLowerCase()) && version.isEnabled())
+              && version.getFeria().isEnabled()){
                 versionesTerminadas.add(version);
             }
         }
@@ -102,7 +108,9 @@ public class VersionServiceImpl implements VersionService {
             LocalDate fechaLimite = version.getFechaLimite();
             String nombre = version.getFeria().getNombre();
             boolean cerrada = version.isCierre();
-            if((keyword == null || keyword.isEmpty()  || nombre.toLowerCase().contains(keyword.toLowerCase())) && (!now.isAfter(fechaLimite) && !cerrada)){
+            if((keyword == null || keyword.isEmpty()  || nombre.toLowerCase().contains(keyword.toLowerCase()))
+                    && (!now.isAfter(fechaLimite) && !cerrada)
+                    && version.getFeria().isEnabled()){
                 versionesDisponibles.add(version);
             }
         }
