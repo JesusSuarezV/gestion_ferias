@@ -7,10 +7,6 @@ btn.onclick = function() {
     modal.style.display = "block";
 }
 
-span.onclick = function() {
-    window.location.href = "../views/login.html";
-}
-
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";

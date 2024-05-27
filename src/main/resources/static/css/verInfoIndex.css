@@ -109,13 +109,14 @@ body {
 
 .boton-doc{
     background-color: #D9D9D9;
-    width: 70px;
+    width: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 30px;
-    border-radius: 15px;
+    height: 40px;
+    border-radius: 20px;
     cursor: pointer;
+    color: #002948;
 }
 
 .tabla td{

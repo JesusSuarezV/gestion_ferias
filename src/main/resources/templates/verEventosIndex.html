@@ -9,7 +9,7 @@
     <title>Ver ferias</title>
 </head>
 
-<body>
+<body> 
 <div class="navegacion" th:insert="~{@{/fragments/navIndex.html}}"></div>
 <div class="contenedor">
     <form class="busqueda" th:action="@{/eventos/search}" method="get">
@@ -30,11 +30,12 @@
                 <img th:src="@{/ferias/imagen/{idFeria}(idFeria=${version.feria.id})}" alt="">
             </div>
             <div class="info-feria">
-                <h3><span th:text="${version.feria.nombre}"></span> V<span th:text="${version.numero}"></span></h3>
-                <a th:href="'/eventos/'+ ${version.id} + '/proyectos'"><button class="boton-ver-feria">Ver Evento</button></a>
+                <h3><span th:text="${version.feria.nombre}"></span><span th:text="${version.numero}"></span></h3>
+                <a th:href="'/eventos/'+ ${version.id} + '/proyectos'"><button class="boton-ver-feria">Ver feria</button></a>
             </div>
         </div>
     </div>
+    <div class="final"></div>
 </div>
 </body>
 

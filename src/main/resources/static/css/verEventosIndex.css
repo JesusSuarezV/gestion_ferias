@@ -55,7 +55,7 @@ body {
     border: none;
     height: 25px;
     font-size: 18px;
-    width: 92%;
+    width: 100%;
     border-radius: 10px;
     letter-spacing: 1.5px;
 }
@@ -75,6 +75,19 @@ body {
     height: 25px;
     width: auto;
 }
+
+.imagen-lupa button{
+    background-color: #4F6E85;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    cursor: pointer;
+    border: none;
+}
+
 
 .contenedor {
     margin-top: 80px;
@@ -96,6 +109,10 @@ body {
     grid-gap: 30px;
     box-sizing: border-box;
     padding: 10px;
+}
+
+.final{
+    height: 40px;
 }
 
 .cuadro {
@@ -121,7 +138,7 @@ body {
     background-color: #002948;
     color: white;
     border-radius: 30px;
-    margin-bottom: 10px;
+    cursor: pointer;
     font-size: 16px;
 }
 
@@ -137,6 +154,8 @@ body {
     height: 100%;
     object-fit: cover;
     position: absolute;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
 }
 
 .info-feria h3 {
@@ -167,6 +186,7 @@ body {
 
 .texto{
     font-size: 20px;
+    color: black;
 }
 
 .cuadro-descripcion{
@@ -177,7 +197,7 @@ body {
 .descripcion{
     background-color: white;
     margin-top: 30px;
-    width: fit-content;
+    width: 100%;
     height: fit-content;
     padding: 20px;
     border-radius: 20px;

@@ -8,7 +8,7 @@
     <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
     <title>Ver proyectos</title>
 </head>
-
+ 
 <body>
 <div class="navegacion" th:insert="~{@{/fragments/navIndex.html}}"></div>
 <div class="contenedor">
@@ -24,10 +24,7 @@
         <div class="proyectos">
             <h1 class="titulo">Proyectos inscritos</h1>
             <div class="rectangulo" th:each="proyecto : ${proyectos}">
-                <a th:href="'/eventos/' + ${version.id} + '/proyectos/' + ${proyecto.id}"><p class="texto" th:text="${proyecto.nombre}">
-                    Plataforma Laboral Icarus: Aplicación web de
-                    gestión de bolsa de empleo para inmigrantes
-                    venezolanos en la ciudad de Cúcuta</p>
+                <a th:href="'/eventos/' + ${version.id} + '/proyectos/' + ${proyecto.id}"><p class="texto" th:text="${proyecto.nombre}"></p>
                 </a>
             </div>
             <div class="paginacion" id="paginacion"></div>
@@ -38,12 +35,7 @@
                     <h3><span th:text="${version.feria.nombre}"></span> V<span th:text="${version.numero}"></span></h3>
                 </div>
                 <div class="descripcion-feria">
-                    <p th:text="${version.feria.descripcion}">¡Bienvenidos a nuestra Feria de Proyectos de Aula! Aquí, nuestros brillantes estudiantes
-                        universitarios exhiben sus proyectos desarrollados en diversas materias. Desde innovadoras
-                        soluciones tecnológicas hasta investigaciones punteras, esta feria es un escaparate de
-                        creatividad y conocimiento. Únete a nosotros para explorar el ingenio y el esfuerzo de
-                        nuestros futuros líderes en un ambiente de aprendizaje dinámico e inspirador. ¡No te lo
-                        pierdas!</p>
+                    <p th:text="${version.feria.descripcion}"></p>
                 </div>
             </div>
         </div>
