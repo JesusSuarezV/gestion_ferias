@@ -269,6 +269,12 @@ hr {
     margin-left: 10px;
 }
 
+.txt-u{
+    text-align: left;
+    margin-left: 10px;
+    overflow-wrap: break-word;
+}
+
 .verProyecto {
     text-align: center;
     padding: 10px 20px;

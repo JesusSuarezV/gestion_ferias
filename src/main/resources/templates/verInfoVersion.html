@@ -58,9 +58,9 @@
                 <div class="cuadro" th:each="proyecto : ${proyectos}">
                     <div class="cua">
                         <img class="icon" th:src="@{/img/proyectt.png}">
-                        <div class="txt" th:text="${proyecto.nombre}"></div>
+                        <div class="txt-u" th:text="${proyecto.nombre}"></div>
                     </div>
-                    <div class="botones-2">
+                    <div class="botones-2"> 
                         <div class="txt">
                             <a th:href="'/proyecto/' + ${proyecto.id}"><button class="verProyecto">Ver proyecto</button></a>
                         </div>
