@@ -187,7 +187,7 @@ public class ProyectoController {
             model.addAttribute("integrantes", integrantes);
             model.addAttribute("rolObj", usuarioService.obtenerUsuarioPorUsername(username).getRole());
             boolean ok = !proyecto.getVersion().isCierre() && proyecto.getVersion().isEnabled()
-            && !LocalDate.now().isBefore(proyecto.getVersion().getFechaCierre()) && proyecto.getVersion().getFeria().isEnabled();
+            && !LocalDate.now().isAfter(proyecto.getVersion().getFechaCierre()) && proyecto.getVersion().getFeria().isEnabled();
             model.addAttribute("asignacion", ok);
             return "verInformacionProyecto";
         }catch(Exception e){
