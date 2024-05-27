@@ -12,7 +12,7 @@ body {
 .contenedor {
     display: grid;
     grid-template-columns: 230px 1fr;
-    grid-template-rows: 55px max-content;
+    grid-template-rows: 55px auto;
     justify-items: stretch;
     align-items: stretch;
 }
@@ -36,7 +36,8 @@ body {
     grid-row: 2;
     border-style: none;
     align-items: center;
-    height: 100vh;
+    height: auto;
+    min-height: 100vh;
 }
 
 /*Registro exitoso*/
