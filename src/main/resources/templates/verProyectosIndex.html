@@ -10,7 +10,7 @@
 </head>
  
 <body>
-<div class="navegacion" th:insert="~{@{/fragments/navIndex.html}}"></div>
+<div class="navegacion" th:insert="~{@{fragments/navIndex.html}}"></div>
 <div class="contenedor">
     <form class="busqueda" th:action="@{/eventos/{idVersion}/proyectos/search(idVersion=${version.id})}" method="get">
         <div class="busqueda">
