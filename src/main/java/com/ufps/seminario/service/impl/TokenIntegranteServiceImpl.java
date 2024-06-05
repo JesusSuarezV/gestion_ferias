@@ -36,7 +36,7 @@ public class TokenIntegranteServiceImpl implements TokenIntegranteService {
             String token = UUID.randomUUID().toString();
             TokenIntegrante tokenIntegrante = new TokenIntegrante(token, LocalDate.now(), integranteCreado, false);
             guardarTokenIntegrante(tokenIntegrante);
-            String url = "http://localhost:8080/Confirmacion/integrante/"+token;
+            String url = "https://gestionferias-production.up.railway.app/Confirmacion/integrante/"+token;
             String cuerpo = "Acaba de ser agregado al proyecto '"+ integranteCreado.getProyecto().getNombre() + "', confirme su registro en el siguiente enlace: <a href=\"" + url + "\">" + url + "</a>";
             mailService.enviarCorreo(integranteCreado.getCorreoRegistro(), "Invitación a Proyecto - FPA", cuerpo);
         }catch(Exception ignored){
