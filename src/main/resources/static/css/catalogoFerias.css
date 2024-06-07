@@ -41,7 +41,7 @@ h3 {
     height: 25px;
     font-size: 18px;
     width: 100%;
-    border-radius: 30px;
+    border-radius: 5px;
     letter-spacing: 1.5px;
 }
 
@@ -53,7 +53,7 @@ h3 {
     align-items: center;
     justify-content: center;
     width: 100%;
-    border-radius: 35px;
+    border-radius: 5px;
 }
 
 .busqueda {
@@ -96,50 +96,13 @@ h3 {
     margin-top: 50px;
 }
 
-.ferias {
-    margin-top: 40px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 30px;
-    box-sizing: border-box;
-}
-
-.rectangulo {
-    background-color: rgba(148, 167, 182, 0.41);
-    color: #002948;
-    border-radius: 40px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    width: 420px;
-    padding: 5px;
-    height: 150px;
-}
 
 .nombre {
     font-weight: bold;
     font-size: 25px;
-}
-
-.textos {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-evenly;
-    height: 100%;
-    font-size: 18px;
-    width: 60%;
-}
-
-.fecha-limi td {
-    padding-top: 10px;
-}
-
-.rectangulo img {
-    padding: 10px;
-    width: 90px;
-    height: auto;
+    margin-bottom: 5px;
+    overflow-wrap: break-word;
+    width: 100%;
 }
 
 .boton {
@@ -147,10 +110,10 @@ h3 {
     justify-content: center;
     font-size: 16px;
     align-items: center;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    height: 30px;
+    width: max-content;
     margin-right: 10px;
-    border-radius: 20px;
+    border-radius: 5px;
     cursor: pointer;
     color: white;
     background-color: #002948;
@@ -188,7 +151,7 @@ h3 {
     width: 40px;
     background-color: #D9D9D9;
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: 20px;
 }
 
@@ -196,3 +159,43 @@ h3 {
     background-color: #6A8BA4;
     color: white;
 }
+
+.photo img{
+    height: 50px;
+    width: auto;
+}
+
+.item_lista{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 80%;
+    background-color: #D9D9D9;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.informacion_feria{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+.informacion{
+    width: 270px;
+}
+
+.ferias_disponibles{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.informacion td {
+    text-align: left;
+    vertical-align: middle;
+    height: 25px;
+ }

@@ -30,11 +30,10 @@
                         <div class="imagen-lupa">
                             <button><img th:src="@{/img/search_47686.png}" alt=""></button>
                         </div>
-                    </form>
-                    <div class="ferias">
-                        <div class="rectangulo" th:each="version : ${versiones}">
-                            <div class="textos">
-
+                    </form> 
+                    <div class="ferias_disponibles">
+                        <div class="item_lista" th:each="version : ${versiones}">
+                            <div class="informacion_feria">
                                 <div class="nombre" th:text="${version.feria.nombre} + '  V.'+ ${version.numero}"></div>
                                 <table class="informacion">
                                     <tr>
@@ -52,9 +51,6 @@
                                 </table>
                             </div>
                             <div class="foto-boton">
-                                <div class="photo">
-                                    <img class="img" th:src="@{/img/presentacion.png}" alt="Imagen pequeña">
-                                </div>
                             <div class="boton">
                                 <a href=""><button type="button" class="ver-evento">Ver ranking</button></a>
                             </div>
