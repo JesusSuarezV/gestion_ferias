@@ -58,9 +58,6 @@
                                 </table>
                             </div>
                             <div class="botones">
-                                <a th:href="'/version/' + ${version.id}">
-                                    <button class="editar">Ver versión</button>
-                                </a>
                                 <div class="botones_antes_cierre">
                                     <a th:if="${!version.cierre} and ${!version.fechaCierre.isBefore(#temporals.createNow().toLocalDate())}"
                                         th:href="'/version/' + ${version.id} + '/editar'">
@@ -84,7 +81,9 @@
                                         <button class="cerrar">Cerrar Feria</button>
                                     </form>
                                 </div>
-
+                                <a th:href="'/version/' + ${version.id}">
+                                    <button class="editar">Ver versión</button>
+                                </a>
                             </div>
                         </div>
                     </div>
