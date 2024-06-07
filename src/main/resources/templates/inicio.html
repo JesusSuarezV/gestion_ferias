@@ -14,8 +14,8 @@
 
 <body> 
     <div class="contenedor" id="contenedor">
-        <div class="header" th:include="@{/fragments/navbar.html}"></div>
-        <div class="menu" th:include="@{/fragments/menu.html}"></div>
+        <div class="header" th:include="@{fragments/navbar.html}"></div>
+        <div class="menu" th:include="@{fragments/menu.html}"></div>
         <div class="contenido">
             <div th:if="${param.continue}" class="ventanita ventana-verde" id="notification">
                 <p>Ha iniciado sesion correctamente</p>

@@ -40,7 +40,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             TokenUsuario tokenUsuario = new TokenUsuario(token, LocalDate.now(), usuario, true);
             tokenService.guardarTokenUsuario(tokenUsuario);
 
-            String url = "http://localhost:8080/Confirmacion/" + token;
+            String url = "https://gestionferias-production.up.railway.app/Confirmacion/" + token;
             String cuerpo = "Por favor, confirme su cuenta en el siguiente enlace: <a href=\"" + url + "\">" + url + "</a>";
             mailService.enviarCorreo(usuario.getUsername(), "ENLACE DE ACTIVACIÓN FPA", cuerpo);
 

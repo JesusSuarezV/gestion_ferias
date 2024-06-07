@@ -13,8 +13,8 @@
 
 <body>
     <div class="contenedor">
-        <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
-        <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
+        <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
+        <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
         <div class="contenido">
             <form class="formulario" th:action="@{/version/{idVersion}/editar(idVersion=${version.id})}"
                 th:object="${version}" method="post" enctype="multipart/form-data">
