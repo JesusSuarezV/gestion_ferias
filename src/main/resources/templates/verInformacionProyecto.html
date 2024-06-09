@@ -82,10 +82,10 @@
                                 <form th:if="${rolObj.id != 1}"
                                     th:action="@{/proyecto/{idProyecto}/jurado/eliminar(idProyecto=${proyecto.id})}"
                                     method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="juradoCorreo" th:value="${jurado.username}" required>
                                     <button class="eliminar">x</button>
-                                    <input type="hidden" name="juradoCorreo" th:value="${jurado.username}">
                                 </form>
-                            </td>
+                            </td> 
                         </tr>
                         <tr class="fila" th:if="${rolObj.id != 1} and ${asignacion}">
                             <td class="columna-desc">

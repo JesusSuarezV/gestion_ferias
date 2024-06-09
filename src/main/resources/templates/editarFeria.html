@@ -8,9 +8,9 @@
     <link rel="stylesheet" th:href="@{/css/cuadricula.css}">
     <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
-    <link rel="stylesheet" th:href="@{/css/crearFeria.css}">
+    <link rel="stylesheet" th:href="@{/css/registros_edicion.css}">
 </head>
-
+ 
 <body>
     <div class="contenedor">
         <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
@@ -19,28 +19,30 @@
             <form class="formulario" th:action="@{/ferias/{idFeria}/editar(idFeria=${feria.id})}" th:object="${feria}"
                 method="post" enctype="multipart/form-data">
                 <h2 class="titulo">Editar Feria</h2>
-                <div class="crearFeria">
+                <div class="formulario_proyecto">
                     <div class="item">
                         <div class="item-texto">
                             <label for="nombre">Nombre de la feria:</label>
                         </div>
-                        <input type="text" name="nombre" id="nombre" th:value="${feria.nombre}" required>
+                        <input class="texto_corto" type="text" name="nombre" id="nombre" th:value="${feria.nombre}" required>
                     </div>
                     <div class="item">
                         <div class="item-texto">
                             <label for="descripcion">Descripcion de la feria:</label>
                         </div>
-                        <textarea name="descripcion" id="descripcion" th:text="${feria.descripcion}"
+                        <textarea class="texto_largo" name="descripcion" id="descripcion" th:text="${feria.descripcion}"
                             required></textarea>
                     </div>
                     <div class="item archivo-examinar">
                         <div class="item-texto">
                             <label for="imagenFeria">Imagen de la feria:</label>
                         </div>
-                        <input type="file" name="imagenFeria" id="imagenFeria" accept="image/*">
+                        <input class="texto_corto cargar_archivo" type="file" name="imagenFeria" id="imagenFeria" accept="image/*">
                     </div>
-                    <div class="area">
-                        <label>Areas:</label>
+                    <div class="item">
+                        <div class="item-texto">
+                            <label>Areas:</label>
+                        </div>
                         <table class="area-tabla" id="areas">
                             <tr>
                                 <td>
@@ -76,7 +78,6 @@
             const newAreaDiv = document.createElement('tr');
             newAreaDiv.id = "area[" + areaIndex + "]";
             newAreaDiv.innerHTML = `
-            <td></td>
             <td>
                 <input type="text" name="area[${areaIndex}]">
                 <button type="button" class="btnClear" onclick="eliminarComponente2('area[${areaIndex}]')">

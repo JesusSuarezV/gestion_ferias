@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet" />
     <link rel="stylesheet" th:href="@{/css/viewProyect.css}" />
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
-</head>
+</head> 
 
 <body>
     <div class="contenedor" id="contenedor">
@@ -36,8 +36,6 @@
                             </form>
                             <a th:href="'/proyecto/' + ${proyecto.id} + '/editar'"><button type="button"
                                     class="editar">Editar</button></a>
-                        </div>
-                        <div class="txt-boton">
                             <a th:href="'/proyecto/' + ${proyecto.id}"><button class="verProyecto">Ver
                                     proyecto</button></a>
                         </div>
