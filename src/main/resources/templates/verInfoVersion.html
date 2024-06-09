@@ -13,8 +13,10 @@
   
 <body>
     <div class="contenedor" id="contenedor">
-        <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
-        <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
+        
+        <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
+        <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
+
         <div class="contenido">
             <div class="contenido-proyecto">
                 <div class="informacion_feria">
@@ -40,6 +42,19 @@
                             </tr>
                         </table>
                     </div>
+
+
+                    <div class="calificar" th:if="${version.archivoUrl != null}">
+                        <a th:href="${version.archivoUrl}" target="_blank" rel="noopener noreferrer">
+                            <div class="boton-registrar">
+                                Ver Formato
+                            </div>
+                        </a>
+                    </div>
+
+                    <br>
+                    <br>
+
                     <div class="calificar"
                         th:if="${!version.cierre} and ${!version.fechaCierre.isBefore(#temporals.createNow().toLocalDate())}">
                         <a th:href="'/version/'+${version.id} + '/registrar'">
