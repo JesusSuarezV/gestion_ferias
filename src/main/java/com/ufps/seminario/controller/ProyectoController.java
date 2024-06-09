@@ -36,6 +36,9 @@ public class ProyectoController {
     @Autowired
     AreaService areaService;
 
+    @Autowired
+    FirebaseService firebaseService;
+
     @GetMapping("/mis_proyectos")
     public String verMisProyectos(Model model) {
         try {
@@ -86,7 +89,11 @@ public class ProyectoController {
             Usuario creadorProyecto = usuarioService.obtenerUsuarioPorUsername(username);
             Proyecto proyectoOriginal = proyectoService.obtenerProyectoPorId(idProyecto);
             proyecto.setVersion(proyectoOriginal.getVersion());
-            proyecto.setArchivo(archivoProyecto.getBytes());
+            if(archivoProyecto != null && archivoProyecto.getBytes().length>0){
+                String fileUrl = firebaseService.uploadFile(archivoProyecto);
+                proyecto.setArchivoUrl(fileUrl);
+            }
+            else proyecto.setArchivoUrl(proyectoOriginal.getArchivoUrl());
             proyecto.setId(idProyecto);
             proyecto.setFechaRegistro(proyectoOriginal.getFechaRegistro());
             proyecto.setJurados(proyectoOriginal.getJurados());

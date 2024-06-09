@@ -49,16 +49,22 @@
                             <td class="columna-desc" th:if="${proyecto.url == ''}"> No posee </td>
                             <td class="columna-desc" th:if="${proyecto.url != ''}" th:text="${proyecto.url}"></td>
                         </tr>
-                        <tr class="fila" th:if="${not #lists.isEmpty(proyecto.archivo)}">
-                            <td class="columna-item">Archivo proyecto:</td>
-                            <td class="columna-desc">
-                                <a th:href="@{/proyecto/archivo/{idProyecto}(idProyecto=${proyecto.id})}">
-                                    <div class="boton-doc">
-                                        Descargar
-                                    </div>
-                                </a>
-                            </td>
-                        </tr>
+                        <th:block th:if="${proyecto.archivoUrl != null}">
+                            <tr class="fila">
+
+                                <td class="columna-item">Archivo proyecto:</td>
+                                <td class="columna-desc">
+
+                                    <a th:href="${proyecto.archivoUrl}" target="_blank" rel="noopener noreferrer">
+                                        <div class="boton-doc">
+                                            Descargar
+                                        </div>
+                                    </a>
+
+                                </td>
+
+                            </tr>
+                        </th:block>
                         <tr class="fila" th:each="integrante, iterStat : ${integrantes}">
                             <td class="columna-item" th:rowspan="${#lists.size(integrantes)}" th:if="${iterStat.first}">
                                 Integrantes: </td>

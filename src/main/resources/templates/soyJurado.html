@@ -14,8 +14,13 @@
 
 <body>
     <div class="contenedor" id="contenedor">
+<<<<<<< HEAD
+        <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
+        <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
+=======
         <div class="header" th:insert="~{@{/fragments/navbar.html}}"></div>
         <div class="menu" th:insert="~{@{/fragments/menu.html}}"></div>
+>>>>>>> a915965836798dd8a5bc0f02119df09fbf089a1d
         <div class="contenido">
             <div class="noFerias" th:if="${#lists.isEmpty(versiones_jurado)}">
                 <h2 class="titulo">¿Dónde soy jurado?</h2>

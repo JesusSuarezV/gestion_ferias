@@ -44,6 +44,9 @@ public class FeriaController {
     @Autowired
     AuspiciadorService auspiciadorService;
 
+    @Autowired
+    FirebaseService firebaseService;
+
     @GetMapping("/")
     public String listarFeriasDisponibles(Model model,
                                   @RequestParam(name = "keyword", required = false) String keyword,
@@ -135,8 +138,11 @@ public class FeriaController {
 
     @PostMapping("/crear")
     public String crearFeria(@ModelAttribute Feria feria, @RequestParam Map<String, String> requestParams,
-                             @RequestParam("imagenFeria") MultipartFile imagen, RedirectAttributes redirectAttributes) {
+                             @RequestParam("imagenFeria") MultipartFile imagen, RedirectAttributes redirectAttributes) throws IOException {
         try {
+            String imageUrl = firebaseService.uploadFile(imagen);
+            System.out.println(imageUrl);
+            feria.setImagenUrl(imageUrl);
             feria.setImagen(imagen.getBytes());
             feria.setFechaCreacion(LocalDate.now());
             feria.setCreador(usuarioService.obtenerUsuarioPorUsername(sesionService.getUsernameFromSession()));
@@ -155,8 +161,9 @@ public class FeriaController {
             redirectAttributes.addFlashAttribute("exito", "Feria creada exitosamente");
             return "redirect:/ferias/mis_ferias";
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             redirectAttributes.addFlashAttribute("error", "Algo falló en la creación");
-            return "redirect:/ferias/mis_ferias";
+            return "redirect:/ferias/mis_ferias?error";
         }
     }
 
@@ -166,7 +173,8 @@ public class FeriaController {
                               RedirectAttributes redirectAttributes) {
         try {
             if(imagen != null && imagen.getBytes().length > 0){
-                feria.setImagen(imagen.getBytes());
+                String imageUrl = firebaseService.uploadFile(imagen);
+                feria.setImagenUrl(imageUrl);
             }
             feria.setFechaCreacion(LocalDate.now());
             feria.setCreador(usuarioService.obtenerUsuarioPorUsername(sesionService.getUsernameFromSession()));
@@ -248,6 +256,10 @@ public class FeriaController {
         try{
             String username = sesionService.getUsernameFromSession();
             Feria feria = feriaService.obtenerFeria(idFeria);
+
+            String urlFile = firebaseService.uploadFile(formatoVersion);
+            version.setArchivoUrl(urlFile);
+
             version.setArchivo(formatoVersion.getBytes());
             version.setFeria(feria);
             version.setEnabled(true);
@@ -280,6 +292,7 @@ public class FeriaController {
             redirectAttributes.addFlashAttribute("exito", "Versión creada exitosamente");
             return "redirect:/ferias/"+idFeria+"/version";
         }catch(Exception e){
+            System.out.println(e.getMessage());
             redirectAttributes.addFlashAttribute("error", "Algo falló en la creación");
             return "redirect:/ferias/"+idFeria+"/version/crear";
         }

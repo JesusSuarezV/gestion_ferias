@@ -48,6 +48,9 @@ public class VersionController {
     @Autowired
     TokenIntegranteService tokenIntegranteService;
 
+    @Autowired
+    FirebaseService firebaseService;
+
     @GetMapping("/{idVersion}")
     public String verVersion(Model model, @PathVariable int idVersion) {
         try {
@@ -95,7 +98,8 @@ public class VersionController {
             Usuario creadorProyecto = usuarioService.obtenerUsuarioPorUsername(username);
             Version version = versionService.obtenerVersion(idVersion);
             //Crear proyecto
-            proyecto.setArchivo(archivoProyecto.getBytes());
+            String fileUrl = firebaseService.uploadFile(archivoProyecto);
+            proyecto.setArchivoUrl(fileUrl);
             proyecto.setVersion(version);
             proyecto.setFechaRegistro(LocalDate.now());
             proyecto.setEnabled(true);
@@ -233,7 +237,13 @@ public class VersionController {
         try {
             String username = sesionService.getUsernameFromSession();
             Feria feria = feriaService.obtenerFeriaByVersion(idVersion);
-            version.setArchivo(formatoVersion.getBytes());
+
+            if (formatoVersion != null && formatoVersion.getBytes().length > 0) {
+
+                String urlFile = firebaseService.uploadFile(formatoVersion);
+                version.setArchivoUrl(urlFile);
+            }
+
             version.setFeria(feria);
             version.setId(idVersion);
             int cantidadDisponible = versionService.obtenerCantidadDisponiblePorFeriayFecha(feria, version.getFechaInicio());

@@ -20,6 +20,8 @@ public class Feria {
 
     private String descripcion;
 
+    private String imagenUrl;
+
     private byte[] imagen;
 
     private LocalDate fechaCreacion;

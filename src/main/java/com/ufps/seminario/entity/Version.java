@@ -27,6 +27,7 @@ public class Version {
     private LocalDate fechaLimite;
     private LocalDate fechaCierre;
     private byte[] archivo;
+    private String archivoUrl;
     private String archivoConentType;
     private boolean cierre;
     private int aprobacion;
