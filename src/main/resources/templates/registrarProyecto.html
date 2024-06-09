@@ -8,7 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/cuadricula.css}">
     <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
-    <link rel="stylesheet" th:href="@{/css/registrarProyecto.css}">
+    <link rel="stylesheet" th:href="@{/css/registros_edicion.css}">
 </head>
 
 <body>
@@ -20,39 +20,42 @@
                 th:action="@{/version/{idVersion}/registrar(idVersion=${version.id})}" method="post"
                 enctype="multipart/form-data">
                 <h2 class="titulo">Registrar Proyecto</h2>
-                <div class="editarProyecto">
+                <div class="formulario_proyecto">
                     <div class="item">
-                        <div class="item-texto">
+                        <div class="item-texto item_obligatiorio">
                             <label for="nombre">Nombre del proyecto:</label>
                         </div>
-                        <textarea name="nombre" id="nombre" required></textarea>
+                        <input class="texto_corto" name="nombre" id="nombre" required></input>
                     </div>
                     <div class="item">
-                        <div class="item-texto">
+                        <div class="item-texto item_obligatiorio">
                             <label for="descripcion">Descripcion:</label>
                         </div>
-                        <textarea name="descripcion" id="descripcion" required></textarea>
+                        <textarea class="texto_largo" rows="5" name="descripcion" id="descripcion" required></textarea>
                     </div>
                     <div class="item">
-                        <div class="item-texto">
+                        <div class="item-texto item_obligatiorio">
                             <label for="objetivos">Objetivo:</label>
                         </div>
-                        <textarea name="objetivos" id="objetivos" required></textarea>
+                        <textarea class="texto_largo" rows="5" name="objetivos" id="objetivos" required></textarea>
                     </div>
                     <div class="item">
                         <div class="item-texto">
                             <label for="url">URL video:</label>
                         </div>
-                        <input type="text" name="url" id="url">
+                        <input class="texto_corto" type="text" name="url" id="url">
                     </div>
-                    <div class="item item">
-                        <div class="item-texto">
+                    <div class="item">
+                        <div class="item-texto item_obligatiorio">
                             <label for="archivoProyecto">Archivo proyecto:</label>
                         </div>
-                        <input type="file" name="archivoProyecto" id="archivoProyecto" accept="application/pdf">
+                        <input class="cargar_archivo" type="file" name="archivoProyecto" id="archivoProyecto"
+                            accept="application/pdf">
                     </div>
                     <div class="integrantes">
-                        <label>Integrantes:</label>
+                        <div class="item-texto">
+                            <label>Integrantes:</label>
+                        </div>
                         <table class="integrante" id="integrantes">
                             <tr>
                                 <td>
@@ -63,7 +66,9 @@
                         </table>
                     </div>
                     <div class="area" th:if="${not #lists.isEmpty(areas)}">
-                        <label for="areasSelect">Areas:</label>
+                        <div class="item-texto">
+                            <label for="areasSelect">Areas:</label>
+                        </div>
                         <div class="elegir-area">
                             <select class="areasSeleccion" id="areasSelect">
                                 <option th:each="area : ${areas}" th:value="${area.id}" th:text="${area.nombre}">
@@ -131,26 +136,26 @@
             let nombre = selectedOption.text;
 
             let selectedAreas = document.getElementById('areasSeleccionadas');
-        let newArea = document.createElement('tr');
-        let newTd = document.createElement('td');
-        let newText = document.createElement('h3');
-        newText.textContent = nombre;
-        newText.className = 'nombre-area';
-        newArea.id = "area["+id+"]";
+            let newArea = document.createElement('tr');
+            let newTd = document.createElement('td');
+            let newText = document.createElement('h3');
+            newText.textContent = nombre;
+            newText.className = 'nombre-area';
+            newArea.id = "area[" + id + "]";
 
-        // Crear un botón para remover el área
-        let removeButton = document.createElement('button');
-        removeButton.textContent = 'X';
-        removeButton.type = 'button';
-        removeButton.className = 'btnClear';
-        removeButton.onclick = function() {
-            selectedAreas.removeChild(newArea);
-        };
+            // Crear un botón para remover el área
+            let removeButton = document.createElement('button');
+            removeButton.textContent = 'X';
+            removeButton.type = 'button';
+            removeButton.className = 'btnClear';
+            removeButton.onclick = function () {
+                selectedAreas.removeChild(newArea);
+            };
 
-        newTd.appendChild(newText);
-        newTd.appendChild(removeButton);
-        newArea.appendChild(newTd);
-        selectedAreas.appendChild(newArea);
+            newTd.appendChild(newText);
+            newTd.appendChild(removeButton);
+            newArea.appendChild(newTd);
+            selectedAreas.appendChild(newArea);
 
             // Agregar un campo oculto para enviar el ID al backend
             let hiddenInput = document.createElement('input');

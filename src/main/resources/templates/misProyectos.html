@@ -11,7 +11,7 @@
     <link rel="stylesheet" th:href="@{/css/viewProyect.css}" />
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
 </head>
- 
+
 <body>
     <div class="contenedor" id="contenedor">
         <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
@@ -26,7 +26,6 @@
             <div class="proyectos" th:if="${not #lists.isEmpty(proyectosActuales)}">
                 <div class="cuadro" th:each="proyecto : ${proyectosActuales}">
                     <div class="cua">
-                        <img class="icon" th:src="@{/img/proyectt.png}">
                         <div class="txt" th:text="${proyecto.nombre}"></div>
                     </div>
                     <div class="botones">
@@ -53,7 +52,6 @@
             <div class="siProyect" th:if="${not #lists.isEmpty(proyectosPasados)}">
                 <div class="cuadro" th:each="proyecto : ${proyectosPasados}">
                     <div class="cua">
-                        <img class="icon" th:src="@{/img/proyectt.png}">
                         <div class="txt" th:text="${proyecto.nombre}"></div>
                     </div>
                     <div class="botones-2">

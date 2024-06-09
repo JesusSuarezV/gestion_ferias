@@ -1,6 +1,6 @@
-*{
+* {
     font-family: 'League Spartan', sans-serif;
-  }  
+}
 
 .contenido-proyecto {
     width: 90%;
@@ -10,6 +10,7 @@
     margin-top: 30px;
     margin-bottom: 30px;
     grid-gap: 30px;
+    justify-items: center;
 }
 
 .contenido {
@@ -18,16 +19,18 @@
     align-items: center;
 }
 
-.informacion_feria{
-    background-color: #D9D9D9;
+.informacion_feria {
+    background-color: #ecececaf;
     padding: 30px;
+    box-shadow: 2px 5px 14px -8px rgba(0, 0, 0, 0.71);
+    -webkit-box-shadow: 2px 5px 14px -8px rgba(0, 0, 0, 0.71);
+    -moz-box-shadow: 2px 5px 14px -8px rgba(0, 0, 0, 0.71);
     border-radius: 5px;
 }
 
 .tabla {
     text-align: left;
     border-collapse: collapse;
-    margin-top: 30px;
 }
 
 .tabla-informacion {
@@ -37,22 +40,27 @@
     width: 100%;
 }
 
+.fila {
+    height: 40px;
+    vertical-align: middle;
+}
+
 .boton-registrar {
     display: flex;
     font-size: 16px;
     align-items: center;
     height: 30px;
     width: max-content;
-    margin-right: 10px;
     border-radius: 5px;
     cursor: pointer;
     color: white;
     background-color: #002948;
     padding: 5px 15px;
+    margin-top: 15px;
 }
 
 /*Proyectos de una version*/
-.siProyect{
+.siProyect {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -60,7 +68,22 @@
 
 }
 
-.ver_proyecto{
+.calificar {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+.tabla td {
+    font-size: 18px;
+}
+
+.calificar a{
+    text-decoration: none;
+}
+
+.ver_proyecto {
     display: flex;
     font-size: 16px;
     align-items: center;
@@ -75,47 +98,32 @@
     border: none;
 }
 
-.boton_ver a{
+.boton_ver a {
     text-decoration: none;
 }
 
-.item_lista{
+.lista_proyectos{
+    width: 90%;
+}
+
+.item_lista {
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 80%;
+    width: -webkit-fill-available;
     background-color: #D9D9D9;
     border-radius: 5px;
+    box-shadow: 2px 5px 14px -8px rgba(0, 0, 0, 0.71);
+    -webkit-box-shadow: 2px 5px 14px -8px rgba(0, 0, 0, 0.71);
+    -moz-box-shadow: 2px 5px 14px -8px rgba(0, 0, 0, 0.71);
     margin-bottom: 30px;
     justify-content: space-between;
     padding: 20px;
-}
+} 
 
-/*idk*/
-
-.fila {
-    height: 40px;
-    vertical-align: middle;
-}
-
-.boton-doc {
-    background-color: #D9D9D9;
-    width: 120px;
-    display: flex;
-    color: #002948;
-    align-items: center;
-    justify-content: center;
-    height: 35px;
-    border-radius: 20px;
-    cursor: pointer;
-}
 
 .columna-desc a {
     text-decoration: none;
-}
-
-.tabla td {
-    font-size: 18px;
 }
 
 .columna-item {
@@ -126,215 +134,13 @@
 
 .nombre-proyecto {
     color: #002948;
-
+    width: 90%;
+    overflow-wrap: normal;
 }
 
 .proyecto {
     color: #002948;
     margin-top: 30px;
-}
-
-.objetivo {
-    color: #002948;
-}
-
-.descripcion-proyecto {
-    text-align: justify;
-    font-size: 20px;
-}
-
-.descripcion-objetivo {
-    text-align: justify;
-    font-size: 20px;
-}
-
-.calificar {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
-}
-
-.boton-calificar {
-    color: white;
-    background-color: #002948;
-    font-size: 20px;
-    width: 150px;
-    height: 40px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-
-.columna-eliminar {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.eliminar {
-    margin-left: 30px;
-    background-color: #D30000;
-    color: white;
-    font-weight: bold;
-    height: 20px;
-    width: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 100%;
-    cursor: pointer;
-    border: none;
-}
-
-.boton-agregar {
-    background-color: #D9D9D9;
-    width: 170px;
-    display: flex;
-    color: #002948;
-    align-items: center;
-    justify-content: center;
-    height: 35px;
-    border-radius: 20px;
-    cursor: pointer;
-}
-
-
-
-/* Estilo del Modal */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.4);
-    padding-top: 60px;
-}
-
-.modal-content {
-    background-color: #D9D9D9;
-    margin: 5% auto;
-    padding: 20px;
-    border: 1.5px solid #002948;
-    border-radius: 30px;
-    width: 35%;
-    height: 180px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-}
-
-.contenido-modal{
-    width: 90%;
-}
-
-.modal-content p {
-    font-size: 20px;
-    width: 85%;
-}
-
-.boton-a {
-    color: white;
-    background-color: #002948;
-    font-size: 18px;
-    width: 130px;
-    height: 40px;
-    border-radius: 20px;
-    display: flex;
-    border: none;
-    align-items: center;
-    justify-content: center;
-}
-
-.boton-a:hover,
-.boton-a:focus {
-    background-color: #4F6E85;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.botones {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    width: 100%;
-    margin-top: 20px;
-}
-
-.correo-jurado {
-    width: 100%;
-    height: 30px;
-    font-size: 20px;
-    border-radius: 20px;
-    border: none;
-}
-
-/**/
-
-hr {
-    margin-top: 5px;
-}
-
-.cua {
-    font-weight: bold;
-    color: #002948;
-    display: flex;
-    align-items: center;
-}
-
-
-.cuadro {
-    display: flex;
-    flex-direction: column;
-    background-color: rgb(148, 167, 182, 0.41);
-    box-shadow: 1px 1px 4px #002948;
-    border-radius: 30px;
-    padding: 20px;
-    width: 240px;
-    margin-top: 20px;
-}
-
-
-.calificar a {
-    text-decoration: none;
-}
-
-.icon {
-    width: 80px;
-    height: 80px;
-}
-
-.txt {
-    text-align: left;
-    margin-left: 10px;
-}
-
-.txt-u{ 
-    text-align: left;
-    margin-left: 10px;
-    overflow-wrap: break-word;
-}
-
-.verProyecto {
-    text-align: center;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    color: white;
-    font-size: 16px;
-    background-color: #002948;
-    width: 130px;
-    margin-top: 10px;
 }
 
 .no-hay-proyectos {

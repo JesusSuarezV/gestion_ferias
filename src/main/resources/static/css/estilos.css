@@ -129,7 +129,12 @@
     padding: 10px 6px;
 }
 
-.elemento-2:hover{
+.elemento-2 a{
+    text-decoration: none;
+    color: #002948;
+}
+
+.elemento-2 a:hover{
     color: #4F6E85;
     transition: 0.5s;
 }

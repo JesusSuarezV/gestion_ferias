@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet" />
     <link rel="stylesheet" th:href="@{/css/feriasCreadas.css}" />
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
-</head>
+</head> 
 <body>
  
 <div class="contenedor" id="contenedor">
@@ -32,7 +32,7 @@
                         <img th:src="@{/ferias/imagen/{idFeria}(idFeria=${feria.id})}" alt="">
                     </div>
                     <div class="info">
-                        <p th:text="${feria.nombre}"></p>
+                        <h3 class="titulo_feria" th:text="${feria.nombre}"></h3>
                         <div class="botones">
                             <a th:href="'/ferias/' + ${feria.id} + '/editar'">
                                 <button class="edit">Editar</button>

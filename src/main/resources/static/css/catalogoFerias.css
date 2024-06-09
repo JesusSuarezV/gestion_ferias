@@ -171,6 +171,9 @@ h3 {
     align-items: center;
     width: 80%;
     background-color: #D9D9D9;
+    box-shadow: 2px 5px 14px -8px rgba(0, 0, 0, 0.71);
+    -webkit-box-shadow: 2px 5px 14px -8px rgba(0, 0, 0, 0.71);
+    -moz-box-shadow: 2px 5px 14px -8px rgba(0, 0, 0, 0.71);
     border-radius: 5px;
     margin-bottom: 30px;
     justify-content: space-between;

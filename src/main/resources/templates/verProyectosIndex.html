@@ -7,12 +7,12 @@
     <link rel="stylesheet" th:href="@{/css/verEventosIndex.css}">
     <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
     <title>Ver proyectos</title>
-</head>
+</head> 
  
 <body>
 <div class="navegacion" th:insert="~{@{fragments/navIndex.html}}"></div>
 <div class="contenedor">
-    <form class="busqueda" th:action="@{/eventos/{idVersion}/proyectos/search(idVersion=${version.id})}" method="get">
+    <form class="buscador" th:action="@{/eventos/{idVersion}/proyectos/search(idVersion=${version.id})}" method="get">
         <div class="busqueda">
             <input class="texto-buscar" type="text" name="keyword" placeholder="Ingrese su consulta"/>
         </div>

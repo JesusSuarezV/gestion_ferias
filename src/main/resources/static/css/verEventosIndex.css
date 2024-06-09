@@ -50,14 +50,15 @@ body {
     transition: 300ms;
 }
 
-.texto-buscar {
-    background-color: white;
-    border: none;
-    height: 25px;
-    font-size: 18px;
+.buscador {
+    margin-top: 30px;
+    display: flex;
+    padding: 3px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    border-radius: 10px;
-    letter-spacing: 1.5px;
+    border-radius: 5px;
 }
 
 .busqueda {
@@ -66,16 +67,30 @@ body {
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
-    background-color: white;
-    width: 60%;
+    width: 50%;
     border-radius: 35px;
 }
 
-.busqueda img {
+.texto-buscar {
+    background-color: white;
+    border: none;
+    height: 30px;
+    font-size: 16px;
+    width: 100%;
+    border-radius: 5px;
+    letter-spacing: 1.5px;
+}
+
+.busqueda input{
+    padding: 5px 10px;
+    font-size: 20px;
+}
+
+.imagen-lupa img {
     height: 25px;
     width: auto;
 }
-
+ 
 .imagen-lupa button{
     background-color: #4F6E85;
     width: 35px;
@@ -84,10 +99,10 @@ body {
     align-items: center;
     justify-content: center;
     border-radius: 100%;
+    margin-left: 5px;
     cursor: pointer;
     border: none;
 }
-
 
 .contenedor {
     margin-top: 80px;
@@ -111,7 +126,7 @@ body {
     padding: 10px;
 }
 
-.final{
+.final {
     height: 40px;
 }
 
@@ -119,8 +134,11 @@ body {
     height: 230px;
     width: 350px;
     background-color: white;
-    border-radius: 30px;
+    border-radius: 5px;
     box-shadow: #182835;
+    box-shadow: 2px 5px 14px -8px rgba(0, 0, 0, 0.71);
+    -webkit-box-shadow: 2px 5px 14px -8px rgba(0, 0, 0, 0.71);
+    -moz-box-shadow: 2px 5px 14px -8px rgba(0, 0, 0, 0.71);
 }
 
 .info-feria {
@@ -137,7 +155,7 @@ body {
     border: none;
     background-color: #002948;
     color: white;
-    border-radius: 30px;
+    border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
 }
@@ -149,13 +167,13 @@ body {
     overflow: hidden;
 }
 
-.imagen img{
+.imagen img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     position: absolute;
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .info-feria h3 {
@@ -164,15 +182,15 @@ body {
 
 /*Ver proyectos*/
 
-.contenedor-2{
+.contenedor-2 {
     display: grid;
-    grid-template-columns: 70% 30%; 
+    grid-template-columns: 70% 30%;
     width: 80%;
     column-gap: 35px;
     height: 100vh;
 }
 
-.rectangulo{
+.rectangulo {
     background-color: #D9D9D9;
     width: 95%;
     height: fit-content;
@@ -181,34 +199,34 @@ body {
     justify-content: center;
     align-items: center;
     margin-top: 20px;
-    border-radius: 18px;
+    border-radius: 5px;
 }
 
-.texto{
+.texto {
     font-size: 20px;
     color: black;
 }
 
-.cuadro-descripcion{
+.cuadro-descripcion {
     display: flex;
     justify-content: center;
 }
 
-.descripcion{
+.descripcion {
     background-color: white;
     margin-top: 30px;
     width: 100%;
     height: fit-content;
     padding: 20px;
-    border-radius: 20px;
+    border-radius: 5px;
 }
 
-.descripcion-feria{
+.descripcion-feria {
     margin-top: 10px;
     font-size: 18px;
 }
 
-.titulo-feria{
+.titulo-feria {
     font-size: 19px;
 }
 
@@ -229,7 +247,7 @@ body {
     width: 40px;
     background-color: #D9D9D9;
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: 20px;
 }
 
