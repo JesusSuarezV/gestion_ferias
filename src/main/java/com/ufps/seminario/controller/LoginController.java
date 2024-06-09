@@ -6,6 +6,8 @@ import com.ufps.seminario.service.SesionService;
 import com.ufps.seminario.service.UsuarioService;
 import com.ufps.seminario.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -33,7 +35,12 @@ public class LoginController {
     @GetMapping("/")
     public String index(){
 
-        return "index";
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated() || auth.getPrincipal().equals("anonymousUser")) {
+            return "index";
+        }
+
+        return "redirect:/Inicio";
     }
 
     @GetMapping("/test")
