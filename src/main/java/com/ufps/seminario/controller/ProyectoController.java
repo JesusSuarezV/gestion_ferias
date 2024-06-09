@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/proyecto")
@@ -193,6 +194,15 @@ public class ProyectoController {
             model.addAttribute("areas", proyecto.getAreas());
             model.addAttribute("integrantes", integrantes);
             model.addAttribute("rolObj", usuarioService.obtenerUsuarioPorUsername(username).getRole());
+
+            boolean creador = false;
+
+            if (Objects.equals(proyecto.getVersion().getFeria().getCreador().getUsername(), sesionService.getUsernameFromSession())){
+                creador = true;
+            }
+
+            model.addAttribute(creador);
+
             boolean ok = !proyecto.getVersion().isCierre() && proyecto.getVersion().isEnabled()
             && !LocalDate.now().isAfter(proyecto.getVersion().getFechaCierre()) && proyecto.getVersion().getFeria().isEnabled();
             model.addAttribute("asignacion", ok);

@@ -100,7 +100,7 @@
                             <tr class="fila" id="mainRow" th:each="jurado, iterStat : ${jurados}">
                                 <td class="columna-desc columna-eliminar">
                                     <span th:text="${jurado.username}"></span>
-                                    <form th:if="${rolObj.id != 1}"
+                                    <form th:if="${rolObj.id != 1} and ${asignacion} and ${creador}"
                                         th:action="@{/proyecto/{idProyecto}/jurado/eliminar(idProyecto=${proyecto.id})}"
                                         method="post" enctype="multipart/form-data">
                                         <input type="hidden" name="juradoCorreo" th:value="${jurado.username}" required>
@@ -108,7 +108,7 @@
                                     </form>
                                 </td>
                             </tr>
-                            <tr class="fila" th:if="${rolObj.id != 1} and ${asignacion}">
+                            <tr class="fila" th:if="${rolObj.id != 1} and ${asignacion} and ${creador}">
                                 <td class="columna-desc">
                                     <div class="boton-agregar">
                                         Asignar jurado
