@@ -11,6 +11,8 @@ import java.util.List;
 
 public interface VersionService {
 
+    boolean estaCerrado(Version version);
+
     public Page<Version> listarVersiones(Feria feria, Pageable pageable);
 
     public Version obtenerVersion(int id);

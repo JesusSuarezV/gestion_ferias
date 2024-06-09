@@ -62,9 +62,9 @@ public class FeriaController {
             System.out.println(feria.getNombre());
         }
 
-        for(Feria feria:feriasPagina.getContent()){
-            System.out.println(feria.getNombre());
-        }
+//        for(Feria feria:feriasPagina.getContent()){
+//            System.out.println(feria.getNombre());
+//        }
         model.addAttribute("username", username);
         model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
 
@@ -292,7 +292,6 @@ public class FeriaController {
             redirectAttributes.addFlashAttribute("exito", "Versión creada exitosamente");
             return "redirect:/ferias/"+idFeria+"/version";
         }catch(Exception e){
-            System.out.println(e.getMessage());
             redirectAttributes.addFlashAttribute("error", "Algo falló en la creación");
             return "redirect:/ferias/"+idFeria+"/version/crear";
         }

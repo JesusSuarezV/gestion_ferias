@@ -10,4 +10,5 @@ public interface IntegranteService {
     public List<Integrante> obtenerIntegrantePorProyecto(Proyecto proyecto);
     public Integrante obtenerIntegrantePorId(int id);
     public void eliminarIntegrante(Integrante integrante);
+    public boolean esIntegrante(Proyecto proyecto, String username);
 }

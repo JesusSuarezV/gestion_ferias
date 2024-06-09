@@ -85,7 +85,9 @@ public class VersionServiceImpl implements VersionService {
     public List<Version> obtenerVersionesPorJurado(Usuario usuario) {
         List<Integer> ids = new ArrayList<>();
         for(Proyecto proyecto: usuario.getProyectosCalificar()){
-            ids.add(proyecto.getVersion().getId());
+            if(!this.estaCerrado(proyecto.getVersion())){
+                ids.add(proyecto.getVersion().getId());
+            }
         }
         return versionRepository.findByIdIn(ids);
     }
@@ -123,6 +125,13 @@ public class VersionServiceImpl implements VersionService {
         return LocalDate.now().isAfter(version.getFechaCierre()) || version.isCierre();
     }
 
+    @Override
+    public boolean estaCerrado(Version version) {
+        return LocalDate.now().isAfter(version.getFechaCierre())
+                || version.isCierre()
+                || !version.getFeria().isEnabled()
+                || !version.isEnabled();
+    }
 
     @Override
     public Page<Version> listarVersiones(Feria feria, Pageable pageable) {
