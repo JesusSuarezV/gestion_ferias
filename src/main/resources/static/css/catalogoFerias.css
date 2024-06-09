@@ -34,7 +34,7 @@
 h3 {
     color: #4F6E85;
 }
-
+ 
 .texto-buscar {
     background-color: #D9D9D9;
     border: none;
@@ -63,7 +63,7 @@ h3 {
     justify-content: space-evenly;
     align-items: center;
     width: 50%;
-    border-radius: 35px;
+    border-radius: 5px;
 }
 
 .busqueda input{
