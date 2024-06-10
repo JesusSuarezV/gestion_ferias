@@ -81,6 +81,11 @@ body {
     letter-spacing: 1.5px;
 }
 
+.nav-menu a{
+    text-decoration: none;
+    color: white;
+}
+
 .busqueda input{
     padding: 5px 10px;
     font-size: 20px;
@@ -196,7 +201,7 @@ body {
     height: fit-content;
     padding: 20px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     margin-top: 20px;
     border-radius: 5px;
