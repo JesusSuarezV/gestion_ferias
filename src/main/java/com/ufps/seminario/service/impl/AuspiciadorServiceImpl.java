@@ -21,7 +21,7 @@ public class AuspiciadorServiceImpl implements AuspiciadorService {
 
     @Override
     public List<Auspiciador> obtenerAuspiciadorPorVersion(Version version) {
-        return auspiciadorRepository.findByVersion(version);
+        return auspiciadorRepository.findByVersionAndEnabled(version, true);
     }
 
     @Override
