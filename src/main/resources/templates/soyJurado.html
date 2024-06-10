@@ -60,7 +60,14 @@
                 </div>
             </div>
 
-
+            <div th:if="${exito}" class="ventanita ventana-verde" id="notification">
+                <p><span th:text="${exito}"></span></p>
+                <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
+            </div>
+            <div th:if="${error}" class="ventanita-roja" id="notification">
+                <p><span th:text="${error}"></span></p>
+                <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
+            </div>
         </div>
     </div>
     <script th:src="@{/js/menu.js}"></script>
@@ -80,6 +87,7 @@
         document.getElementById('btn-open').addEventListener("click", open_close_menu);
 
     </script>
+    <script th:src="@{/js/script.js}"></script>
 </body>
 
 </html>

@@ -241,7 +241,8 @@ public class ProyectoController {
             return "verInformacionProyecto";
         }catch(Exception e){
             redirectAttributes.addFlashAttribute("error", "Algo falló al cargar el proyecto, raro");
-            return "redirect/mis_proyectos";
+            System.out.println(e.getMessage());
+            return "redirect:/proyecto/mis_proyectos";
         }
     }
 

@@ -38,7 +38,8 @@ public class VersionServiceImpl implements VersionService {
             if((keyword == null || keyword.isEmpty()  || nombre.toLowerCase().contains(keyword.toLowerCase()))
                     && !fecha.isAfter(fechaCierre)
                     && !cerrada
-                    && integranteLista.getProyecto().getVersion().getFeria().isEnabled()){
+                    && integranteLista.getProyecto().getVersion().getFeria().isEnabled()
+                    && integranteLista.isEnabled()){
                 ids.add(integranteLista.getProyecto().getVersion().getId());
             }
         }
@@ -58,7 +59,8 @@ public class VersionServiceImpl implements VersionService {
             boolean cerrada = integranteLista.getProyecto().getVersion().isCierre();
             if((keyword == null || keyword.isEmpty()  || nombre.toLowerCase().contains(keyword.toLowerCase()))
                     && (fecha.isAfter(fechaCierre) || cerrada)
-                    && integranteLista.getProyecto().getVersion().getFeria().isEnabled()){
+                    && integranteLista.getProyecto().getVersion().getFeria().isEnabled()
+                    && integranteLista.isEnabled()){
                 ids.add(integranteLista.getProyecto().getVersion().getId());
             }
         }
