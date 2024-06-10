@@ -30,7 +30,7 @@ public class IntegranteServiceImpl implements IntegranteService {
 
     @Override
     public List<Integrante> obtenerIntegrantePorProyecto(Proyecto proyecto) {
-        return integranteRepository.findByProyecto(proyecto);
+        return integranteRepository.findByProyectoAndEnabled(proyecto, true);
     }
 
     @Override

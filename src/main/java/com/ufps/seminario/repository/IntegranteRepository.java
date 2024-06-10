@@ -10,4 +10,6 @@ import java.util.List;
 public interface IntegranteRepository extends JpaRepository<Integrante, Integer> {
     List<Integrante> findByCorreoRegistro(String correoRegistro);
     List<Integrante> findByProyecto(Proyecto proyecto);
+
+    List<Integrante> findByProyectoAndEnabled(Proyecto proyecto, boolean a);
 }
