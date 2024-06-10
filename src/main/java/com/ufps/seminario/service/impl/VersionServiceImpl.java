@@ -47,7 +47,8 @@ public class VersionServiceImpl implements VersionService {
                     && !cerrada
                     && integranteLista.getProyecto().getVersion().getFeria().isEnabled()
                     && integranteLista.isEnabled()
-                    && integranteLista.getProyecto().getVersion().isEnabled()){
+                    && integranteLista.getProyecto().getVersion().isEnabled()
+                    && integranteLista.getProyecto().isEnabled()){
                 ids.add(integranteLista.getProyecto().getVersion().getId());
             }
         }
@@ -69,7 +70,8 @@ public class VersionServiceImpl implements VersionService {
                     && (fecha.isAfter(fechaCierre) || cerrada)
                     && integranteLista.getProyecto().getVersion().getFeria().isEnabled()
                     && integranteLista.isEnabled()
-                    && integranteLista.getProyecto().getVersion().isEnabled()){
+                    && integranteLista.getProyecto().getVersion().isEnabled()
+                    && integranteLista.getProyecto().isEnabled()){
                 ids.add(integranteLista.getProyecto().getVersion().getId());
             }
         }
