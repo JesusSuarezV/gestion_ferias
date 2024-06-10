@@ -12,14 +12,14 @@
     align-items: center;
 }
 
-.info-contenido { 
+.info-contenido {
     width: 90%;
     height: fit-content;
     display: flex;
     flex-direction: column;
 }
 
-.foto-boton{
+.foto-boton {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -34,7 +34,7 @@
 h3 {
     color: #4F6E85;
 }
- 
+
 .texto-buscar {
     background-color: #D9D9D9;
     border: none;
@@ -66,7 +66,7 @@ h3 {
     border-radius: 5px;
 }
 
-.busqueda input{
+.busqueda input {
     padding: 5px 10px;
     font-size: 20px;
 }
@@ -75,8 +75,8 @@ h3 {
     height: 25px;
     width: auto;
 }
- 
-.imagen-lupa button{
+
+.imagen-lupa button {
     background-color: #4F6E85;
     width: 35px;
     height: 35px;
@@ -120,7 +120,7 @@ h3 {
     padding: 5px 15px;
 }
 
-.ver-evento{
+.ver-evento {
     display: flex;
     justify-content: center;
     font-size: 16px;
@@ -133,39 +133,7 @@ h3 {
     border: none;
 }
 
-.paginacion {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    margin-top: 30px;
-    margin-bottom: 30px;
-}
-
-.page-btn,
-.page-number {
-    margin: 0 5px;
-    padding: 5px 10px;
-    border: none;
-    height: 40px;
-    width: 40px;
-    background-color: #D9D9D9;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 20px;
-}
-
-.page-number.active {
-    background-color: #6A8BA4;
-    color: white;
-}
-
-.photo img{
-    height: 50px;
-    width: auto;
-}
-
-.item_lista{
+.item_lista {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -180,17 +148,17 @@ h3 {
     padding: 20px;
 }
 
-.informacion_feria{
+.informacion_feria {
     display: flex;
     flex-direction: column;
     width: 80%;
 }
 
-.informacion{
+.informacion {
     width: 270px;
 }
 
-.ferias_disponibles{
+.ferias_disponibles {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -201,4 +169,37 @@ h3 {
     text-align: left;
     vertical-align: middle;
     height: 25px;
- }
+}
+
+/*Paginación*/
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.pagination button {
+    margin: 0 5px;
+    padding: 10px 15px;
+    background-color: #4F6E85;
+    cursor: pointer;
+    border-radius: 3px;
+    border: none;
+}
+
+.pagination button.active {
+    background-color: #002948;
+    color: white;
+}
+
+.pagination button:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+}
+
+.photo img {
+    height: 50px;
+    width: auto;
+}

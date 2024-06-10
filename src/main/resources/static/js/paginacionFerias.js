@@ -1,14 +1,14 @@
 let paginaActual = 1;
 const elementosPorPagina = 5; 
-const items = document.querySelectorAll('.info-contenido .rectangulo');
-const paginacionContainer = document.getElementById('paginacion');
+const items = document.querySelectorAll('.item_lista');
+const paginacionContainer = document.getElementById('pagination');
 
 function mostrarPagina(pagina) {
     const inicio = (pagina - 1) * elementosPorPagina;
     const fin = pagina * elementosPorPagina;
 
     items.forEach((item, indice) => {
-        item.style.display = (indice >= inicio && indice < fin) ? 'block' : 'none';
+        item.style.display = (indice >= inicio && indice < fin) ? 'flex' : 'none';
     });
 
     actualizarPaginacion(pagina);
@@ -17,6 +17,8 @@ function mostrarPagina(pagina) {
 function actualizarPaginacion(pagina) {
     paginacionContainer.innerHTML = '';
     const totalPaginas = Math.ceil(items.length / elementosPorPagina);
+
+    if (totalPaginas <= 1) return;
 
     if (pagina > 1) {
         const firstButton = document.createElement('button');

@@ -32,7 +32,7 @@
                         </div>
                     </form>
                     <div class="ferias_disponibles">
-                        <div class="item_lista" data-feria="1" th:each="version : ${versiones}">
+                        <div id="content" class="item_lista" data-feria="1" th:each="version : ${versiones}">
                             <div class="informacion_feria">
                                 <div class="nombre" th:text="${version.feria.nombre}"></div>
                                 <table class="informacion">
@@ -58,20 +58,13 @@
                                 </a>
                             </div>
                         </div>
-                        <!-- Agregar más divs de feria aquí -->
-                    </div>
-                    <div class="paginacion">
-                        <button id="firstPage" class="page-btn"><<</button>
-                        <button id="prevPage" class="page-btn"><</button>
-                        <span id="pageNumbers" class="page-numbers"></span>
-                        <button id="nextPage" class="page-btn">></button>
-                        <button id="lastPage" class="page-btn">>></button>
                     </div> 
+                    <div id="pagination" class="pagination"></div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="@{/js/pagination.js}"></script>
+    <script th:src="@{/js/paginacionFerias.js}"></script>
     <script th:src="@{/js/menu.js}"></script>
     <script>
         //Despliegue del menu principal

@@ -27,7 +27,7 @@
                 <a th:href="'/eventos/' + ${version.id} + '/proyectos/' + ${proyecto.id}"><p class="texto" th:text="${proyecto.nombre}"></p>
                 </a>
             </div>
-            <div class="paginacion" id="paginacion"></div>
+            <div id="pagination" class="pagination"></div>
         </div>
         <div class="cuadro-descripcion">
             <div class="descripcion">
@@ -41,7 +41,7 @@
         </div>
     </div>
 </div>
-<script th:src="@{/js/paginacionIndex.js}"></script>
+<script th:src="@{/js/paginacionFerias.js}"></script>
 </body>
 
 </html>
