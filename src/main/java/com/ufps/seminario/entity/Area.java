@@ -22,4 +22,12 @@ public class Area {
     @JoinColumn(name = "feria_id")
     private Feria feria;
     private boolean enabled;
+
+    @Override
+    public boolean equals(Object obj){
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        final Area other = (Area)obj;
+        return other.getId() == this.id;
+    }
 }

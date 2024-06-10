@@ -43,5 +43,15 @@ public class IntegranteServiceImpl implements IntegranteService {
         integranteRepository.delete(integrante);
     }
 
+    @Override
+    public boolean esIntegrante(Proyecto proyecto, String username) {
+        List<Integrante> integrantes = this.obtenerIntegrantePorProyecto(proyecto);
+        boolean esIntegrante = false;
+        for(Integrante integrante: integrantes){
+            esIntegrante = integrante.getCorreoRegistro().equals(username);
+        }
+        return esIntegrante;
+    }
+
 
 }
