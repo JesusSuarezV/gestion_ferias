@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface AuspiciadorRepository extends JpaRepository<Auspiciador, Integer> {
     List<Auspiciador> findByVersion(Version version);
+
+    List<Auspiciador> findByVersionAndEnabled(Version version, boolean b);
 }

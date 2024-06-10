@@ -46,7 +46,8 @@ public class VersionServiceImpl implements VersionService {
                     && !fecha.isAfter(fechaCierre)
                     && !cerrada
                     && integranteLista.getProyecto().getVersion().getFeria().isEnabled()
-                    && integranteLista.isEnabled()){
+                    && integranteLista.isEnabled()
+                    && integranteLista.getProyecto().getVersion().isEnabled()){
                 ids.add(integranteLista.getProyecto().getVersion().getId());
             }
         }
@@ -67,7 +68,8 @@ public class VersionServiceImpl implements VersionService {
             if((keyword == null || keyword.isEmpty()  || nombre.toLowerCase().contains(keyword.toLowerCase()))
                     && (fecha.isAfter(fechaCierre) || cerrada)
                     && integranteLista.getProyecto().getVersion().getFeria().isEnabled()
-                    && integranteLista.isEnabled()){
+                    && integranteLista.isEnabled()
+                    && integranteLista.getProyecto().getVersion().isEnabled()){
                 ids.add(integranteLista.getProyecto().getVersion().getId());
             }
         }
@@ -83,7 +85,8 @@ public class VersionServiceImpl implements VersionService {
         for(Version version: versiones){
             String nombre = version.getFeria().getNombre();
             if((keyword == null || keyword.isEmpty()  || nombre.toLowerCase().contains(keyword.toLowerCase()) && version.isEnabled())
-              && version.getFeria().isEnabled()){
+              && version.getFeria().isEnabled()
+              && version.isEnabled()){
                 versionesTerminadas.add(version);
             }
         }
@@ -94,7 +97,7 @@ public class VersionServiceImpl implements VersionService {
     public List<Version> obtenerVersionesPorJurado(Usuario usuario) {
         List<Integer> ids = new ArrayList<>();
         for(Proyecto proyecto: usuario.getProyectosCalificar()){
-            if(!this.estaCerrado(proyecto.getVersion())){
+            if(!this.estaCerrado(proyecto.getVersion()) && proyecto.isEnabled()){
                 ids.add(proyecto.getVersion().getId());
             }
         }
@@ -121,7 +124,8 @@ public class VersionServiceImpl implements VersionService {
             boolean cerrada = version.isCierre();
             if((keyword == null || keyword.isEmpty()  || nombre.toLowerCase().contains(keyword.toLowerCase()))
                     && (!now.isAfter(fechaLimite) && !cerrada)
-                    && version.getFeria().isEnabled()){
+                    && version.getFeria().isEnabled()
+                    && version.isEnabled()){
                 versionesDisponibles.add(version);
             }
         }
