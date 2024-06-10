@@ -27,7 +27,7 @@
         </div>
         <div class="cuadro" th:each="version : ${versiones}" th:if="${not #lists.isEmpty(versiones)}">
             <div class="imagen">
-                <img th:src="@{/ferias/imagen/{idFeria}(idFeria=${version.feria.id})}" alt="">
+                <img th:src="${feria.imagenUrl != null and !feria.imagenUrl.isEmpty() ? feria.imagenUrl : '/img/img1.jpeg'}" alt="">
             </div>
             <div class="info-feria">
                 <h3><span th:text="${version.feria.nombre}"></span><span th:text="${version.numero}"></span></h3>
