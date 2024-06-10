@@ -9,11 +9,6 @@
     <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
 </head>
 <body class="cuerpo">
-<div th:if="${param.error}" class="ventanita ventana-roja" id="notification">
-    <p>Usuario o Contraseña invalidos</p>
-    <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
-</div>
- 
 
 <div class="contenedor" id="contenedor">
     <div class="form-contenedor sign-up">
@@ -56,6 +51,10 @@
             </div>
         </div>
     </div>
+</div>
+<div th:if="${param.error}" class="ventanita ventana-roja" id="notification">
+    <p>Usuario o Contraseña no validos</p>
+    <span id="equis" class="close" onclick="closeNotification('notification')">x</span>
 </div>
 <script th:src="@{/js/login.js}"></script>
 </body>
