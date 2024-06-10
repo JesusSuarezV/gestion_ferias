@@ -227,13 +227,13 @@ public class ProyectoController {
             model.addAttribute("integrantes", integrantes);
             model.addAttribute("rolObj", usuarioService.obtenerUsuarioPorUsername(username).getRole());
 
-            boolean creador = false;
+            boolean creador = Objects.equals(
+                    proyecto.getVersion().getFeria().getCreador().getUsername(),
+                    sesionService.getUsernameFromSession()
+            );
 
-            if (Objects.equals(proyecto.getVersion().getFeria().getCreador().getUsername(), sesionService.getUsernameFromSession())){
-                creador = true;
-            }
 
-            model.addAttribute(creador);
+            model.addAttribute("creador", creador);
 
             boolean ok = !proyecto.getVersion().isCierre() && proyecto.getVersion().isEnabled()
             && !LocalDate.now().isAfter(proyecto.getVersion().getFechaCierre()) && proyecto.getVersion().getFeria().isEnabled();
@@ -252,10 +252,22 @@ public class ProyectoController {
         try{
             Usuario jurado = usuarioService.obtenerUsuarioPorUsername(reqParams.get("juradoCorreo"));
             Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
-            proyecto.getJurados().add(jurado);
-            proyectoService.guardarProyecto(proyecto);
-            redirectAttributes.addFlashAttribute("exito", "Jurado agregado exitosamente");
-            return "redirect:/proyecto/"+idProyecto+"?exito";
+
+            boolean contains = proyecto.getIntegrantes().stream()
+                    .anyMatch(integrante -> integrante.getUsuario() == jurado);
+
+            if (contains) {
+                redirectAttributes.addFlashAttribute("error", "Un miembro del proyecto NO puede ser asignado como jurado");
+                return "redirect:/proyecto/"+idProyecto+"?error";
+            } else {
+                proyecto.getJurados().add(jurado);
+                proyectoService.guardarProyecto(proyecto);
+                redirectAttributes.addFlashAttribute("exito", "Jurado agregado exitosamente");
+                return "redirect:/proyecto/"+idProyecto+"?exito";
+            }
+
+
+
         }catch(Exception e){
             redirectAttributes.addFlashAttribute("error", "No se pudó agregar al jurado, tal vez no esta registrado en el sistema");
             return "redirect:/proyecto/"+idProyecto+"?error";
@@ -273,7 +285,7 @@ public class ProyectoController {
             Usuario jurado = usuarioService.obtenerUsuarioPorUsername(reqParams.get("juradoCorreo"));
             Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
 
-            if(proyecto.getVersion().getFeria().getCreador().getUsername().equals(username)){
+            if(!proyecto.getVersion().getFeria().getCreador().getUsername().equals(username)){
                 throw new RuntimeException("No es creador de esta feria");
             }
             proyecto.getJurados().remove(jurado);

@@ -86,9 +86,10 @@
                         <label for="calificación">Calificación:</label>
                     </div>
                     <div class="item-contenido">
-                        <label for="calificación" th:if="${proyecto.calificacion == '0.0'}">No ha sido calificado</label>
-                        <label for="calificación" th:if="${proyecto.calificacion != '0.0'}"
-                            th:text="${proyecto.calificacion}"></label>
+
+                        <label for="calificación"
+
+                        <td th:text="${proyecto.calificacion == 0.0 ? 'Este proyecto no ha sido calificado' : proyecto.calificacion}">85</td>></label>
                     </div>
                 </div>
                 <div class="item item-tabla">
