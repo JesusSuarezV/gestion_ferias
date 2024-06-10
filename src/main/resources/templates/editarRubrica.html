@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div class="botones">
-                <a th:href="'/version/' + ${version.id}"><button type="button" id="cancelarBtn">Cancelar</button></a>
+                <a th:href="'/ferias/' + ${version.feria.id} + '/version'"><button type="button" id="cancelarBtn">Cancelar</button></a>
                 <button id="guardarBtn">Guardar</button>
             </div>
         </form>
