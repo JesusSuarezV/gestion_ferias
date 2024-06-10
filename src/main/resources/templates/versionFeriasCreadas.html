@@ -21,7 +21,7 @@
             <div th:if="${#lists.isEmpty(versiones)}" class="noFerias">
                 <h2 class="titulo">Versiones de ferias creadas</h2>
                 <div class="noFerias">
-                    <h3 class="aviso">No se han creado ferias.</h3>
+                    <h3 class="aviso">No se han creado versiones.</h3>
                 </div>
                 <div class="CrearEvento">
                     <a th:href="'/ferias/' + ${feria.id} + '/version/crear'"><button>Crea feria</button></a>
