@@ -48,7 +48,7 @@ public class IntegranteServiceImpl implements IntegranteService {
         List<Integrante> integrantes = this.obtenerIntegrantePorProyecto(proyecto);
         boolean esIntegrante = false;
         for(Integrante integrante: integrantes){
-            esIntegrante = integrante.getCorreoRegistro().equals(username);
+            esIntegrante = esIntegrante || integrante.getCorreoRegistro().equals(username);
         }
         return esIntegrante;
     }
