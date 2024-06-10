@@ -20,4 +20,8 @@ public interface ProyectoService {
     public List<Proyecto> obtenerProyectoPorJurado(Usuario usuario);
 
     public List<Proyecto> obtenerProyectosPorVersionYPalabra(Version version, String keyword);
+
+    void eliminarProyecto(Proyecto proyecto);
+
+    void eliminarProyecto(int id);
 }

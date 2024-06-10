@@ -6,6 +6,7 @@ import com.ufps.seminario.entity.Usuario;
 import com.ufps.seminario.entity.Version;
 import com.ufps.seminario.repository.IntegranteRepository;
 import com.ufps.seminario.repository.ProyectoRepository;
+import com.ufps.seminario.service.IntegranteService;
 import com.ufps.seminario.service.ProyectoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,9 @@ public class ProyectoServiceImpl implements ProyectoService {
 
     @Autowired
     IntegranteRepository integranteRepository;
+
+    @Autowired
+    IntegranteService integranteService;
 
     @Override
     public List<Proyecto> obtenerProyectosPorVersion(Version version) {
@@ -102,5 +106,20 @@ public class ProyectoServiceImpl implements ProyectoService {
             }
         }
         return proyectos;
+    }
+
+    @Override
+    public void eliminarProyecto(Proyecto proyecto) {
+        for(Integrante integrante: integranteRepository.findByProyecto(proyecto)){
+            integranteService.eliminarIntegrante(integrante);
+        }
+        proyecto.setEnabled(false);
+        proyectoRepository.save(proyecto);
+    }
+
+    @Override
+    public void eliminarProyecto(int id) {
+        Proyecto proyecto = proyectoRepository.getReferenceById(id);
+        eliminarProyecto(proyecto);
     }
 }

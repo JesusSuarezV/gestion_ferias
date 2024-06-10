@@ -2,9 +2,11 @@ package com.ufps.seminario.service.impl;
 
 import com.ufps.seminario.entity.Feria;
 import com.ufps.seminario.entity.Usuario;
+import com.ufps.seminario.entity.Version;
 import com.ufps.seminario.repository.FeriaRepository;
 import com.ufps.seminario.repository.VersionRepository;
 import com.ufps.seminario.service.FeriaService;
+import com.ufps.seminario.service.VersionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +21,8 @@ public class FeriaServiceImpl implements FeriaService {
     FeriaRepository feriaRepository;
     @Autowired
     VersionRepository versionRepository;
+    @Autowired
+    VersionService versionService;
 
     @Override
     public Feria guardarFeria(Feria feria) {
@@ -40,6 +44,9 @@ public class FeriaServiceImpl implements FeriaService {
     @Override
     public void ocultarFeria(int id) {
         Feria feria = feriaRepository.getReferenceById(id);
+        for(Version version : versionRepository.findByFeria(feria)){
+            versionService.ocultarVersion(version);
+        }
         feria.setEnabled(false);
         feriaRepository.save(feria);
     }
