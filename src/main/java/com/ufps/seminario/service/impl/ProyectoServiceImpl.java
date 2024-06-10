@@ -25,7 +25,7 @@ public class ProyectoServiceImpl implements ProyectoService {
 
     @Override
     public List<Proyecto> obtenerProyectosPorVersion(Version version) {
-        return proyectoRepository.findByVersion(version);
+        return proyectoRepository.findByVersionAndEnabled(version, true);
     }
 
     @Override
