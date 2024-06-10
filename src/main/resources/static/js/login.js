@@ -11,3 +11,19 @@ loginBtn.addEventListener('click', () => {
     container.classList.remove("active");
 });
 
+function closeNotification(notificationId) {
+    var notification = document.getElementById(notificationId);
+    notification.style.display = "none";
+}
+
+window.onload = function() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var hasError = urlParams.has('error');
+
+    if (!hasError) {
+        var notification = document.getElementById('notification');
+        if (notification) {
+            notification.style.display = "none";
+        }
+    }
+};

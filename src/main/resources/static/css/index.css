@@ -356,7 +356,7 @@
     transform: translateX(200%);
 }
 
-.ventanita ventana-roja{
+.ventana-roja{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -371,7 +371,7 @@
     bottom: 10px;
     right: 10px;
 }
-.ventanita-roja .close{
+.ventana-roja .close{
     cursor: pointer;
     font-size: 25px;
 }
