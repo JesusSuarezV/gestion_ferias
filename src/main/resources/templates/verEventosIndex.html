@@ -30,7 +30,7 @@
                 <img th:src="${version.feria.imagenUrl != null and !version.feria.imagenUrl.isEmpty() ? version.feria.imagenUrl : '/img/img1.jpeg'}" alt="">
             </div>
             <div class="info-feria">
-                <h3><span th:text="${version.feria.nombre}"></span><span th:text="${version.numero}"></span></h3>
+                <h3><span th:text="${version.feria.nombre} "></span><span th:text="${version.numero}"></span></h3>
                 <a th:href="'/eventos/'+ ${version.id} + '/proyectos'"><button class="boton-ver-feria">Ver feria</button></a>
             </div>
         </div>
