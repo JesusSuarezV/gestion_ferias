@@ -19,7 +19,19 @@ public class FirebaseConfig {
         String credentialsJson = System.getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON");
 
         if (credentialsJson == null || credentialsJson.isEmpty()) {
-            throw new IllegalStateException("Environment variable GOOGLE_APPLICATION_CREDENTIALS_JSON not set or empty.");
+            //throw new IllegalStateException("Environment variable GOOGLE_APPLICATION_CREDENTIALS_JSON not set or empty.");
+
+            String credentialsPath = "D:/json/credenciales.json";
+
+
+            try (FileInputStream serviceAccount = new FileInputStream(credentialsPath)) {
+                FirebaseOptions options = new FirebaseOptions.Builder()
+                        .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                        .build();
+
+                return FirebaseApp.initializeApp(options);
+            }
+
         }
 
         ByteArrayInputStream credentialsStream = new ByteArrayInputStream(credentialsJson.getBytes(StandardCharsets.UTF_8));

@@ -10,7 +10,7 @@
     align-items: center;
 }
 
-.titulo {
+.titulo { 
     width: 90%;
     margin-top: 40px;
     color: #002948;
@@ -57,6 +57,7 @@ h3 {
     box-shadow: #182835;
     overflow: hidden;
     border: #002948;
+    margin-bottom: 40px;
 }
 
 .info {
@@ -116,21 +117,26 @@ h3 {
 }
 
 .CrearEvento button {
-    padding: 10px 35px;
+    padding: 10px 15px;
     color: rgb(255, 255, 255);
     background-color: #002948;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 18px;
+    width: 130px;
 }
 
 .CrearEvento {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    z-index: 999;
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+.top-boton{
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    justify-content: space-between;
     align-items: center;
 }

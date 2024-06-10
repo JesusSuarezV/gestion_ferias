@@ -31,13 +31,13 @@
   background-color: #002948;
   border: none;
 }
-
+ 
 .CrearEvento button {
   padding: 10px 35px;
   color: rgb(255, 255, 255);
   background-color: #002948;
   border: none;
-  border-radius: 20px;
+  border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
 }

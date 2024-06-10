@@ -27,7 +27,8 @@
                 <tbody>
                 <tr th:each="proyecto: ${proyectosCalificados}">
                     <td th:text="${proyecto.nombre}">Proyecto 1</td>
-                    <td th:text="${proyecto.calificacion}">85</td>
+                    <td th:text="${proyecto.calificacion == 0.0 ? 'Este proyecto no ha sido calificado' : proyecto.calificacion}">85</td>
+
                 </tr>
                 </tbody>
             </table>

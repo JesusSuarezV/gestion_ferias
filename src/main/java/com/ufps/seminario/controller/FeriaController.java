@@ -176,6 +176,10 @@ public class FeriaController {
                 String imageUrl = firebaseService.uploadFile(imagen);
                 feria.setImagenUrl(imageUrl);
             }
+            else {
+                Feria oldFeria = feriaService.obtenerFeria(idFeria);
+                feria.setImagenUrl(oldFeria.getImagenUrl());
+            }
             feria.setFechaCreacion(LocalDate.now());
             feria.setCreador(usuarioService.obtenerUsuarioPorUsername(sesionService.getUsernameFromSession()));
             feria.setId(idFeria);

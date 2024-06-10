@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,69 +10,71 @@
     <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet" />
     <link rel="stylesheet" th:href="@{/css/feriasCreadas.css}" />
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
-</head> 
+</head>
+
 <body>
- 
-<div class="contenedor" id="contenedor">
-    <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
-    <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
-    <div class="contenido">
-        <h2 class="titulo">Ferias creadas</h2>
-        <div th:if="${#lists.isEmpty(ferias)}" class="noFerias">
-            <h3>No hay ferias creadas.</h3>
-            <div class="CrearEvento">
-                <a th:href="'/ferias/crear'">
-                    <button>Crea feria</button>
-                </a>
+
+    <div class="contenedor" id="contenedor">
+        <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
+        <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
+        <div class="contenido">
+            <div class="top-boton">
+                <h2 class="titulo">Ferias creadas</h2>
+                <div class="CrearEvento">
+                    <a th:href="'/ferias/crear'">
+                        <button>Crea feria</button>
+                    </a>
+                </div>
             </div>
-        </div>
-        <div th:if="${not #lists.isEmpty(ferias)}" class="ferias">
-            <tr th:each="feria : ${ferias}">
-                <div class="cuadro">
-                    <div class="top">
-                        <img th:src="${feria.imagenUrl != null and !feria.imagenUrl.isEmpty() ? feria.imagenUrl : '/img/img1.jpeg'}" alt="">
-                    </div>
-                    <div class="info">
-                        <h3 class="titulo_feria" th:text="${feria.nombre}"></h3>
-                        <div class="botones">
-                            <a th:href="'/ferias/' + ${feria.id} + '/editar'">
-                                <button class="edit">Editar</button>
-                            </a>
-                            <form method="post" th:action="@{/ferias/{idFeria}/eliminar(idFeria=${feria.id})}" enctype="multipart/form-data">
-                                <button class="delete">Eliminar</button>
-                            </form>
-                            <a th:href="'/ferias/' + ${feria.id} + '/version'">
-                                <button class="versiones">Versiones</button>
-                            </a>
+            <div th:if="${#lists.isEmpty(ferias)}" class="noFerias">
+                <h3>No hay ferias creadas.</h3>
+            </div>
+            <div th:if="${not #lists.isEmpty(ferias)}" class="ferias">
+                <tr th:each="feria : ${ferias}">
+                    <div class="cuadro">
+                        <div class="top">
+                            <img th:src="${feria.imagenUrl != null and !feria.imagenUrl.isEmpty() ? feria.imagenUrl : '/img/img1.jpeg'}"
+                                alt="">
+                        </div>
+                        <div class="info">
+                            <h3 class="titulo_feria" th:text="${feria.nombre}"></h3>
+                            <div class="botones">
+                                <a th:href="'/ferias/' + ${feria.id} + '/editar'">
+                                    <button class="edit">Editar</button>
+                                </a>
+                                <form method="post" th:action="@{/ferias/{idFeria}/eliminar(idFeria=${feria.id})}"
+                                    enctype="multipart/form-data">
+                                    <button class="delete">Eliminar</button>
+                                </form>
+                                <a th:href="'/ferias/' + ${feria.id} + '/version'">
+                                    <button class="versiones">Versiones</button>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div> 
-            </tr>
-            <div class="CrearEvento">
-                <a th:href="'/ferias/crear'">
-                    <button>Crea feria</button>
-                </a>
+                </tr>
             </div>
+            <div id="pagination" class="pagination"></div>
         </div>
     </div>
-</div>
-<script th:src="@{/js/menu.js}"></script>
-<script>
-    //Despliegue del menu principal
-    let listElements = document.querySelectorAll('.lista-item');
+    <script th:src="@{/js/paginacionFerias.js}"></script>
+    <script th:src="@{/js/menu.js}"></script>
+    <script>
+        //Despliegue del menu principal
+        let listElements = document.querySelectorAll('.lista-item');
 
-    listElements.forEach(listElement => {
-        listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
-            listElement.classList.toggle('arrow'); //agrega la clase arrow
-            let menu = listElement.nextElementSibling;
-            menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+        listElements.forEach(listElement => {
+            listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
+                listElement.classList.toggle('arrow'); //agrega la clase arrow
+                let menu = listElement.nextElementSibling;
+                menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+            });
         });
-    });
 
-    //ejecutar funcion con click
-    document.getElementById('btn-open').addEventListener("click", open_close_menu);
+        //ejecutar funcion con click
+        document.getElementById('btn-open').addEventListener("click", open_close_menu);
 
-</script>
+    </script>
 </body>
 
 </html>
