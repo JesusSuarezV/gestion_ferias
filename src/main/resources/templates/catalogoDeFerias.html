@@ -12,14 +12,14 @@
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
 </head>
 
-<body>
+<body> 
     <div class="contenedor" id="contenedor">
         <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
         <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
         <div class="contenido">
-            <div class="info-contenido" th:if="${#lists.isEmpty(versiones)}">
+            <div class="noFerias" th:if="${#lists.isEmpty(versiones)}">
                 <h3 class="aviso">No hay ferias disponibles</h3>
-            </div>
+            </div> 
             <div class="info-contenido" th:if="${not #lists.isEmpty(versiones)}">
                 <h2 class="titulo">Ferias disponibles</h2>
                 <div class="si-hay-proyectos">
@@ -30,10 +30,10 @@
                         <div class="imagen-lupa">
                             <button><img th:src="@{/img/search_47686.png}" alt=""></button>
                         </div>
-                    </form> 
-                    <div class="ferias">
-                        <div class="rectangulo" data-feria="1" th:each="version : ${versiones}">
-                            <div class="textos">
+                    </form>
+                    <div class="ferias_disponibles">
+                        <div id="content" class="item_lista" data-feria="1" th:each="version : ${versiones}">
+                            <div class="informacion_feria">
                                 <div class="nombre" th:text="${version.feria.nombre}"></div>
                                 <table class="informacion">
                                     <tr>
@@ -48,34 +48,31 @@
                                         <td>Fecha Limite:</td>
                                         <td class="fecha-limite" th:text="${version.fechaLimite}"></td>
                                     </tr>
-                                </table> 
+                                </table>
                             </div>
                             <div class="foto-boton">
-                                <div class="photo">
-                                    <img class="img" th:src="@{/img/presentacion.png}" alt="Imagen pequeña">
-                                </div>
                                 <a th:href="'/version/' + ${version.id}">
                                     <div class="boton">
                                         Ver version
                                     </div>
                                 </a>
                             </div>
-
                         </div>
-                        <!-- Agregar más divs de feria aquí -->
-                    </div>
-                    <div class="paginacion">
-                        <button id="firstPage" class="page-btn"><<</button>
-                        <button id="prevPage" class="page-btn"><</button>
-                        <span id="pageNumbers" class="page-numbers"></span>
-                        <button id="nextPage" class="page-btn">></button>
-                        <button id="lastPage" class="page-btn">>></button>
-                    </div>
+                    </div> 
+                    <div id="pagination" class="pagination"></div>
                 </div>
+            </div>
+            <div th:if="${exito}" class="ventanita ventana-verde" id="notification">
+                <p><span th:text="${exito}"></span></p>
+                <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
+            </div>
+            <div th:if="${error}" class="ventanita-roja" id="notification">
+                <p><span th:text="${error}"></span></p>
+                <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
             </div>
         </div>
     </div>
-    <script src="@{/js/pagination.js}"></script>
+    <script th:src="@{/js/paginacionFerias.js}"></script>
     <script th:src="@{/js/menu.js}"></script>
     <script>
         //Despliegue del menu principal

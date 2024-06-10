@@ -64,6 +64,7 @@ public class CalificacionController {
         }
     }
 
+    //PENDIENTE VISTA
     @GetMapping("/jurado/version/{versionId}")
     public String verVersionJurado(Model model, @PathVariable int idVersion){
         try{
@@ -71,21 +72,24 @@ public class CalificacionController {
             model.addAttribute("username", username);
             Usuario usuario = usuarioService.obtenerUsuarioPorUsername(username);
             model.addAttribute("role", usuario.getRole().getNombre());
+
             Version version = versionService.obtenerVersion(idVersion);
             List<Proyecto> proyectos = new ArrayList<>();
             for(Proyecto proyecto: usuario.getProyectosCalificar()){
-                if(proyecto.getVersion().getId() == version.getId()){
+                if(!versionService.estaCerrado(proyecto.getVersion()) && proyecto.getVersion().getId() == version.getId()){
                     proyectos.add(proyecto);
                 }
             }
+
             model.addAttribute("proyectos", proyectos);
             model.addAttribute("version", version);
-            return "version";
+            return "redirect:/calificaciones";
         }catch(Exception e){
-            return "redirect:/version";
+            return "redirect:/calificaciones";
         }
     }
 
+    //PENDIENTE VISTA
     @GetMapping("/jurado/proyecto/{proyectoId}")
     public String verProyectoJurado(Model model, @PathVariable int idProyecto){
         try{
@@ -99,9 +103,9 @@ public class CalificacionController {
             model.addAttribute("proyecto", proyecto);
             model.addAttribute("integrantes", integrantes);
             model.addAttribute("jurados", jurados);
-            return "version";
+            return "redirect:/calificaciones";
         }catch(Exception e){
-            return "redirect:/version";
+            return "redirect:/calificaciones";
         }
     }
 

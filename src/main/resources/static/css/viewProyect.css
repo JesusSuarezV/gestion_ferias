@@ -1,13 +1,11 @@
-*{
+* {
   font-family: 'League Spartan', sans-serif;
 }
 
 .contenido {
-  /*border-bottom: 1px solid #002948;*/
   margin-top: 30px;
-  margin-left: 60px;
   height: 100%;
-} 
+}
 
 .titulo {
   margin-top: 25px;
@@ -17,11 +15,10 @@
 .pasados {
   margin-top: 50px;
   color: #002948;
-  margin-left: 30px;
 }
 
 .actuales {
-  margin-top: 50px;
+  margin-top: 10px;
   color: #002948;
 }
 
@@ -30,6 +27,10 @@
   width: 90%;
   margin: 0;
   /* bdosrcdmer: 60px;   */
+}
+
+.titulo {
+  width: 90%;
 }
 
 .cua {
@@ -50,7 +51,7 @@
 
 .proyectos {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
   margin-bottom: 30px;
   width: 90%;
@@ -62,9 +63,12 @@
   flex-direction: column;
   background-color: rgb(148, 167, 182, 0.41);
   box-shadow: 1px 1px 4px #002948;
-  border-radius: 30px;
+  border-radius: 5px;
   padding: 20px;
-  width: 240px;
+  box-shadow: 2px 5px 14px -8px rgba(0, 0, 0, 0.71);
+  -webkit-box-shadow: 2px 5px 14px -8px rgba(0, 0, 0, 0.71);
+  -moz-box-shadow: 2px 5px 14px -8px rgba(0, 0, 0, 0.71);
+  width: 80%;
   margin-top: 20px;
 }
 
@@ -83,7 +87,7 @@
   font-size: 18px;
   width: 100%;
   margin-bottom: 10px;
-  margin-top:15px;
+  margin-top: 15px;
 }
 
 .botones {
@@ -94,7 +98,7 @@
   justify-content: center;
 }
 
-.top-botones{
+.top-botones {
   display: flex;
   align-items: center;
   text-align: center;
@@ -103,7 +107,7 @@
   width: 100%;
 }
 
-.txt-boton{
+.txt-boton {
   display: flex;
   align-items: center;
   margin-top: 10px;
@@ -111,18 +115,19 @@
 }
 
 
-.botones button{
+.botones button {
   text-align: center;
   padding: 10px 20px;
   border: none;
-  border-radius: 20px;
+  border-radius: 5px;
   cursor: pointer;
   color: white;
   font-size: 16px;
   background-color: #002948;
 }
 
-.eliminar, .editar{
+.eliminar,
+.editar {
   width: 100px;
 }
 
@@ -130,20 +135,20 @@
   width: 130px;
 }
 
-.siProyect{
+.siProyect {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
   margin-bottom: 30px;
   width: 90%;
   justify-items: center;
 }
 
-.botones-2 button{
+.botones-2 button {
   text-align: center;
   padding: 10px 20px;
   border: none;
-  border-radius: 20px;
+  border-radius: 5px;
   cursor: pointer;
   color: white;
   font-size: 16px;

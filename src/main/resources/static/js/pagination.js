@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const itemsPerPage = 2;
+    const itemsPerPage = 5;
     const ferias = document.querySelectorAll('.rectangulo');
     const totalPages = Math.ceil(ferias.length / itemsPerPage);
     const pageNumbers = document.getElementById('pageNumbers');

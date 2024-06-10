@@ -27,10 +27,19 @@
                 <tbody>
                 <tr th:each="proyecto: ${proyectosCalificados}">
                     <td th:text="${proyecto.nombre}">Proyecto 1</td>
-                    <td th:text="${proyecto.calificacion}">85</td>
+                    <td th:text="${proyecto.calificacion == 0.0 ? 'Este proyecto no ha sido calificado' : proyecto.calificacion}">85</td>
+
                 </tr>
                 </tbody>
             </table>
+        </div>
+        <div th:if="${exito}" class="ventanita ventana-verde" id="notification">
+            <p><span th:text="${exito}"></span></p>
+            <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
+        </div>
+        <div th:if="${error}" class="ventanita-roja" id="notification">
+            <p><span th:text="${error}"></span></p>
+            <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
         </div>
     </div>
 </div>

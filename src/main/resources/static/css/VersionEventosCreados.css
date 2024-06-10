@@ -1,4 +1,4 @@
-*{
+* {
   text-decoration: none;
   list-style: none;
   margin: 0;
@@ -7,6 +7,7 @@
   padding: 0;
   font-family: 'League Spartan';
 }
+
 .titulo {
   margin-top: 50px;
   margin-left: 40px;
@@ -26,13 +27,9 @@
   background-color: rgb(148, 167, 182, 0.41);
   color: #002948;
   padding: 20px;
-  /* Espacio interno */
   border-radius: 10px;
-  /* Bordes redondeados */
   display: flex;
-  /* Para alinear los elementos internos */
   align-items: center;
-  /* Alinea verticalmente */
   margin-top: 50px;
 }
 
@@ -83,13 +80,15 @@
   margin-top: 5px;
   margin-bottom: 5px;
 }
+
 .cerrar {
   margin-top: 5px;
   margin-bottom: 5px;
 }
 
 .editar,
-.eliminar,.cerrar {
+.eliminar,
+.cerrar {
   padding: 10px 35px;
   /* Espacio interno de los botones */
   border: none;
@@ -102,7 +101,8 @@
   background-color: #002948;
 
 }
-.CrearEvento button{
+
+.CrearEvento button {
   padding: 10px 35px;
   color: rgb(255, 255, 255);
   background-color: #002948;
@@ -111,6 +111,7 @@
   cursor: pointer;
   font-size: 16px;
 }
+
 .CrearEvento {
   position: fixed;
   bottom: 20px;

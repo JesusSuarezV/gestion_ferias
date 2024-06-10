@@ -8,11 +8,11 @@
     <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
     <title>Ver ferias</title>
 </head>
-
+ 
 <body> 
 <div class="navegacion" th:insert="~{@{fragments/navIndex.html}}"></div>
 <div class="contenedor">
-    <form class="busqueda" th:action="@{/eventos/search}" method="get">
+    <form class="buscador" th:action="@{/eventos/search}" method="get">
         <div class="busqueda">
             <input class="texto-buscar" type="text" name="keyword" placeholder="Ingrese su consulta"/>
         </div>
@@ -23,14 +23,14 @@
     <h1 class="titulo">Ferias activas</h1>
     <div class="ferias">
         <div class = "info-contenido" th:if="${#lists.isEmpty(versiones)}">
-            <h3 class="aviso">No hay eventos abiertos</h3>
+            <h3 class="aviso">No hay ferias abiertos</h3>
         </div>
         <div class="cuadro" th:each="version : ${versiones}" th:if="${not #lists.isEmpty(versiones)}">
             <div class="imagen">
-                <img th:src="@{/ferias/imagen/{idFeria}(idFeria=${version.feria.id})}" alt="">
+                <img th:src="${version.feria.imagenUrl != null and !version.feria.imagenUrl.isEmpty() ? version.feria.imagenUrl : '/img/img1.jpeg'}" alt="">
             </div>
             <div class="info-feria">
-                <h3><span th:text="${version.feria.nombre}"></span><span th:text="${version.numero}"></span></h3>
+                <h3><span th:text="${version.feria.nombre} "></span><span th:text="${version.numero}"></span></h3>
                 <a th:href="'/eventos/'+ ${version.id} + '/proyectos'"><button class="boton-ver-feria">Ver feria</button></a>
             </div>
         </div>

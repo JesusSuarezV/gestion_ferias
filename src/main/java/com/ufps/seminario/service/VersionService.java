@@ -11,6 +11,8 @@ import java.util.List;
 
 public interface VersionService {
 
+    boolean estaCerrado(Version version);
+
     public Page<Version> listarVersiones(Feria feria, Pageable pageable);
 
     public Version obtenerVersion(int id);
@@ -20,11 +22,13 @@ public interface VersionService {
     public Version guardarVersion(Version version);
 
     public List<Version> obtenerVersionesPorIntegranteYDisponibles(String correo, String keyword, LocalDate fecha);
+
     public List<Version> obtenerVersionesPorIntegranteYCerradas(String correo, String keyword, LocalDate fecha);
 
     List<Version> obtenerVersionesCerradas(String correo, LocalDate fecha);
 
     public List<Version> obtenerVersionesPorJurado(Usuario usuario);
+
     public List<Version> obtenerVersionesPorFeria(Feria feria);
 
     public int obtenerCantidadDisponiblePorFeriayFecha(Feria feria, LocalDate now);

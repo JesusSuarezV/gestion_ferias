@@ -7,7 +7,7 @@
     <title>Crear versión de la feria</title>
     <link rel="stylesheet" th:href="@{/css/cuadricula.css}">
     <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/crearVersionFeria.css}">
+    <link rel="stylesheet" th:href="@{/css/registros_edicion.css}">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
 </head>
 
@@ -19,46 +19,50 @@
             <form class="formulario" th:action="@{/ferias/{idFeria}/version/crear(idFeria=${feria.id})}"
                 th:object="${version}" method="post" enctype="multipart/form-data">
                 <h2 class="titulo">Crear versión de la feria</h2>
-                <div class="crearVersionFeria">
-                    <div class="grid-group">
+                <div class="formulario_proyecto">
+                    <div class="grid_formulario">
                         <div class="item">
-                            <div class="version-texto">
+                            <div class="item-texto item_texto_version">
                                 <label for="numero">Versión:</label>
                             </div>
-                            <input type="number" name="numero" id="numero" required>
+                            <input class="texto_corto_version" type="number" name="numero" id="numero" required>
                         </div>
                         <div class="item">
-                            <div class="version-texto">
+                            <div class="item-texto item_texto_version">
                                 <label for="aprobacion">Puntaje mínimo para aprobar:</label>
                             </div>
-                            <input type="number" name="aprobacion" id="aprobacion" required>
+                            <input class="texto_corto_version" type="number" name="aprobacion" id="aprobacion" required>
                         </div>
                         <div class="item">
-                            <div class="version-texto">
+                            <div class="item-texto item_texto_version">
                                 <label for="fechaInicio">Fecha de Inicio:</label>
                             </div>
-                            <input type="date" name="fechaInicio" id="fechaInicio" required>
+                            <input class="texto_corto_version" type="date" name="fechaInicio" id="fechaInicio" required>
                         </div>
                         <div class="item">
-                            <div class="version-texto">
+                            <div class="item-texto item_texto_version">
                                 <label for="fechaCierre">Fecha de fin:</label>
                             </div>
-                            <input type="date" name="fechaCierre" id="fechaCierre" required>
+                            <input class="texto_corto_version" type="date" name="fechaCierre" id="fechaCierre" required>
                         </div>
                         <div class="item">
-                            <div class="version-texto">
+                            <div class="item-texto item_texto_version">
                                 <label for="fechaLimite">Fecha cierre de inscripciones:</label>
                             </div>
-                            <input type="date" name="fechaLimite" id="fechaLimite" required>
+                            <input class="texto_corto_version" type="date" name="fechaLimite" id="fechaLimite" required>
                         </div>
+                    </div> 
+                    <div class="item">
+                        <div class="item-texto item_texto_2">
+                            <label for="archivoProyecto">Formato del proyecto:</label>
+                        </div>
+                        <input class="cargar_archivo" type="file" name="formatoVersion" id="formatoVersion"
+                            accept="application/pdf">
                     </div>
-
-                    <div class="formatoProyecto">
-                        <label for="formatoVersion">Formato del proyecto:</label>
-                        <input type="file" name="formatoVersion" id="formatoVersion" accept="application/pdf">
-                    </div>
-                    <div class="area">
-                        <label>Auspiciador:</label>
+                    <div class="area item">
+                        <div class="item-texto item_texto_2">
+                            <label>Auspiciador:</label>
+                        </div>
                         <table class="area-tabla" id="areas">
                             <tr>
                                 <td>
@@ -75,6 +79,14 @@
                     <button id="registrarBtn">Crear</button>
                 </div>
             </form>
+            <div th:if="${exito}" class="ventanita ventana-verde" id="notification">
+                <p><span th:text="${exito}"></span></p>
+                <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
+            </div>
+            <div th:if="${error}" class="ventanita-roja" id="notification">
+                <p><span th:text="${error}"></span></p>
+                <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
+            </div>
         </div>
     </div>
     <script th:src="@{/js/registro.js}"></script>

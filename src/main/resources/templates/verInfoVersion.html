@@ -10,84 +10,107 @@
     <link rel="stylesheet" th:href="@{/css/verInfoPoryectos.css}">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
 </head>
-<body> 
-<div class="contenedor" id="contenedor">
-    <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
-    <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
-    <div class="contenido">
-        <div class="contenido-proyecto">
-            <div class="nombre-proyecto">
-                <h2  th:text="${version.feria.nombre}+' '+${version.numero}"></h2>
-            </div>
-            <div class="descripcion-proyecto">
-                <p th:text="${version.feria.descripcion}"></p>
-            </div>
-            <div class="tabla-informacion">
-                <table class="tabla">
-                    <tr class="fila">
-                        <td class="columna-item">Fecha inicio:</td>
-                        <td class="columna-desc" th:text="${version.fechaInicio}"></td>
-                    </tr>
-                    <tr class="fila">
-                        <td class="columna-item">Fecha fin:</td>
-                        <td class="columna-desc" th:text="${version.fechaCierre}"></td>
-                    </tr>
-                    <tr class="fila">
-                        <td class="columna-item">Fecha límite de inscripción:</td>
-                        <td class="columna-desc" th:text="${version.fechaLimite}"></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="calificar" th:if="${!version.cierre} and ${!version.fechaCierre.isBefore(#temporals.createNow().toLocalDate())}">
-                <a th:href="'/version/'+${version.id} + '/registrar'">
-                    <div class="boton-registrar">
-                        Registrar Proyecto
+
+<body>
+    <div class="contenedor" id="contenedor">
+
+        <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
+        <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
+
+        <div class="contenido">
+            <div class="contenido-proyecto">
+                <div class="informacion_feria">
+                    <div class="nombre-proyecto">
+                        <h2 th:text="${version.feria.nombre}+' '+${version.numero}"></h2>
                     </div>
-                </a>
-            </div>
-            <div class="proyecto">
-                <h2>Proyectos</h2>
-            </div>
-            <center>
-                <hr>
-            </center>
-            <div th:if="${#lists.isEmpty(proyectos)}" class="no-hay-proyectos">
-                <h3>No se han registrado proyectos</h3>
-            </div>
-            <div class="siProyect" th:if="${not #lists.isEmpty(proyectos)}">
-                <div class="cuadro" th:each="proyecto : ${proyectos}">
-                    <div class="cua">
-                        <img class="icon" th:src="@{/img/proyectt.png}">
-                        <div class="txt-u" th:text="${proyecto.nombre}"></div>
+                    <div class="descripcion-proyecto">
+                        <p th:text="${version.feria.descripcion}"></p>
                     </div>
-                    <div class="botones-2"> 
-                        <div class="txt">
-                            <a th:href="'/proyecto/' + ${proyecto.id}"><button class="verProyecto">Ver proyecto</button></a>
+                    <div class="tabla-informacion">
+                        <table class="tabla">
+                            <tr class="fila">
+                                <td class="columna-item">Fecha inicio:</td>
+                                <td class="columna-desc" th:text="${version.fechaInicio}"></td>
+                            </tr>
+                            <tr class="fila">
+                                <td class="columna-item">Fecha fin:</td>
+                                <td class="columna-desc" th:text="${version.fechaCierre}"></td>
+                            </tr>
+                            <tr class="fila">
+                                <td class="columna-item">Fecha límite de inscripción:</td>
+                                <td class="columna-desc" th:text="${version.fechaLimite}"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="botones-formatos">
+                        <div class="calificar" th:if="${version.archivoUrl != null}">
+                            <a th:href="${version.archivoUrl}" target="_blank" rel="noopener noreferrer">
+                                <div class="boton-registrar">
+                                    Ver Formato
+                                </div>
+                            </a>
+                        </div>
+                        <div class="calificar"
+                            th:if="${!version.cierre} and ${!version.fechaCierre.isBefore(#temporals.createNow().toLocalDate())}">
+                            <a th:href="'/version/'+${version.id} + '/registrar'">
+                                <div class="boton-registrar">
+                                    Registrar Proyecto
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="lista_proyectos">
+                    <div class="proyecto">
+                        <h2>Proyectos</h2>
+                    </div>
+                    <center>
+                        <hr>
+                    </center>
+                    <div th:if="${#lists.isEmpty(proyectos)}" class="no-hay-proyectos">
+                        <h3>No se han registrado proyectos</h3>
+                    </div>
+                    <div class="siProyect" th:if="${not #lists.isEmpty(proyectos)}">
+                        <div class="item_lista" th:each="proyecto : ${proyectos}">
+                            <div class="nombre_proyecto">
+                                <div class="txt-u" th:text="${proyecto.nombre}"></div>
+                            </div>
+                            <div class="boton_ver">
+                                <a th:href="'/proyecto/' + ${proyecto.id}"><button class="ver_proyecto">Ver
+                                        proyecto</button></a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div> 
+            <div th:if="${exito}" class="ventanita ventana-verde" id="notification">
+                <p><span th:text="${exito}"></span></p>
+                <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
+            </div>
+            <div th:if="${error}" class="ventanita-roja" id="notification">
+                <p><span th:text="${error}"></span></p>
+                <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
+            </div>
+        </div>
     </div>
-</div>
-<script th:src="@{/js/modal-2.js}"></script>
-<script th:src="@{/js/menu.js}"></script>
-<script>
-    //Despliegue del menu principal
-    let listElements = document.querySelectorAll('.lista-item');
+    <script th:src="@{/js/modal-2.js}"></script>
+    <script th:src="@{/js/menu.js}"></script>
+    <script>
+        //Despliegue del menu principal
+        let listElements = document.querySelectorAll('.lista-item');
 
-    listElements.forEach(listElement => {
-        listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
-            listElement.classList.toggle('arrow'); //agrega la clase arrow
-            let menu = listElement.nextElementSibling;
-            menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+        listElements.forEach(listElement => {
+            listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
+                listElement.classList.toggle('arrow'); //agrega la clase arrow
+                let menu = listElement.nextElementSibling;
+                menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+            });
         });
-    });
 
-    //ejecutar funcion con click
-    document.getElementById('btn-open').addEventListener("click", open_close_menu);
+        //ejecutar funcion con click
+        document.getElementById('btn-open').addEventListener("click", open_close_menu);
 
-</script>
+    </script>
 </body>
 
 </html>

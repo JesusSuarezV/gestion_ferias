@@ -1,0 +1,23 @@
+
+.ventanita-inicio-sesion {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 25%;
+    height: 30px;
+    padding: 5px;
+    border-radius: 10px;
+    color: white;
+    background-color: rgb(58, 141, 58);
+}
+
+.ventana-emergente {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.contenedor.active .ventana-emergente{
+    display: none;
+}

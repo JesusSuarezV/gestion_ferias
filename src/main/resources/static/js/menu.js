@@ -11,3 +11,8 @@ listElements.forEach(listElement => {
 
 //ejecutar funcion con click
 document.getElementById('btn-open').addEventListener("click", open_close_menu);
+
+function closeNotification(notificationId) {
+    var notification = document.getElementById(notificationId);
+    notification.style.display = "none";
+}

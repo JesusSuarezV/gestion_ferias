@@ -7,7 +7,7 @@
     margin: 0;
     padding: 0;
     font-family: 'League Spartan';
-}
+} 
 
 /*Estilos para el index*/
 
@@ -182,9 +182,14 @@
     height: 100vh;
 }
 
+.nav-menu a{
+    text-decoration: none;
+    color: white;
+}
+
 .contenedor{
     background-color: white;
-    border-radius: 80px;
+    border-radius: 20px;
     position: relative;
     overflow: hidden;
     width: 768px;
@@ -213,7 +218,7 @@
     font-size: 18px;
     padding: 10px 45px;
     border: 1px solid transparent;
-    border-radius: 30px;
+    border-radius: 5px;
     margin-top: 10px;
     cursor: pointer;
 }
@@ -234,7 +239,7 @@
     margin: 8px 0;
     padding: 10px 15px;
     font-size: 20px;
-    border-radius: 30px;
+    border-radius: 5px;
     width: 100%;
     outline: none;
 }
@@ -297,13 +302,11 @@
     height: 100%;
     overflow: hidden;
     transition: all 0.6s ease-in-out;
-    border-radius: 150px 0 0 100px;
     z-index: 1000;
 }
 
 .contenedor.active .toggle-contenedor{
     transform: translateX(-100%);
-    border-radius: 0 150px 100px 0;
 }
 
 .toggle{

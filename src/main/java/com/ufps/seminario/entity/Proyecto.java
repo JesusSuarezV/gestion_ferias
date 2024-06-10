@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -19,6 +20,7 @@ public class Proyecto {
     private String nombre;
     private String objetivos;
     private String descripcion;
+    private String archivoUrl;
     private byte[] archivo;
     private String url;
     @ManyToOne
@@ -42,6 +44,10 @@ public class Proyecto {
     )
     private List<Area> areas = new ArrayList<>();
 
+    @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL)
+    private List<Integrante> integrantes = new ArrayList<>();
+
     private boolean enabled;
     private float calificacion;
+
 }

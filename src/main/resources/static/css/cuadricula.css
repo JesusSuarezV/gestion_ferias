@@ -35,6 +35,8 @@ body {
     grid-column: 2;
     grid-row: 2;
     border-style: none;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     height: auto;
     min-height: 100vh;
@@ -61,6 +63,6 @@ body {
     right: 10px;
 }
 
-.contenedor.active .ventana-emergente{
+.contenedor.active .ventana-emergente {
     display: none;
 }

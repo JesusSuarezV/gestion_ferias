@@ -7,7 +7,7 @@
     <title>Ver proyecto</title>
     <link rel="stylesheet" th:href="@{/css/cuadricula.css}">
     <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/verInfoPoryectos.css}">
+    <link rel="stylesheet" th:href="@{/css/verProyectos.css}">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
 </head>
 
@@ -29,67 +29,104 @@
                 <div class="descripcion-objetivo">
                     <p th:text="${proyecto.objetivos}"></p>
                 </div>
-                <div class="tabla-informacion">
-                    <table class="tabla">
-                        <tr class="fila">
-                            <td class="columna-item">Feria inscrita:</td>
-                            <td class="columna-desc"
-                                th:text="${proyecto.version.feria.nombre} + ' ' + ${proyecto.version.numero}">Feria de
-                                proyectos de Aula v.1</td>
-                        </tr>
-                        <tr class="fila" th:if="${not #lists.isEmpty(areas)}">
-                            <td class="columna-item">Áreas de estudio:</td>
-                            <td class="columna-desc">
-                                <span th:each="area, iterStat : ${areas}"
-                                    th:text="${area.nombre} + (iterStat.last ? ' ' : ', ')"></span>
-                            </td>
-                        </tr>
-                        <tr class="fila">
-                            <td class="columna-item">URL video:</td>
-                            <td class="columna-desc" th:if="${proyecto.url == ''}"> No posee </td>
-                            <td class="columna-desc" th:if="${proyecto.url != ''}" th:text="${proyecto.url}"></td>
-                        </tr>
-                        <tr class="fila" th:if="${not #lists.isEmpty(proyecto.archivo)}">
-                            <td class="columna-item">Archivo proyecto:</td>
-                            <td class="columna-desc">
-                                <a th:href="@{/proyecto/archivo/{idProyecto}(idProyecto=${proyecto.id})}">
-                                    <div class="boton-doc">
-                                        Descargar
-                                    </div>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr class="fila" th:each="integrante, iterStat : ${integrantes}">
-                            <td class="columna-item" th:rowspan="${#lists.size(integrantes)}" th:if="${iterStat.first}">
-                                Integrantes: </td>
-                            <td class="columna-desc" th:text="${integrante.correoRegistro}"></td>
-                        </tr>
-                        <tr class="fila">
-                            <td class="columna-item">Calificación:</td>
-                            <td class="columna-desc" th:text="${proyecto.calificacion}"></td>
-                        </tr>
-                        <tr class="fila" id="mainRow" th:each="jurado, iterStat : ${jurados}">
-                            <td class="columna-item" th:rowspan="${#lists.size(jurados) + 1}" th:if="${iterStat.first}">
-                                Jurados: </td>
-                            <td class="columna-desc columna-eliminar">
-                                <span th:text="${jurado.username}"></span>
-                                <form th:if="${rolObj.id != 1}"
-                                    th:action="@{/proyecto/{idProyecto}/jurado/eliminar(idProyecto=${proyecto.id})}"
-                                    method="post" enctype="multipart/form-data">
-                                    <button class="eliminar">x</button>
-                                    <input type="hidden" name="juradoCorreo" th:value="${jurado.username}">
-                                </form>
-                            </td>
-                        </tr>
-                        <tr class="fila" th:if="${rolObj.id != 1} and ${asignacion}">
-                            <td class="columna-desc">
-                                <div class="boton-agregar">
-                                    Asignar jurado
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
+                <div class="item">
+                    <div class="item-texto">
+                        <label for="feria-inscrita">Feria inscrita:</label>
+                    </div>
+                    <div class="item-contenido">
+                        <label for="feria-inscrita-info"
+                            th:text="${proyecto.version.feria.nombre} + ' ' + ${proyecto.version.numero}"></label>
+                    </div>
                 </div>
+                <div class="item">
+                    <div class="item-texto">
+                        <label for="area-estudio">Áreas de estudio:</label>
+                    </div>
+                    <div class="item-contenido" th:if="${not #lists.isEmpty(areas)}">
+                        <label for="area-estudio-info" th:each="area, iterStat : ${areas}"
+                            th:text="${area.nombre} + (iterStat.last ? ' ' : ', ')"></label>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item-texto">
+                        <label for="url-video">URL video:</label>
+                    </div>
+                    <div class="item-contenido" th:if="${not #lists.isEmpty(areas)}">
+                        <label for="url-video-info" th:if="${proyecto.url == ''}">No posee</label>
+                        <label for="url-video-info" th:if="${proyecto.url != ''}" th:text="${proyecto.url}"></label>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item-texto">
+                        <label for="archivo-proyecto">Archivo proyecto:</label>
+                    </div>
+                    <div class="item-contenido" th:if="${proyecto.archivoUrl != null}">
+                        <a th:href="${proyecto.archivoUrl}" target="_blank" rel="noopener noreferrer">
+                            <div class="boton-doc">
+                                Ver documento
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item-texto">
+                        <label for="integrante">Integrantes:</label>
+                    </div>
+                    <div class="item-contenido" th:if="${proyecto.archivoUrl != null}">
+                        <table class="tabla">
+                            <tr class="fila" th:each="integrante, iterStat : ${integrantes}"
+                                th:rowspan="${#lists.size(integrantes)}" th:if="${iterStat.first}">
+                                <td class="columna-desc" th:text="${integrante.correoRegistro}"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item-texto">
+                        <label for="calificación">Calificación:</label>
+                    </div>
+                    <div class="item-contenido">
+
+                        <label for="calificación"
+
+                        <td th:text="${proyecto.calificacion == 0.0 ? 'Este proyecto no ha sido calificado' : proyecto.calificacion}">85</td>></label>
+                    </div>
+                </div>
+                <div class="item item-tabla">
+                    <div class="item-texto">
+                        <label for="calificación">Jurado:</label>
+                    </div>
+                    <div class="item-contenido tabla-informacion">
+                        <table class="tabla">
+                            <tr class="fila" id="mainRow" th:each="jurado, iterStat : ${jurados}">
+                                <td class="columna-desc columna-eliminar">
+                                    <span th:text="${jurado.username}"></span>
+                                    <form th:if="${rolObj.id != 1} and ${asignacion} and ${creador}"
+                                        th:action="@{/proyecto/{idProyecto}/jurado/eliminar(idProyecto=${proyecto.id})}"
+                                        method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="juradoCorreo" th:value="${jurado.username}" required>
+                                        <button class="eliminar">x</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr class="fila" th:if="${rolObj.id != 1} and ${asignacion} and ${creador}">
+                                <td class="columna-desc">
+                                    <div class="boton-agregar">
+                                        Asignar jurado
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${exito}" class="ventanita ventana-verde" id="notification">
+                <p><span th:text="${exito}"></span></p>
+                <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
+            </div>
+            <div th:if="${error}" class="ventanita-roja" id="notification">
+                <p><span th:text="${error}"></span></p>
+                <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
             </div>
         </div>
     </div>
