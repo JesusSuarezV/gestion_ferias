@@ -2,7 +2,9 @@ package com.ufps.seminario.service.impl;
 
 import com.ufps.seminario.entity.*;
 import com.ufps.seminario.repository.IntegranteRepository;
+import com.ufps.seminario.repository.ProyectoRepository;
 import com.ufps.seminario.repository.VersionRepository;
+import com.ufps.seminario.service.ProyectoService;
 import com.ufps.seminario.service.VersionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +21,11 @@ public class VersionServiceImpl implements VersionService {
     VersionRepository versionRepository;
     @Autowired
     IntegranteRepository integranteRepository;
+    @Autowired
+    ProyectoRepository proyectoRepository;
+    @Autowired
+    ProyectoService proyectoService;
+
     @Override
     public Version guardarVersion(Version version) {
         version.setEnabled(true);
@@ -127,6 +134,8 @@ public class VersionServiceImpl implements VersionService {
         return LocalDate.now().isAfter(version.getFechaCierre()) || version.isCierre();
     }
 
+
+
     @Override
     public boolean estaCerrado(Version version) {
         return LocalDate.now().isAfter(version.getFechaCierre())
@@ -148,8 +157,16 @@ public class VersionServiceImpl implements VersionService {
     @Override
     public void ocultarVersion(int id) {
         Version version = versionRepository.getReferenceById(id);
-        version.setEnabled(false);
-        versionRepository.save(version);
+        ocultarVersion(version);
+    }
 
+    @Override
+    public void ocultarVersion(Version version) {
+        for(Proyecto proyecto : proyectoRepository.findByVersion(version)){
+            proyectoService.eliminarProyecto(proyecto);
+        }
+        version.setEnabled(false);
+        version.setCierre(true);
+        versionRepository.save(version);
     }
 }

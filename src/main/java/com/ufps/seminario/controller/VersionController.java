@@ -98,8 +98,12 @@ public class VersionController {
             Usuario creadorProyecto = usuarioService.obtenerUsuarioPorUsername(username);
             Version version = versionService.obtenerVersion(idVersion);
             //Crear proyecto
-            String fileUrl = firebaseService.uploadFile(archivoProyecto);
-            proyecto.setArchivoUrl(fileUrl);
+            if(archivoProyecto != null && archivoProyecto.getBytes().length>0){
+                String fileUrl = firebaseService.uploadFile(archivoProyecto);
+                proyecto.setArchivoUrl(fileUrl);
+            }
+            //String fileUrl = firebaseService.uploadFile(archivoProyecto);
+            //proyecto.setArchivoUrl(fileUrl);
             proyecto.setVersion(version);
             proyecto.setFechaRegistro(LocalDate.now());
             proyecto.setEnabled(true);
@@ -276,7 +280,7 @@ public class VersionController {
             return "redirect:/ferias/"+feria.getId()+"/version";
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return "redirect:/version/"+idVersion+"/editar?error";
+            return "redirect:/version/"+idVersion+"/editar";
         }
     }
 

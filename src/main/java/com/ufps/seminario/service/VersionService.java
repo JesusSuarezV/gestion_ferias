@@ -36,4 +36,6 @@ public interface VersionService {
     List<Version> obtenerVersionesDisponibles(String keyword, LocalDate now);
 
     public boolean estaCerrado(int idVersion);
+
+    void ocultarVersion(Version version);
 }

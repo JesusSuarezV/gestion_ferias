@@ -305,12 +305,6 @@ public class FeriaController {
     public String eliminarFeria(Model model, @PathVariable int idFeria, RedirectAttributes redirectAttributes){
         try{
             feriaService.ocultarFeria(idFeria);
-            List<Version> versiones = versionService.obtenerVersionesPorFeria(feriaService.obtenerFeria(idFeria));
-            for(Version version: versiones){
-                version.setEnabled(false);
-                version.setCierre(true);
-                versionService.guardarVersion(version);
-            }
             redirectAttributes.addFlashAttribute("exito", "Feria eliminada exitosamente");
             return "redirect:/ferias/mis_ferias";
         }catch(Exception e){

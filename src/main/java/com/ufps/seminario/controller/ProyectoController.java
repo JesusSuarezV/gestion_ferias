@@ -112,7 +112,9 @@ public class ProyectoController {
                 String fileUrl = firebaseService.uploadFile(archivoProyecto);
                 proyecto.setArchivoUrl(fileUrl);
             }
-            else proyecto.setArchivoUrl(proyectoOriginal.getArchivoUrl());
+            else{
+                proyecto.setArchivoUrl(proyectoOriginal.getArchivoUrl());
+            }
             proyecto.setId(idProyecto);
             proyecto.setFechaRegistro(proyectoOriginal.getFechaRegistro());
             proyecto.setJurados(proyectoOriginal.getJurados());
