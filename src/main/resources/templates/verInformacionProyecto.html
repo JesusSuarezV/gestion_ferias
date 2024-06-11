@@ -10,9 +10,9 @@
     <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/verProyectos.css}">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
-</head>
+</head> 
 
-<body>
+<body> 
     <div class="contenedor" id="contenedor">
         <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
         <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
@@ -54,7 +54,7 @@
                     </div>
                     <div class="item-contenido" th:if="${not #lists.isEmpty(areas)}">
                         <label for="url-video-info" th:if="${proyecto.url == ''}">No posee</label>
-                        <label for="url-video-info" th:if="${proyecto.url != ''}" th:text="${proyecto.url}"></label>
+                        <a th:href="${proyecto.url}" target="_blank" th:text="${proyecto.url}"></a>
                     </div>
                 </div>
                 <div class="item">
@@ -171,6 +171,7 @@
         document.getElementById('btn-open').addEventListener("click", open_close_menu);
 
     </script>
+    
 </body>
 
 </html>

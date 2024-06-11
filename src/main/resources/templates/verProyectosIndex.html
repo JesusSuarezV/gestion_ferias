@@ -17,7 +17,7 @@
         <div class="busqueda">
             <input class="texto-buscar" type="text" name="keyword" placeholder="Ingrese su consulta"/>
         </div>
-        <div class="imagen-lupa">
+        <div class="imagen-lupa"> 
             <button><img th:src="@{/img/search_47686.png}" alt=""></button>
         </div>
     </form>
@@ -40,6 +40,20 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="footer">
+        <footer class="contenedor_footer">
+            <div class="texto_imagen">
+                <img th:src="@{/img/proyectt.png}" alt="Feria de proyectos de aula"
+                    class="imagen" />
+                <div>
+                    <p class="texto_footer">
+                        Feria de proyectos de aula - Muestra tus creaciones y aprende de los demás.
+                    </p>
+                </div>
+            </div>
+            <p class="texto_footer">© 2024 Todos los derechos reservados.</p>
+        </footer>
     </div>
 </div>
 <script th:src="@{/js/paginacionFerias.js}"></script>

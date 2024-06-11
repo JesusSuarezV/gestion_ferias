@@ -13,73 +13,83 @@
 </head>
 
 <body>
-<div class="contenedor" id="contenedor">
-    <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
-    <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
-    <div class="contenido">
-        <form class="formulario" th:action="@{/version/{idVersion}/rubrica/editar(idVersion=${version.id})}" method="post" enctype="multipart/form-data">
-            <h2 class="titulo">Editar Rúbrica</h2>
-            <div class="rubrica">
-                <label class="advertencia" for="enunciadoValor">Recordar: Valor significa que peso tiene la pregunta respecto a la calificación. Debe ser un número entre 1 a 100.</label>
-                <div id="criterios">
-                    <div th:each="criterio : ${criterios}" th:id="'[' + ${criterio.id} +']'">
-                        <div class="entradaItem">
-                            <label for="item">Item:</label>
-                            <input class="entrada" type="text" id="item" th:name="'criterio_item[' + ${criterio.id} +']'" th:value="${criterio.nombre}" required />
+    <div class="contenedor" id="contenedor">
+        <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
+        <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
+        <div class="contenido">
+            <form class="formulario" th:action="@{/version/{idVersion}/rubrica/editar(idVersion=${version.id})}"
+                method="post" enctype="multipart/form-data">
+                <h2 class="titulo">Editar Rúbrica</h2>
+                <div class="cuadraro_grande">
+                    <div class="rubrica">
+                        <label class="advertencia" for="enunciadoValor">Recordar: Valor significa que peso tiene la
+                            pregunta respecto a la calificación. Debe ser un número entre 1 a 100.</label>
+                        <div id="criterios">
+                            <div th:each="criterio : ${criterios}" th:id="'[' + ${criterio.id} +']'">
+                                <div class="entradaItem">
+                                    <label for="item">Item:</label>
+                                    <input class="entrada" type="text" id="item"
+                                        th:name="'criterio_item[' + ${criterio.id} +']'" th:value="${criterio.nombre}"
+                                        required />
+                                </div>
+                                <div class="valorItem">
+                                    <label for="valorPregunta">Valor:</label>
+                                    <input class="valor" type="number" min="0" max="100" id="valorPregunta"
+                                        th:name="'criterio_nivel[' + ${criterio.id} +']'" th:value="${criterio.valor}"
+                                        required />
+                                </div>
+                                <button type="button" class="btnClear"
+                                    th:onclick="'eliminarComponente(\'' +${criterio.id} + '\')'">
+                                    X
+                                </button>
+                            </div>
                         </div>
-                        <div class="valorItem">
-                            <label for="valorPregunta">Valor:</label>
-                            <input class="valor" type="number" min="0" max="100" id="valorPregunta" th:name="'criterio_nivel[' + ${criterio.id} +']'" th:value="${criterio.valor}" required />
+                        <div id="criteriosEliminados"></div>
+                        <div class="agregarItem">
+                            <button type="button" id="agregarBtn" onclick="agregarCriterio()">Agregar Item</button>
                         </div>
-                        <button type="button" class="btnClear" th:onclick="'eliminarComponente(\'' +${criterio.id} + '\')'">
-                            X
-                        </button>
+                    </div>
+                    <div class="botones">
+                        <a th:href="'/ferias/' + ${version.feria.id} + '/version'"><button type="button"
+                                id="cancelarBtn">Cancelar</button></a>
+                        <button id="guardarBtn">Guardar</button>
                     </div>
                 </div>
-                <div id="criteriosEliminados"></div>
-                <div class="agregarItem">
-                    <button type="button" id="agregarBtn" onclick="agregarCriterio()">Agregar Item</button>
-                </div>
+            </form>
+            <div th:if="${exito}" class="ventanita ventana-verde" id="notification">
+                <p><span th:text="${exito}"></span></p>
+                <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
             </div>
-            <div class="botones">
-                <a th:href="'/ferias/' + ${version.feria.id} + '/version'"><button type="button" id="cancelarBtn">Cancelar</button></a>
-                <button id="guardarBtn">Guardar</button>
+            <div th:if="${error}" class="ventanita-roja" id="notification">
+                <p><span th:text="${error}"></span></p>
+                <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
             </div>
-        </form>
-        <div th:if="${exito}" class="ventanita ventana-verde" id="notification">
-            <p><span th:text="${exito}"></span></p>
-            <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
-        </div>
-        <div th:if="${error}" class="ventanita-roja" id="notification">
-            <p><span th:text="${error}"></span></p>
-            <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
         </div>
     </div>
-</div>
-<script th:src="@{/js/menu.js}"></script>
-<script>
-    //Despliegue del menu principal
-    let listElements = document.querySelectorAll('.lista-item');
+    <script th:src="@{/js/menu.js}"></script>
+    <script>
+        //Despliegue del menu principal
+        let listElements = document.querySelectorAll('.lista-item');
 
-    listElements.forEach(listElement => {
-        listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
-            listElement.classList.toggle('arrow'); //agrega la clase arrow
-            let menu = listElement.nextElementSibling;
-            menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+        listElements.forEach(listElement => {
+            listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
+                listElement.classList.toggle('arrow'); //agrega la clase arrow
+                let menu = listElement.nextElementSibling;
+                menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+            });
         });
-    });
 
-    //ejecutar funcion con click
-    document.getElementById('btn-open').addEventListener("click", open_close_menu);
+        //ejecutar funcion con click
+        document.getElementById('btn-open').addEventListener("click", open_close_menu);
 
-</script>
-<script type="text/javascript">
-    let criterioIndex = 0;
-    function agregarCriterio() {
-        const areasDiv = document.getElementById('criterios');
-        const newAreaDiv = document.createElement('div');
-        newAreaDiv.id = "criterio["+criterioIndex+"]";
-        newAreaDiv.innerHTML = `
+    </script>
+    <script type="text/javascript">
+        let criterioIndex = 0;
+        function agregarCriterio() {
+            const areasDiv = document.getElementById('criterios');
+            const newAreaDiv = document.createElement('div');
+            newAreaDiv.id = "criterio[" + criterioIndex + "]";
+            newAreaDiv.innerHTML = `
             <div class="entradaItem">
                 <label for="item">Item:</label>
                 <input class="entrada" type="text" id="item" name="item[${criterioIndex}]" required />
@@ -92,30 +102,31 @@
                 </button>
             </div>
         `;
-        areasDiv.appendChild(newAreaDiv);
-        criterioIndex++;
-    }
-    function eliminarComponente(id) {
-        var componente = document.getElementById('['+id+']');
-        if (componente) {
-            componente.remove();
+            areasDiv.appendChild(newAreaDiv);
+            criterioIndex++;
         }
-        const areasDiv = document.getElementById('criteriosEliminados');
-        const newAreaDiv = document.createElement('div');
-        newAreaDiv.id = "version_criterio_delete[${id}]";
-        newAreaDiv.innerHTML = `
+        function eliminarComponente(id) {
+            var componente = document.getElementById('[' + id + ']');
+            if (componente) {
+                componente.remove();
+            }
+            const areasDiv = document.getElementById('criteriosEliminados');
+            const newAreaDiv = document.createElement('div');
+            newAreaDiv.id = "version_criterio_delete[${id}]";
+            newAreaDiv.innerHTML = `
             <div>
                 <input type="hidden" name="version_criterio_delete[${id}]" id="version_criterio_delete[${id}]">
             </div>
         `;
-        areasDiv.appendChild(newAreaDiv);
-    }
-    function eliminarComponente2(id) {
-        var componente = document.getElementById(id);
-        if (componente) {
-            componente.remove();
+            areasDiv.appendChild(newAreaDiv);
         }
-    }
-</script>
+        function eliminarComponente2(id) {
+            var componente = document.getElementById(id);
+            if (componente) {
+                componente.remove();
+            }
+        }
+    </script>
 </body>
+
 </html>

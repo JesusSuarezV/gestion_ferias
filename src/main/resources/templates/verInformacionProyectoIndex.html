@@ -35,12 +35,13 @@
                     </tr>
                     <tr class="fila">
                         <td class="columna-item">URL video:</td>
-                        <td class="columna-desc" th:if= "${proyecto.url == ''}"> No posee </td>
-                        <td class="columna-desc" th:if= "${proyecto.url != ''}" th:text="${proyecto.url}"></td>
+                        <td class="columna-desc" th:if= "${proyecto.url == ''}"> No posee</td>
+                        <td class="columna-desc"><a th:href="${proyecto.url}" target="_blank" th:text="${proyecto.url}"></a></td>
                     </tr>
-                    <tr class="fila" th:if="${not #lists.isEmpty(proyecto.archivo)}">
+                    <tr class="fila" >
                         <td class="columna-item">Archivo proyecto:</td>
-                        <td class="columna-desc" >
+                        <td class="columna-desc" th:if="${#lists.isEmpty(proyecto.archivo)}">No posee</td>
+                        <td class="columna-desc" th:if="${not #lists.isEmpty(proyecto.archivo)}">
                             <a th:href="@{/proyecto/archivo/{idProyecto}(idProyecto=${proyecto.id})}">
                                 <div class="boton-doc">
                                     Descargar
@@ -60,7 +61,21 @@
             </div>
         </div>
     </div>
-</div>
+    <div class="footer">
+        <footer class="contenedor_footer">
+            <div class="texto_imagen">
+                <img th:src="@{/img/proyectt.png}" alt="Feria de proyectos de aula"
+                    class="imagen" />
+                <div>
+                    <p class="texto_footer">
+                        Feria de proyectos de aula - Muestra tus creaciones y aprende de los demás.
+                    </p>
+                </div>
+            </div>
+            <p class="texto_footer">© 2024 Todos los derechos reservados.</p>
+        </footer>
+    </div>
+</div> 
 </body>
 
 </html>

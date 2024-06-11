@@ -87,11 +87,11 @@
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
-    height: 520px;
+    height: 430px;
 }
 
 .caja-elementos{
-    width: 90%;
+    width: 80%;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -100,9 +100,9 @@
 
 .elemento-item{
     background-color: #6A8BA4;
-    width: 260px;
-    height: 380px;
-    border-radius: 30px;
+    width: 230px;
+    height: 330px;
+    border-radius: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -112,13 +112,13 @@
 
 .elemento-item p{
     color: #002948;
-    font-size: 23px;
+    font-size: 20px;
     width: 70%;
     text-align: center;
 }
 
 .elemento-item img{
-    height: 100px;
+    height: 90px;
     width: auto;
 }
 
@@ -139,8 +139,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 300px;
-    font-size: 30px;
+    height: 260px;
+    font-size: 26px;
     text-align: center;
     text-shadow: 1px 1px 5px black;
 }
@@ -151,7 +151,7 @@
     font-size: 30px;
     padding: 10px 45px;
     border: 1px solid transparent;
-    border-radius: 30px;
+    border-radius: 5px;
     margin-top: 10px;
     cursor: pointer;
     text-shadow: 1px 1px 5px #002948;
@@ -162,12 +162,40 @@
 }
 
 .texto{
-    width: 75%;
+    width: 70%;
 }
+
+/*footer*/
 
 .footer{
     height: 100px;
-    background-color: black;
+    background-color: #D9D9D9;
+}
+
+.contenedor_footer{
+    padding: 0 50px;
+    width:  100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.texto_imagen{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: center;
+    color: #4e4e4e;
+}
+
+.texto_imagen img{
+    height: 40px;
+    width: auto;
+}
+
+.texto_footer{
+    color: #4e4e4e;
 }
 
 /*Estilos para el login*/
