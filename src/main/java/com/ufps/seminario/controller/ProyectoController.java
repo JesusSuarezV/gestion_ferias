@@ -146,15 +146,19 @@ public class ProyectoController {
                         integrante.setProyecto(proyecto);
                         integrantesNuevos.add(integrante);
                     }else if(llave.startsWith("area")){ //Asignar Area
-                        int idArea = Integer.parseInt(llave.substring(5, llave.length()-1));
+                        String pref = "area[";
+                        int idArea = Integer.parseInt(llave.substring(pref.length(), llave.length()-1));
                         Area area = areaService.obtenerArea(idArea);
                         areasNuevas.add(area);
                     }else {
-                        int i = Integer.parseInt(llave.substring(llave.length() - 3, llave.length() - 1));
                         if(llave.startsWith("proyecto_area_delete")){
+                            String pref = "proyecto_area_delete[";
+                            int i = Integer.parseInt(llave.substring(pref.length(), llave.length() - 1));
                             Area area = areaService.obtenerArea(i);
                             areasEliminadas.add(area);
                         }else if(llave.startsWith("proyecto_integrante_delete")){
+                            String pref = "proyecto_integrante_delete[";
+                            int i = Integer.parseInt(llave.substring(pref.length(), llave.length() - 1));
                             Integrante integrante = integranteService.obtenerIntegrantePorId(i);
                             integrantesEliminados.add(integrante);
                         }
@@ -185,6 +189,7 @@ public class ProyectoController {
             redirectAttributes.addFlashAttribute("exito", "Proyecto editado :D");
             return "redirect:/proyecto/mis_proyectos";
         }catch (Exception e){
+            System.out.println(e.getMessage());
             redirectAttributes.addFlashAttribute("error", "Hubo un error al editar proyecto");
             return "redirect:/proyecto/mis_proyectos";
         }
