@@ -1,4 +1,4 @@
-   let areaIndex = 0;
+    let areaIndex = 0;
     function agregarArea() {
         let select = document.getElementById('areasSelect');
         let selectedOption = select.options[select.selectedIndex];

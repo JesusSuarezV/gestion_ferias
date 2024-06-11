@@ -25,8 +25,12 @@
     justify-content: space-evenly;
 }
 
+/* .titulo {
+    margin-top: 30px;
+} */
+
 .titulo {
-    margin-top: 50px;
+    margin-top: 30px;
     color: #002948;
 }
 
@@ -168,6 +172,10 @@ h3 {
     text-align: left;
     vertical-align: middle;
     height: 25px;
+}
+
+.noFerias {
+    margin-top: 30px;
 }
 
 /*Paginación*/
