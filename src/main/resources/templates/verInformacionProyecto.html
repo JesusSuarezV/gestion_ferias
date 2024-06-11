@@ -61,6 +61,9 @@
                     <div class="item-texto">
                         <label for="archivo-proyecto">Archivo proyecto:</label>
                     </div>
+                    <div class="item-contenido" th:if="${proyecto.archivoUrl == null}">
+                        <label for="archivo-proyecto">No posee</label>
+                    </div>
                     <div class="item-contenido" th:if="${proyecto.archivoUrl != null}">
                         <a th:href="${proyecto.archivoUrl}" target="_blank" rel="noopener noreferrer">
                             <div class="boton-doc">
