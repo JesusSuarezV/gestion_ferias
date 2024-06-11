@@ -17,10 +17,7 @@
         <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
         <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
         <div class="contenido">
-            <div th:if="${#lists.isEmpty(versiones)}" class="noFerias">
-                <h3 class="aviso">No se han creado ferias.</h3>
-            </div>
-            <div th:if="${not #lists.isEmpty(versiones)}" class="info-contenido">
+            <div  class="info-contenido">
                 <h2 class="titulo">Ferias Inscritas</h2>
                 <div class="si-hay-proyectos">
                     <form class="buscador" th:action="@{/version/ferias_inscritas/search}" method="get">
@@ -31,7 +28,7 @@
                             <button><img th:src="@{/img/search_47686.png}" alt=""></button>
                         </div>
                     </form>
-                    <div class="ferias_disponibles">
+                    <div class="ferias_disponibles" th:if="${not #lists.isEmpty(versiones)}" >
                         <div class="item_lista" th:each="version : ${versiones}">
                             <div class="informacion_feria">
                                 <div class="nombre" th:text="${version.feria.nombre} + '  V.'+ ${version.numero}"></div>
@@ -59,7 +56,9 @@
                             </div>
                         </div>
                     </div>
-
+                    <div th:if="${#lists.isEmpty(versiones)}" class="noFerias">
+                        <h3 class="aviso">No se han creado ferias.</h3>
+                    </div>
                 </div>
             </div>
             <div id="pagination" class="pagination"></div>
