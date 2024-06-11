@@ -9,10 +9,10 @@
     <link rel="stylesheet" th:href="@{/css/cuadricula.css}">
     <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
-    <link rel="stylesheet" th:href="@{/css/crearVersionFeria.css}">
+    <link rel="stylesheet" th:href="@{/css/registros_edicion.css}">
 </head>
 
-<body>
+<body> 
     <div class="contenedor">
         <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
         <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
@@ -20,49 +20,53 @@
             <form class="formulario" th:action="@{/version/{idVersion}/editar(idVersion=${version.id})}"
                 th:object="${version}" method="post" enctype="multipart/form-data">
                 <h2 class="titulo">Editar Versión de la feria</h2>
-                <div class="crearVersionFeria">
-                    <div class="grid-group">
+                <div class="formulario_proyecto">
+                    <div class="grid_formulario">
                         <div class="item">
-                            <div class="version-texto">
+                            <div class="item-texto item_texto_version">
                                 <label for="numero">Versión:</label>
                             </div>
-                            <input type="number" name="numero" id="numero" th:value="${version.numero}" required>
+                            <input class="texto_corto_version" type="number" name="numero" id="numero" th:value="${version.numero}" required>
                         </div>
                         <div class="item">
-                            <div class="version-texto">
+                            <div class="item-texto item_texto_version">
                                 <label for="aprobacion">Puntaje mínimo para aprobar:</label>
                             </div>
-                            <input type="number" name="aprobacion" id="aprobacion" th:value="${version.aprobacion}"
+                            <input class="texto_corto_version" type="number" name="aprobacion" id="aprobacion" th:value="${version.aprobacion}"
                                 required>
                         </div>
                         <div class="item">
-                            <div class="version-texto">
+                            <div class="item-texto item_texto_version">
                                 <label for="fechaInicio">Fecha de Inicio:</label>
                             </div>
-                            <input type="date" name="fechaInicio" id="fechaInicio" th:value="${version.fechaInicio}"
+                            <input class="texto_corto_version" type="date" name="fechaInicio" id="fechaInicio" th:value="${version.fechaInicio}"
                                 required>
                         </div>
                         <div class="item">
-                            <div class="version-texto">
+                            <div class="item-texto item_texto_version">
                                 <label for="fechaCierre">Fecha de fin:</label>
                             </div>
-                            <input type="date" name="fechaCierre" id="fechaCierre" th:value="${version.fechaCierre}"
+                            <input class="texto_corto_version" type="date" name="fechaCierre" id="fechaCierre" th:value="${version.fechaCierre}"
                                 required>
                         </div>
                         <div class="item">
-                            <div class="version-texto">
+                            <div class="item-texto item_texto_version">
                                 <label for="fechaLimite">Fecha cierre de inscripciones:</label>
                             </div>
-                            <input type="date" name="fechaLimite" id="fechaLimite" th:value="${version.fechaLimite}"
+                            <input class="texto_corto_version" type="date" name="fechaLimite" id="fechaLimite" th:value="${version.fechaLimite}"
                                 required>
                         </div>
                     </div>
                     <div class="formatoProyecto">
-                        <label for="formatoVersion">Formato del proyecto:</label>
-                        <input type="file" name="formatoVersion" id="formatoVersion" accept="application/pdf">
+                        <div class="item-texto item_texto_2">
+                            <label for="archivoProyecto">Formato del proyecto:</label>
+                        </div>
+                        <input class="cargar_archivo" type="file" name="formatoVersion" id="formatoVersion" accept="application/pdf">
                     </div>
                     <div class="area">
-                        <label>Auspiciador:</label>
+                        <div class="item-texto item_texto_2">
+                            <label>Auspiciador:</label>
+                        </div>
                         <table class="area-tabla" id="areas">
                             <tr>
                                 <td>

@@ -270,10 +270,12 @@ hr {
 .item{
     display: flex;
     flex-direction: row;
-    width: 80%;
+    width: 100%;
     align-items: center;
     justify-content: flex-start;
-    height: 40px;
+    height: fit-content;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .item-tabla{
