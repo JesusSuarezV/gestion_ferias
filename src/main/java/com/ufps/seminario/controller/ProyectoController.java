@@ -218,10 +218,6 @@ public class ProyectoController {
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
 
-            if(!integranteService.esIntegrante(proyecto, username)){
-                throw new RuntimeException("No es integrante del proyecto");
-            }
-
             List<Integrante> integrantes = integranteService.obtenerIntegrantePorProyecto(proyecto);
             model.addAttribute("proyecto", proyecto);
             model.addAttribute("jurados", proyecto.getJurados());

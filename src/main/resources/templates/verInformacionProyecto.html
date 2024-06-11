@@ -61,6 +61,9 @@
                     <div class="item-texto">
                         <label for="archivo-proyecto">Archivo proyecto:</label>
                     </div>
+                    <div class="item-contenido" th:if="${proyecto.archivoUrl == null}">
+                        <label for="archivo-proyecto">No posee</label>
+                    </div>
                     <div class="item-contenido" th:if="${proyecto.archivoUrl != null}">
                         <a th:href="${proyecto.archivoUrl}" target="_blank" rel="noopener noreferrer">
                             <div class="boton-doc">
@@ -73,7 +76,7 @@
                     <div class="item-texto">
                         <label for="integrante">Integrantes:</label>
                     </div>
-                    <div class="item-contenido" th:if="${proyecto.archivoUrl != null}">
+                    <div class="item-contenido">
                         <table class="tabla">
                             <tr class="fila" th:each="integrante, iterStat : ${integrantes}"
                                 th:rowspan="${#lists.size(integrantes)}" th:if="${iterStat.first}">
