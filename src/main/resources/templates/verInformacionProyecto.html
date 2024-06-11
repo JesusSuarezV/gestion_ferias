@@ -76,7 +76,7 @@
                     <div class="item-texto">
                         <label for="integrante">Integrantes:</label>
                     </div>
-                    <div class="item-contenido" th:if="${proyecto.archivoUrl != null}">
+                    <div class="item-contenido">
                         <table class="tabla">
                             <tr class="fila" th:each="integrante, iterStat : ${integrantes}"
                                 th:rowspan="${#lists.size(integrantes)}" th:if="${iterStat.first}">
