@@ -153,7 +153,6 @@ public class CalificacionController {
         //verificamos que el usuario en cuestion pueda calificar dicho proyecto
         if (proyecto.getJurados().contains(usuario)) {
 
-            float totalCalificacion = 0.0f;
 
             for (int i = 0; i < criterioIds.size(); i++) {
                 Criterio criterio = criterioService.obtenerCriterioPorId(criterioIds.get(i));
@@ -171,12 +170,21 @@ public class CalificacionController {
                     calificacion.setValor(valores.get(i));
                     calificacion.setEnabled(true);
                     calificacionService.guardarCalificacion(calificacion);
-                    totalCalificacion += (float) (valores.get(i) * criterio.getValor())/5;
 
                 }
             }
 
-            proyecto.setCalificacion(totalCalificacion);
+            // actualizamos la calificacion
+
+            float valorCalificacion = 0.0f;
+            for (Calificacion calificacion : calificacionService.obtenerCalificaciones(proyecto, usuario)){
+
+                valorCalificacion+= (float) (calificacion.getValor() * calificacion.getCriterio().getValor()) /5;
+
+            }
+
+            proyecto.setCalificacion(valorCalificacion/proyecto.getJurados().size());
+
             proyectoService.guardarProyecto(proyecto);
 
             return "redirect:/calificaciones/jurado/proyecto/{idProyecto}/calificar?exito";
