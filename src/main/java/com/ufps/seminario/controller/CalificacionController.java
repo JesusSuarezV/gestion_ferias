@@ -149,6 +149,7 @@ public class CalificacionController {
 
         Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
 
+
         //verificamos que el usuario en cuestion pueda calificar dicho proyecto
         if (proyecto.getJurados().contains(usuario)) {
 
@@ -170,7 +171,7 @@ public class CalificacionController {
                     calificacion.setValor(valores.get(i));
                     calificacion.setEnabled(true);
                     calificacionService.guardarCalificacion(calificacion);
-                    totalCalificacion += (float) (valores.get(i) * criterio.getValor()) /100;
+                    totalCalificacion += (float) (valores.get(i) * criterio.getValor())/5;
 
                 }
             }

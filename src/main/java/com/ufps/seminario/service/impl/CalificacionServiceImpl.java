@@ -36,10 +36,6 @@ public class CalificacionServiceImpl implements CalificacionService {
     @Override
     public int obtenerCalificacionCriterio(Proyecto proyecto, Usuario jurado, Criterio criterio) {
 
-        System.out.println(proyecto.getNombre());
-        System.out.println(jurado.getUsername());
-        System.out.println(criterio.getNombre());
-
         Calificacion calificacion = calificacionRepository.findByProyectoAndJuradoAndCriterio(proyecto, jurado, criterio);
         if (calificacion != null) return calificacion.getValor();
         return 0;
