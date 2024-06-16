@@ -1,16 +1,11 @@
 package com.ufps.seminario.controller;
 
-import com.ufps.seminario.entity.Integrante;
-import com.ufps.seminario.entity.Proyecto;
-import com.ufps.seminario.entity.Usuario;
-import com.ufps.seminario.entity.Version;
+import com.ufps.seminario.entity.*;
 import com.ufps.seminario.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,23 +30,29 @@ public class CalificacionController {
     @Autowired
     IntegranteService integranteService;
 
+    @Autowired
+    CriterioService criterioService;
+
+    @Autowired
+    CalificacionService calificacionService;
+
     @GetMapping("/mis_calificaciones")
-    public String verMisCalificaciones(Model model){
-        try{
+    public String verMisCalificaciones(Model model) {
+        try {
             String username = sesionService.getUsernameFromSession();
             model.addAttribute("username", username);
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             List<Proyecto> proyectos = proyectoService.obtenerProyectosPorCorreoOrdenadosPorFechaRegistro(username);
             model.addAttribute("proyectosCalificados", proyectos);
             return "misCalificaciones";
-        }catch(Exception e){
+        } catch (Exception e) {
             return "redirect:/";
         }
     }
 
     @GetMapping("/jurado")
-    public String verVersionesJurado(Model model){
-        try{
+    public String verVersionesJurado(Model model) {
+        try {
             String username = sesionService.getUsernameFromSession();
             model.addAttribute("username", username);
             Usuario usuario = usuarioService.obtenerUsuarioPorUsername(username);
@@ -59,15 +60,15 @@ public class CalificacionController {
             List<Version> versiones = versionService.obtenerVersionesPorJurado(usuario);
             model.addAttribute("versiones_jurado", versiones);
             return "soyJurado";
-        }catch(Exception e){
+        } catch (Exception e) {
             return "redirect:/";
         }
     }
 
     //PENDIENTE VISTA
-    @GetMapping("/jurado/version/{versionId}")
-    public String verVersionJurado(Model model, @PathVariable int idVersion){
-        try{
+    @GetMapping("/jurado/version/{idVersion}")
+    public String verVersionJurado(Model model, @PathVariable int idVersion) {
+        try {
             String username = sesionService.getUsernameFromSession();
             model.addAttribute("username", username);
             Usuario usuario = usuarioService.obtenerUsuarioPorUsername(username);
@@ -75,8 +76,8 @@ public class CalificacionController {
 
             Version version = versionService.obtenerVersion(idVersion);
             List<Proyecto> proyectos = new ArrayList<>();
-            for(Proyecto proyecto: usuario.getProyectosCalificar()){
-                if(!versionService.estaCerrado(proyecto.getVersion()) && proyecto.getVersion().getId() == version.getId()){
+            for (Proyecto proyecto : usuario.getProyectosCalificar()) {
+                if (!versionService.estaCerrado(proyecto.getVersion()) && proyecto.getVersion().getId() == version.getId()) {
                     proyectos.add(proyecto);
                 }
             }
@@ -84,15 +85,15 @@ public class CalificacionController {
             model.addAttribute("proyectos", proyectos);
             model.addAttribute("version", version);
             return "redirect:/calificaciones";
-        }catch(Exception e){
+        } catch (Exception e) {
             return "redirect:/calificaciones";
         }
     }
 
     //PENDIENTE VISTA
-    @GetMapping("/jurado/proyecto/{proyectoId}")
-    public String verProyectoJurado(Model model, @PathVariable int idProyecto){
-        try{
+    @GetMapping("/jurado/proyecto/{idProyecto}")
+    public String verProyectoJurado(Model model, @PathVariable int idProyecto) {
+        try {
             String username = sesionService.getUsernameFromSession();
             model.addAttribute("username", username);
             Usuario usuario = usuarioService.obtenerUsuarioPorUsername(username);
@@ -104,9 +105,86 @@ public class CalificacionController {
             model.addAttribute("integrantes", integrantes);
             model.addAttribute("jurados", jurados);
             return "redirect:/calificaciones";
-        }catch(Exception e){
+        } catch (Exception e) {
             return "redirect:/calificaciones";
         }
     }
+
+    @GetMapping("/jurado/proyecto/{idProyecto}/calificar")
+    public String calificarProyecto(Model model, @PathVariable int idProyecto) {
+
+        Usuario usuario = usuarioService.obtenerUsuarioPorUsername(sesionService.getUsernameFromSession());
+
+        Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
+
+        if (proyecto.getJurados().contains(usuario)) {
+
+
+            //obligatorio para el tema de los menus
+            model.addAttribute("username", usuario.getUsername());
+            model.addAttribute("role", usuario.getRole().getNombre());
+
+            model.addAttribute("jurado", usuario);
+
+            List<Criterio> criterios = criterioService.obtenerCriterioPorVersion(proyecto.getVersion());
+            model.addAttribute("proyecto", proyecto);
+            model.addAttribute("criterios", criterios);
+
+
+            model.addAttribute("service", calificacionService);
+
+            return "calificarPROVISIONAL";
+        } else {
+            return "redirect:/calificaciones";
+        }
+
+    }
+
+    @PostMapping("/jurado/proyecto/{idProyecto}/guardar_calificacion")
+    public String guardarCalificacion(Model model, @PathVariable int idProyecto, @RequestParam("criterioId") List<Integer> criterioIds,
+                                      @RequestParam("valor") List<Integer> valores) {
+
+
+        Usuario usuario = usuarioService.obtenerUsuarioPorUsername(sesionService.getUsernameFromSession());
+
+        Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
+
+        //verificamos que el usuario en cuestion pueda calificar dicho proyecto
+        if (proyecto.getJurados().contains(usuario)) {
+
+            float totalCalificacion = 0.0f;
+
+            for (int i = 0; i < criterioIds.size(); i++) {
+                Criterio criterio = criterioService.obtenerCriterioPorId(criterioIds.get(i));
+                if (criterio != null) {
+                    Calificacion calificacion = calificacionService.obtenerCalificacion(proyecto, usuario, criterio);
+                    if (calificacion == null) {
+                        calificacion = new Calificacion();
+                        calificacion.setProyecto(proyecto);
+                        calificacion.setJurado(usuario);
+                        calificacion.setCriterio(criterio);
+                    }
+                    calificacion.setProyecto(proyecto);
+                    calificacion.setJurado(usuario);
+                    calificacion.setCriterio(criterio);
+                    calificacion.setValor(valores.get(i));
+                    calificacion.setEnabled(true);
+                    calificacionService.guardarCalificacion(calificacion);
+                    totalCalificacion += (float) (valores.get(i) * criterio.getValor()) /100;
+
+                }
+            }
+
+            proyecto.setCalificacion(totalCalificacion);
+            proyectoService.guardarProyecto(proyecto);
+
+            return "redirect:/calificaciones/jurado/proyecto/{idProyecto}/calificar?exito";
+
+        } else {
+            return "redirect:/calificaciones?error";
+        }
+
+    }
+
 
 }

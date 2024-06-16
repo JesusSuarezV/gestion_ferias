@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Calificar Proyecto</title>
+</head>
+<body>
+<h1>Calificar Proyecto: <span th:text="${proyecto.nombre}"></span></h1>
+<form action="#" th:action="@{'/calificaciones/jurado/proyecto/' + ${proyecto.id} + '/guardar_calificacion'}" method="post">
+    <div th:each="criterio, iterStat : ${criterios}">
+        <label th:for="${'criterio' + criterio.id}" th:text="${criterio.nombre}">Criterio</label>
+        <input type="hidden" name="criterioId" th:value="${criterio.id}" />
+        <input type="number" name="valor" th:value="${service.obtenerCalificacionCriterio(proyecto, jurado, criterio)}"
+               required step="1" min="0" max="100">
+
+
+    </div>
+
+
+
+
+
+    </div>
+    <div>
+        <button type="submit">Enviar</button>
+    </div>
+</form>
+</body>
+</html>
+

@@ -48,6 +48,7 @@ public class Proyecto {
     private List<Integrante> integrantes = new ArrayList<>();
 
     private boolean enabled;
+
     private float calificacion;
 
 }
