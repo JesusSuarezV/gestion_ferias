@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calificar proyectos</title>
+    <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/cuadricula.css}">
+    <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/calificarProyectos.css}">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+
+<body>
+    <div class="contenedor" id="contenedor">
+        <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
+        <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
+        <div class="contenido">
+            <div class="contenido-calificar">
+                <h2 class="titulo">Calificar: Nombre del proyecto</h2>
+                <form
+                    th:action="@{/calificaciones/jurado/proyecto/{idProyecto}/guardar_calificacion(idProyecto=${proyecto.id})}"
+                    method="post" onsubmit="return validarFormulario(event)">
+                    <div class="calificaciones-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Item a evaluar</th>
+                                    <th>1</th>
+                                    <th>2</th>
+                                    <th>3</th>
+                                    <th>4</th>
+                                    <th>5</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="criterio : ${criterios}">
+                                    <td th:text="${criterio.nombre}"></td>
+                                    <input type="hidden" name="criterioId" th:value="${criterio.id}" />
+                                    <td class="checkbox-row">
+                                        <input type="checkbox" id="'opcion1-' + ${criterio.id}" name="valor" value="1"
+                                            th:checked="${service.obtenerCalificacionCriterio(proyecto, jurado, criterio) == 1}"
+                                            onclick="deseleccionarOtros(this)" />
+                                    </td>
+                                    <td class="checkbox-row">
+                                        <input type="checkbox" id="'opcion2-' + ${criterio.id}" name="valor" value="2"
+                                            th:checked="${service.obtenerCalificacionCriterio(proyecto, jurado, criterio) == 2}"
+                                            onclick="deseleccionarOtros(this)" />
+                                    </td>
+                                    <td class="checkbox-row">
+                                        <input type="checkbox" id="'opcion3-' + ${criterio.id}" name="valor" value="3"
+                                            th:checked="${service.obtenerCalificacionCriterio(proyecto, jurado, criterio) == 3}"
+                                            onclick="deseleccionarOtros(this)" />
+                                    </td>
+                                    <td class="checkbox-row">
+                                        <input type="checkbox" id="'opcion4-' + ${criterio.id}" name="valor" value="4"
+                                            th:checked="${service.obtenerCalificacionCriterio(proyecto, jurado, criterio) == 4}"
+                                            onclick="deseleccionarOtros(this)" />
+                                    </td>
+                                    <td class="checkbox-row">
+                                        <input type="checkbox" id="'opcion5-' + ${criterio.id}" name="valor" value="5"
+                                            th:checked="${service.obtenerCalificacionCriterio(proyecto, jurado, criterio) == 5}"
+                                            onclick="deseleccionarOtros(this)" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="boton">
+                            <button id="enviarCalificacion">Enviar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <script th:src="@{/js/registro.js}"></script>
+    <script th:src="@{/js/menu.js}"></script>
+    <script>
+        //Despliegue del menu principal
+        let listElements = document.querySelectorAll('.lista-item');
+
+        listElements.forEach(listElement => {
+            listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
+                listElement.classList.toggle('arrow'); //agrega la clase arrow
+                let menu = listElement.nextElementSibling;
+                menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+            });
+        });
+
+        //ejecutar funcion con click
+        document.getElementById('btn-open').addEventListener("click", open_close_menu);
+
+    </script>
+    <script>
+        function handleCheckbox(checkbox) {
+            let row = checkbox.closest('tr');
+            let checkboxes = row.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(cb => {
+                if (cb !== checkbox) cb.checked = false;
+            });
+        }
+
+        document.getElementById('enviarCalificacion').addEventListener('click', function (event) {
+            let rows = document.querySelectorAll('.calificaciones-container tbody tr');
+            let allChecked = true;
+
+            rows.forEach(row => {
+                let checkboxes = row.querySelectorAll('input[type="checkbox"]');
+                let isChecked = false;
+                checkboxes.forEach(checkbox => {
+                    if (checkbox.checked) isChecked = true;
+                });
+                if (!isChecked) allChecked = false;
+            });
+
+            if (!allChecked) {
+                alert('Por favor, califique todos los items antes de enviar la calificación del proyecto.');
+                event.preventDefault();
+            }
+        });
+    </script>
+    <script>
+        // Función para deseleccionar otros checkboxes en la misma fila
+        function deseleccionarOtros(checkbox) {
+            var row = checkbox.parentNode.parentNode; // Obtener la fila actual del checkbox
+            var checkboxes = row.getElementsByTagName('input'); // Obtener todos los checkboxes de la fila
+
+            // Deseleccionar todos los checkboxes excepto el que fue seleccionado
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i] !== checkbox && checkboxes[i].type === 'checkbox') {
+                    checkboxes[i].checked = false;
+                }
+            }
+        }
+
+        // Función para validar el formulario antes de enviarlo
+        function validarFormulario(event) {
+            var rows = document.querySelectorAll('tbody tr'); // Obtener todas las filas del cuerpo de la tabla
+            for (var i = 0; i < rows.length; i++) {
+                var checkboxes = rows[i].getElementsByTagName('input'); // Obtener todos los checkboxes de la fila
+                var algunoSeleccionado = false;
+
+                // Verificar si al menos un checkbox está seleccionado
+                for (var j = 0; j < checkboxes.length; j++) {
+                    if (checkboxes[j].type === 'checkbox' && checkboxes[j].checked) {
+                        algunoSeleccionado = true;
+                        break;
+                    }
+                }
+
+                // Si no hay ningún checkbox seleccionado, mostrar una alerta y evitar el envío del formulario
+                if (!algunoSeleccionado) {
+                    alert('Debe seleccionar al menos una opción por cada criterio.');
+                    event.preventDefault();
+                    return false;
+                }
+            }
+            return true; // Permitir el envío del formulario si todo está correcto
+        }
+    </script>
+</body>
+
+</html>

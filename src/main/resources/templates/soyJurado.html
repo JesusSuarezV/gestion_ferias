@@ -22,7 +22,7 @@
             <div class="noFerias" th:if="${#lists.isEmpty(versiones_jurado)}">
                 <h2 class="titulo">¿Dónde soy jurado?</h2>
                 <h3 class="aviso">No es jurado en ninguna feria.</h3>
-            </div> 
+            </div>
             <div class="info-contenido" th:if="${not #lists.isEmpty(versiones_jurado)}">
                 <h2 class="titulo">¿Dónde soy jurado?</h2>
                 <div class="si-hay-proyectos">
@@ -51,7 +51,7 @@
                             </div>
                             <div class="foto-boton">
                                 <a th:href="'/calificaciones/jurado/version/' + ${version.id}">
-                                    <button class="ver-evento">Ver feria</button>
+                                    <div class="boton">Ver feria</div>
                                 </a>
                             </div>
                         </div>

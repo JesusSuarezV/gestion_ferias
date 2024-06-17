@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>Calificar Proyecto</title>
     <script th:src="@{/js/script.js}"></script>
@@ -48,61 +49,64 @@
         }
     </script>
 </head>
+
 <body>
-<h1>Calificar Proyecto: <span th:text="${proyecto.nombre}"></span></h1>
-<form th:action="@{/calificaciones/jurado/proyecto/{idProyecto}/guardar_calificacion(idProyecto=${proyecto.id})}" method="post" onsubmit="return validarFormulario(event)">
-    <table>
-        <thead>
-        <tr>
-            <th>Item a evaluar</th>
-            <th>1</th>
-            <th>2</th>
-            <th>3</th>
-            <th>4</th>
-            <th>5</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Iterar sobre cada criterio -->
-        <tr th:each="criterio : ${criterios}">
-            <td th:text="${criterio.nombre}"></td>
-            <input type="hidden" name="criterioId" th:value="${criterio.id}" />
-            <td class="checkbox-row">
-                <input type="checkbox" id="'opcion1-' + ${criterio.id}" name="valor" value="1"
-                       th:checked="${service.obtenerCalificacionCriterio(proyecto, jurado, criterio) == 1}"
-                       onclick="deseleccionarOtros(this)" />
-                <label th:for="'opcion1-' + ${criterio.id}">1</label>
-            </td>
-            <td class="checkbox-row">
-                <input type="checkbox" id="'opcion2-' + ${criterio.id}" name="valor" value="2"
-                       th:checked="${service.obtenerCalificacionCriterio(proyecto, jurado, criterio) == 2}"
-                       onclick="deseleccionarOtros(this)" />
-                <label th:for="'opcion2-' + ${criterio.id}">2</label>
-            </td>
-            <td class="checkbox-row">
-                <input type="checkbox" id="'opcion3-' + ${criterio.id}" name="valor" value="3"
-                       th:checked="${service.obtenerCalificacionCriterio(proyecto, jurado, criterio) == 3}"
-                       onclick="deseleccionarOtros(this)" />
-                <label th:for="'opcion3-' + ${criterio.id}">3</label>
-            </td>
-            <td class="checkbox-row">
-                <input type="checkbox" id="'opcion4-' + ${criterio.id}" name="valor" value="4"
-                       th:checked="${service.obtenerCalificacionCriterio(proyecto, jurado, criterio) == 4}"
-                       onclick="deseleccionarOtros(this)" />
-                <label th:for="'opcion4-' + ${criterio.id}">4</label>
-            </td>
-            <td class="checkbox-row">
-                <input type="checkbox" id="'opcion5-' + ${criterio.id}" name="valor" value="5"
-                       th:checked="${service.obtenerCalificacionCriterio(proyecto, jurado, criterio) == 5}"
-                       onclick="deseleccionarOtros(this)" />
-                <label th:for="'opcion5-' + ${criterio.id}">5</label>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <div>
-        <button type="submit">Enviar</button>
-    </div>
-</form>
+    <h1>Calificar Proyecto: <span th:text="${proyecto.nombre}"></span></h1>
+    <form th:action="@{/calificaciones/jurado/proyecto/{idProyecto}/guardar_calificacion(idProyecto=${proyecto.id})}"
+        method="post" onsubmit="return validarFormulario(event)">
+        <table>
+            <thead>
+                <tr>
+                    <th>Item a evaluar</th>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Iterar sobre cada criterio -->
+                <tr th:each="criterio : ${criterios}">
+                    <td th:text="${criterio.nombre}"></td>
+                    <input type="hidden" name="criterioId" th:value="${criterio.id}" />
+                    <td class="checkbox-row">
+                        <input type="checkbox" id="'opcion1-' + ${criterio.id}" name="valor" value="1"
+                            th:checked="${service.obtenerCalificacionCriterio(proyecto, jurado, criterio) == 1}"
+                            onclick="deseleccionarOtros(this)" />
+                        <label th:for="'opcion1-' + ${criterio.id}">1</label>
+                    </td>
+                    <td class="checkbox-row">
+                        <input type="checkbox" id="'opcion2-' + ${criterio.id}" name="valor" value="2"
+                            th:checked="${service.obtenerCalificacionCriterio(proyecto, jurado, criterio) == 2}"
+                            onclick="deseleccionarOtros(this)" />
+                        <label th:for="'opcion2-' + ${criterio.id}">2</label>
+                    </td>
+                    <td class="checkbox-row">
+                        <input type="checkbox" id="'opcion3-' + ${criterio.id}" name="valor" value="3"
+                            th:checked="${service.obtenerCalificacionCriterio(proyecto, jurado, criterio) == 3}"
+                            onclick="deseleccionarOtros(this)" />
+                        <label th:for="'opcion3-' + ${criterio.id}">3</label>
+                    </td>
+                    <td class="checkbox-row">
+                        <input type="checkbox" id="'opcion4-' + ${criterio.id}" name="valor" value="4"
+                            th:checked="${service.obtenerCalificacionCriterio(proyecto, jurado, criterio) == 4}"
+                            onclick="deseleccionarOtros(this)" />
+                        <label th:for="'opcion4-' + ${criterio.id}">4</label>
+                    </td>
+                    <td class="checkbox-row">
+                        <input type="checkbox" id="'opcion5-' + ${criterio.id}" name="valor" value="5"
+                            th:checked="${service.obtenerCalificacionCriterio(proyecto, jurado, criterio) == 5}"
+                            onclick="deseleccionarOtros(this)" />
+                        <label th:for="'opcion5-' + ${criterio.id}">5</label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <button type="submit">Enviar</button>
+        </div>
+    </form>
 </body>
+
 </html>

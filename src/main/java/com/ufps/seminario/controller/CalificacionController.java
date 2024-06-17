@@ -73,7 +73,6 @@ public class CalificacionController {
             model.addAttribute("username", username);
             Usuario usuario = usuarioService.obtenerUsuarioPorUsername(username);
             model.addAttribute("role", usuario.getRole().getNombre());
-
             Version version = versionService.obtenerVersion(idVersion);
             List<Proyecto> proyectos = new ArrayList<>();
             for (Proyecto proyecto : usuario.getProyectosCalificar()) {
@@ -81,12 +80,11 @@ public class CalificacionController {
                     proyectos.add(proyecto);
                 }
             }
-
             model.addAttribute("proyectos", proyectos);
             model.addAttribute("version", version);
-            return "redirect:/calificaciones";
+            return "verInfoVersion";
         } catch (Exception e) {
-            return "redirect:/calificaciones";
+            return "redirect:/verFeria";
         }
     }
 
@@ -112,32 +110,21 @@ public class CalificacionController {
 
     @GetMapping("/jurado/proyecto/{idProyecto}/calificar")
     public String calificarProyecto(Model model, @PathVariable int idProyecto) {
-
         Usuario usuario = usuarioService.obtenerUsuarioPorUsername(sesionService.getUsernameFromSession());
-
         Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
-
         if (proyecto.getJurados().contains(usuario)) {
-
-
             //obligatorio para el tema de los menus
             model.addAttribute("username", usuario.getUsername());
             model.addAttribute("role", usuario.getRole().getNombre());
-
             model.addAttribute("jurado", usuario);
-
             List<Criterio> criterios = criterioService.obtenerCriterioPorVersion(proyecto.getVersion());
             model.addAttribute("proyecto", proyecto);
             model.addAttribute("criterios", criterios);
-
-
             model.addAttribute("service", calificacionService);
-
-            return "calificarPROVISIONAL";
+            return "calificarProyectos";
         } else {
             return "redirect:/calificaciones";
         }
-
     }
 
     @PostMapping("/jurado/proyecto/{idProyecto}/guardar_calificacion")
