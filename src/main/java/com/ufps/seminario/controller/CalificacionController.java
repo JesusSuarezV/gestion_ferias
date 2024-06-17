@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/calificaciones")
@@ -35,7 +37,6 @@ public class CalificacionController {
 
     @Autowired
     CalificacionService calificacionService;
-
 
     @GetMapping("/mis_calificaciones")
     public String verMisCalificaciones(Model model) {
@@ -76,7 +77,8 @@ public class CalificacionController {
             Version version = versionService.obtenerVersion(idVersion);
             List<Proyecto> proyectos = new ArrayList<>();
             for (Proyecto proyecto : usuario.getProyectosCalificar()) {
-                if (!versionService.estaCerrado(proyecto.getVersion()) && proyecto.getVersion().getId() == version.getId()) {
+                if (!versionService.estaCerrado(proyecto.getVersion())
+                        && proyecto.getVersion().getId() == version.getId()) {
                     proyectos.add(proyecto);
                 }
             }
@@ -86,9 +88,8 @@ public class CalificacionController {
         } catch (Exception e) {
             return "redirect:/verFeria";
         }
-    } 
+    }
 
-    //PENDIENTE VISTA
     @GetMapping("/jurado/proyecto/{idProyecto}")
     public String verProyectoJurado(Model model, @PathVariable int idProyecto) {
         try {
@@ -113,7 +114,7 @@ public class CalificacionController {
         Usuario usuario = usuarioService.obtenerUsuarioPorUsername(sesionService.getUsernameFromSession());
         Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
         if (proyecto.getJurados().contains(usuario)) {
-            //obligatorio para el tema de los menus
+            // obligatorio para el tema de los menus
             model.addAttribute("username", usuario.getUsername());
             model.addAttribute("role", usuario.getRole().getNombre());
             model.addAttribute("jurado", usuario);
@@ -128,19 +129,13 @@ public class CalificacionController {
     }
 
     @PostMapping("/jurado/proyecto/{idProyecto}/guardar_calificacion")
-    public String guardarCalificacion(Model model, @PathVariable int idProyecto, @RequestParam("criterioId") List<Integer> criterioIds,
-                                      @RequestParam("valor") List<Integer> valores) {
-
-
+    public String guardarCalificacion(Model model, @PathVariable int idProyecto,
+            @RequestParam("criterioId") List<Integer> criterioIds,
+            @RequestParam("valor") List<Integer> valores) {
         Usuario usuario = usuarioService.obtenerUsuarioPorUsername(sesionService.getUsernameFromSession());
-
         Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
-
-
-        //verificamos que el usuario en cuestion pueda calificar dicho proyecto
+        // verificamos que el usuario en cuestion pueda calificar dicho proyecto
         if (proyecto.getJurados().contains(usuario)) {
-
-
             for (int i = 0; i < criterioIds.size(); i++) {
                 Criterio criterio = criterioService.obtenerCriterioPorId(criterioIds.get(i));
                 if (criterio != null) {
@@ -157,30 +152,19 @@ public class CalificacionController {
                     calificacion.setValor(valores.get(i));
                     calificacion.setEnabled(true);
                     calificacionService.guardarCalificacion(calificacion);
-
                 }
             }
-
             // actualizamos la calificacion
-
             float valorCalificacion = 0.0f;
-            for (Calificacion calificacion : calificacionService.obtenerCalificaciones(proyecto, usuario)){
-
-                valorCalificacion+= (float) (calificacion.getValor() * calificacion.getCriterio().getValor()) /5;
-
+            for (Calificacion calificacion : calificacionService.obtenerCalificaciones(proyecto, usuario)) {
+                valorCalificacion += (float) (calificacion.getValor() * calificacion.getCriterio().getValor()) / 5;
             }
-
-            proyecto.setCalificacion(valorCalificacion/proyecto.getJurados().size());
-
+            proyecto.setCalificacion(valorCalificacion / proyecto.getJurados().size());
             proyectoService.guardarProyecto(proyecto);
-
             return "redirect:/calificaciones/jurado/proyecto/{idProyecto}/calificar?exito";
-
         } else {
             return "redirect:/calificaciones?error";
         }
-
     }
-
 
 }
