@@ -3,11 +3,16 @@
 }
 
 .titulo{
-    margin-left: 10%;
     margin-top: 50px;
     color: #002948;
-}
+    width: 80%;
+} 
 
+.imagen-ver{
+    height: 30px;
+    width: auto;
+    cursor: pointer;
+}
 
 .calificaciones-container {
     padding: 20px;
@@ -22,17 +27,67 @@ table {
     border-collapse: collapse;
 }
 
+.tabla-item{
+    text-align: center;
+}
+
 thead th {
     background-color: #6A8BA4;
     color: #002948;
-    padding: 15px;
+    padding: 10px;
     border: 1px solid #002948;
     text-align: center;
-    font-size: 25px;
+    font-size: 20px;
+}
+
+.algo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tabla-item-2{
+    width: fit-content;
+}
+
+.boton-verde{
+    background-color: green;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    font-size: 26px;
+}
+
+.boton-rojo{
+    background-color: red;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    font-size: 26px;
+}
+
+.proyectos{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 tbody td {
-    padding: 15px;
+    padding: 10px;
     border: 1px solid #002948;
 }
 
@@ -50,10 +105,6 @@ th, td {
 
 th:first-child, td:first-child {
     width: 70%;
-}
-
-th:last-child, td:last-child {
-    width: 30%;
 }
 
 th, td:not(:last-child) {

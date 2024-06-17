@@ -303,13 +303,10 @@ public class ProyectoController {
     @GetMapping("/archivo/{idProyecto}")
     public ResponseEntity<ByteArrayResource> descargarPdf(@PathVariable int idProyecto) {
         byte[] pdfData = proyectoService.obtenerProyectoPorId(idProyecto).getArchivo();
-
         if (pdfData == null) {
             return ResponseEntity.notFound().build();
         }
-
         ByteArrayResource resource = new ByteArrayResource(pdfData);
-
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=document.pdf")
                 .contentType(MediaType.APPLICATION_PDF)
@@ -317,10 +314,9 @@ public class ProyectoController {
                 .body(resource);
     }
 
+    
     @GetMapping("/listado_proyectos_calificados")
-    public String calificarProyecto(Model model, @PathVariable int idProyecto,
-            @RequestParam Map<String, String> reqParams,
-            RedirectAttributes redirectAttributes) {
+    public String aprobarProyecto(Model model, RedirectAttributes redirectAttributes) {
         return "aprobarProyectos";
     }
 }

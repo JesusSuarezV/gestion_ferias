@@ -11,57 +11,115 @@
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
     <link rel="stylesheet" th:href="@{/css/misCalificaciones.css}">
 </head>
-<body>
-<div class="contenedor" id="contenedor">
-    <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
-    <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
-    <div class="contenido">
-        <h2 class="titulo">Mis calificaciones</h2>
-        <div class="calificaciones-container">
-            <table>
-                <thead>
-                <tr>
-                    <th>Proyecto</th>
-                    <th>Calificación</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="proyecto: ${proyectosCalificados}">
-                    <td th:text="${proyecto.nombre}">Proyecto 1</td>
-                    <td th:text="${proyecto.calificacion == 0.0 ? 'Este proyecto no ha sido calificado' : proyecto.calificacion}">85</td>
 
-                </tr>
-                </tbody>
-            </table> 
-        </div>
-        <div th:if="${exito}" class="ventanita ventana-verde" id="notification">
-            <p><span th:text="${exito}"></span></p>
-            <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
-        </div>
-        <div th:if="${error}" class="ventanita-roja" id="notification">
-            <p><span th:text="${error}"></span></p>
-            <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
+<body>
+    <div class="contenedor" id="contenedor">
+        <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
+        <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
+        <div class="contenido">
+            <h2 class="titulo">Nombre del proyecto</h2>
+            <div class="proyectos aprobados">
+                <h2 class="titulo">Proyectos aprobados automáticamente</h2>
+                <div class="calificaciones-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Proyecto</th>
+                                <th>Ver</th>
+                                <th>Calificación</th>
+                                <th class="tabla-item-2">Aprobar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Proyecto 1</td>
+                                <td class="tabla-item"><img class="imagen-ver" th:src="@{/img/ver.png}" alt=""></td>
+                                <td class="tabla-item">85</td>
+                                <td class="tabla-item">
+                                    <div class="algo">
+                                        <div class="boton-verde">+</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr th:each="proyecto: ${proyectosCalificados}">
+                                <td th:text="${proyecto.nombre}">Proyecto 1</td>
+                                <td
+                                    th:text="${proyecto.calificacion == 0.0 ? 'Este proyecto no ha sido calificado' : proyecto.calificacion}">
+                                    85</td>
+                                <td><img class="imagen-ver" th:src="@{/img/ver.png}" alt=""></td>
+                                <td>
+                                    <div class="boton-verde">+</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="proyectos desaprobados">
+                <h2 class="titulo">Proyectos calificados</h2>
+                <div class="calificaciones-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Proyecto</th>
+                                <th>Ver</th>
+                                <th>Calificación</th>
+                                <th class="tabla-item-2">Aprobar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Proyecto 1</td>
+                                <td class="tabla-item"><img class="imagen-ver" th:src="@{/img/ver.png}" alt=""></td>
+                                <td class="tabla-item">85</td>
+                                <td class="tabla-item">
+                                    <div class="algo">
+                                        <div class="boton-rojo">x</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr th:each="proyecto: ${proyectosCalificados}">
+                                <td th:text="${proyecto.nombre}">Proyecto 1</td>
+                                <td
+                                    th:text="${proyecto.calificacion == 0.0 ? 'Este proyecto no ha sido calificado' : proyecto.calificacion}">
+                                    85</td>
+                                <td><img class="imagen-ver" th:src="@{/img/ver.png}" alt=""></td>
+                                <td>
+                                    <div class="boton-verde">+</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div th:if="${exito}" class="ventanita ventana-verde" id="notification">
+                <p><span th:text="${exito}"></span></p>
+                <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
+            </div>
+            <div th:if="${error}" class="ventanita-roja" id="notification">
+                <p><span th:text="${error}"></span></p>
+                <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
+            </div>
         </div>
     </div>
-</div>
-<script th:src="@{/js/registro.js}"></script>
-<script th:src="@{/js/menu.js}"></script>
-<script>
-    //Despliegue del menu principal
-    let listElements = document.querySelectorAll('.lista-item');
+    <script th:src="@{/js/registro.js}"></script>
+    <script th:src="@{/js/menu.js}"></script>
+    <script>
+        //Despliegue del menu principal
+        let listElements = document.querySelectorAll('.lista-item');
 
-    listElements.forEach(listElement => {
-        listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
-            listElement.classList.toggle('arrow'); //agrega la clase arrow
-            let menu = listElement.nextElementSibling;
-            menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+        listElements.forEach(listElement => {
+            listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
+                listElement.classList.toggle('arrow'); //agrega la clase arrow
+                let menu = listElement.nextElementSibling;
+                menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+            });
         });
-    });
 
-    //ejecutar funcion con click
-    document.getElementById('btn-open').addEventListener("click", open_close_menu);
+        //ejecutar funcion con click
+        document.getElementById('btn-open').addEventListener("click", open_close_menu);
 
-</script>
+    </script>
 </body>
 
 </html>
