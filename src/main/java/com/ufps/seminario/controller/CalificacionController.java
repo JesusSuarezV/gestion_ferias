@@ -36,6 +36,7 @@ public class CalificacionController {
     @Autowired
     CalificacionService calificacionService;
 
+
     @GetMapping("/mis_calificaciones")
     public String verMisCalificaciones(Model model) {
         try {
@@ -65,7 +66,6 @@ public class CalificacionController {
         }
     }
 
-    //PENDIENTE VISTA
     @GetMapping("/jurado/version/{idVersion}")
     public String verVersionJurado(Model model, @PathVariable int idVersion) {
         try {
@@ -86,7 +86,7 @@ public class CalificacionController {
         } catch (Exception e) {
             return "redirect:/verFeria";
         }
-    }
+    } 
 
     //PENDIENTE VISTA
     @GetMapping("/jurado/proyecto/{idProyecto}")

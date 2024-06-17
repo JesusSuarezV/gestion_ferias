@@ -10,9 +10,9 @@
     <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/verProyectos.css}">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
-</head> 
+</head>
 
-<body> 
+<body>
     <div class="contenedor" id="contenedor">
         <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
         <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
@@ -91,9 +91,9 @@
                     </div>
                     <div class="item-contenido">
 
-                        <label for="calificación"
-
-                        <td th:text="${proyecto.calificacion == 0.0 ? 'Este proyecto no ha sido calificado' : proyecto.calificacion}">85</td>></label>
+                        <label for="calificación" <td
+                            th:text="${proyecto.calificacion == 0.0 ? 'Este proyecto no ha sido calificado' : proyecto.calificacion}">85
+                            </td>></label>
                     </div>
                 </div>
                 <div class="item item-tabla">
@@ -123,6 +123,11 @@
                         </table>
                     </div>
                 </div>
+            </div>
+            <div class="boton-apartado">
+                <a th:href="'/calificaciones/jurado/proyecto/' + ${proyecto.id} + '/calificar'"><button
+                    class="ver_proyecto">Calificar
+                    proyecto</button></a>
             </div>
             <div th:if="${exito}" class="ventanita ventana-verde" id="notification">
                 <p><span th:text="${exito}"></span></p>
@@ -171,7 +176,7 @@
         document.getElementById('btn-open').addEventListener("click", open_close_menu);
 
     </script>
-    
+
 </body>
 
 </html>

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDate; 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +58,7 @@ public class ProyectoController {
             model.addAttribute("proyectosPasados", proyectosPasados);
 
             return "misProyectos";
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             redirectAttributes.addFlashAttribute("error", "Algo falló en la consulta de proyectos");
             return "redirect:/";
@@ -66,14 +66,14 @@ public class ProyectoController {
     }
 
     @GetMapping("/{idProyecto}/editar")
-    public String editarProyecto(Model model, @PathVariable int idProyecto, RedirectAttributes redirectAttributes){
+    public String editarProyecto(Model model, @PathVariable int idProyecto, RedirectAttributes redirectAttributes) {
         try {
             String username = sesionService.getUsernameFromSession();
             model.addAttribute("username", username);
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
 
-            if(!integranteService.esIntegrante(proyecto, username)){
+            if (!integranteService.esIntegrante(proyecto, username)) {
                 throw new RuntimeException("No es integrante del proyecto");
             }
 
@@ -86,7 +86,7 @@ public class ProyectoController {
             model.addAttribute("areasVersion", areasVersion);
 
             return "editarProyecto";
-        }catch(Exception e){
+        } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Feria eliminada exitosamente");
             return "redirect:/mis_proyectos";
         }
@@ -94,25 +94,24 @@ public class ProyectoController {
 
     @PostMapping("/{idProyecto}/editar")
     public String editarProyecto(@ModelAttribute Proyecto proyecto, @PathVariable int idProyecto,
-                                 @RequestParam Map<String, String> requestParams,
-                                 @RequestParam("archivoProyecto") MultipartFile archivoProyecto,
-                                 RedirectAttributes redirectAttributes){
+            @RequestParam Map<String, String> requestParams,
+            @RequestParam("archivoProyecto") MultipartFile archivoProyecto,
+            RedirectAttributes redirectAttributes) {
         try {
 
             String username = sesionService.getUsernameFromSession();
             Usuario creadorProyecto = usuarioService.obtenerUsuarioPorUsername(username);
             Proyecto proyectoOriginal = proyectoService.obtenerProyectoPorId(idProyecto);
 
-            if(!integranteService.esIntegrante(proyectoOriginal, username)){
+            if (!integranteService.esIntegrante(proyectoOriginal, username)) {
                 throw new RuntimeException("No es integrante del proyecto");
             }
 
             proyecto.setVersion(proyectoOriginal.getVersion());
-            if(archivoProyecto != null && archivoProyecto.getBytes().length>0){
+            if (archivoProyecto != null && archivoProyecto.getBytes().length > 0) {
                 String fileUrl = firebaseService.uploadFile(archivoProyecto);
                 proyecto.setArchivoUrl(fileUrl);
-            }
-            else{
+            } else {
                 proyecto.setArchivoUrl(proyectoOriginal.getArchivoUrl());
             }
             proyecto.setId(idProyecto);
@@ -124,7 +123,7 @@ public class ProyectoController {
             proyecto.setEstado(proyectoOriginal.isEstado());
             proyecto = proyectoService.guardarProyecto(proyecto);
 
-            //Asignar areas y crear integrantes
+            // Asignar areas y crear integrantes
             List<Integrante> integrantesEliminados = new ArrayList<>();
             List<Area> areasEliminadas = new ArrayList<>();
             List<Integrante> integrantesNuevos = new ArrayList<>();
@@ -133,30 +132,30 @@ public class ProyectoController {
                 String llave = entry.getKey();
                 String nombre = entry.getValue();
                 if (nombre != null && !nombre.isEmpty()) {
-                    if(llave.startsWith("integrante")){ //Crear Integrante
+                    if (llave.startsWith("integrante")) { // Crear Integrante
                         Integrante integrante = new Integrante();
                         integrante.setEnabled(false);
                         integrante.setCorreoRegistro(nombre);
-                        try{
+                        try {
                             Usuario usuario = usuarioService.obtenerUsuarioPorUsername(nombre);
                             integrante.setUsuario(usuario);
-                        }catch(Exception e){
-                            //Nada xd
+                        } catch (Exception e) {
+                            // Nada xd
                         }
                         integrante.setProyecto(proyecto);
                         integrantesNuevos.add(integrante);
-                    }else if(llave.startsWith("area")){ //Asignar Area
+                    } else if (llave.startsWith("area")) { // Asignar Area
                         String pref = "area[";
-                        int idArea = Integer.parseInt(llave.substring(pref.length(), llave.length()-1));
+                        int idArea = Integer.parseInt(llave.substring(pref.length(), llave.length() - 1));
                         Area area = areaService.obtenerArea(idArea);
                         areasNuevas.add(area);
-                    }else {
-                        if(llave.startsWith("proyecto_area_delete")){
+                    } else {
+                        if (llave.startsWith("proyecto_area_delete")) {
                             String pref = "proyecto_area_delete[";
                             int i = Integer.parseInt(llave.substring(pref.length(), llave.length() - 1));
                             Area area = areaService.obtenerArea(i);
                             areasEliminadas.add(area);
-                        }else if(llave.startsWith("proyecto_integrante_delete")){
+                        } else if (llave.startsWith("proyecto_integrante_delete")) {
                             String pref = "proyecto_integrante_delete[";
                             int i = Integer.parseInt(llave.substring(pref.length(), llave.length() - 1));
                             Integrante integrante = integranteService.obtenerIntegrantePorId(i);
@@ -166,29 +165,29 @@ public class ProyectoController {
                 }
             }
 
-            //Eliminar areas e integrantes
-            for(Area area: areasEliminadas){
+            // Eliminar areas e integrantes
+            for (Area area : areasEliminadas) {
                 proyecto.getAreas().remove(area);
             }
-            for(Integrante integrante: integrantesEliminados){
-                if(!creadorProyecto.getUsername().equals(integrante.getCorreoRegistro())){
+            for (Integrante integrante : integrantesEliminados) {
+                if (!creadorProyecto.getUsername().equals(integrante.getCorreoRegistro())) {
                     integranteService.eliminarIntegrante(integrante);
                 }
             }
 
-            //Agregar areas e integrantes
-            for(Area area: areasNuevas){
+            // Agregar areas e integrantes
+            for (Area area : areasNuevas) {
                 proyecto.getAreas().add(area);
             }
-            for(Integrante integrante: integrantesNuevos){
+            for (Integrante integrante : integrantesNuevos) {
                 tokenIntegranteService.generarToken(integranteService.guardarIntegrante(integrante));
             }
 
-            //Actualizar proyecto
+            // Actualizar proyecto
             proyectoService.guardarProyecto(proyecto);
             redirectAttributes.addFlashAttribute("exito", "Proyecto editado :D");
             return "redirect:/proyecto/mis_proyectos";
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             redirectAttributes.addFlashAttribute("error", "Hubo un error al editar proyecto");
             return "redirect:/proyecto/mis_proyectos";
@@ -196,12 +195,12 @@ public class ProyectoController {
     }
 
     @PostMapping("/{idProyecto}/eliminar")
-    public String eliminarProyecto(Model model, @PathVariable int idProyecto, RedirectAttributes redirectAttributes){
-        try{
+    public String eliminarProyecto(Model model, @PathVariable int idProyecto, RedirectAttributes redirectAttributes) {
+        try {
             String username = sesionService.getUsernameFromSession();
             Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
 
-            if(!integranteService.esIntegrante(proyecto, username)){
+            if (!integranteService.esIntegrante(proyecto, username)) {
                 throw new RuntimeException("No es integrante del proyecto");
             }
 
@@ -209,15 +208,15 @@ public class ProyectoController {
             proyectoService.guardarProyecto(proyecto);
             redirectAttributes.addFlashAttribute("exito", "Proyecto eliminado");
             return "redirect:/proyecto/mis_proyectos";
-        }catch(Exception e){
+        } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Proyecto no pudo ser eliminado");
             return "redirect:/proyecto/mis_proyectos";
         }
     }
 
     @GetMapping("/{idProyecto}")
-    public String verProyecto(Model model, @PathVariable int idProyecto, RedirectAttributes redirectAttributes){
-        try{
+    public String verProyecto(Model model, @PathVariable int idProyecto, RedirectAttributes redirectAttributes) {
+        try {
             String username = sesionService.getUsernameFromSession();
             model.addAttribute("username", username);
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
@@ -232,17 +231,16 @@ public class ProyectoController {
 
             boolean creador = Objects.equals(
                     proyecto.getVersion().getFeria().getCreador().getUsername(),
-                    sesionService.getUsernameFromSession()
-            );
-
+                    sesionService.getUsernameFromSession());
 
             model.addAttribute("creador", creador);
 
             boolean ok = !proyecto.getVersion().isCierre() && proyecto.getVersion().isEnabled()
-            && !LocalDate.now().isAfter(proyecto.getVersion().getFechaCierre()) && proyecto.getVersion().getFeria().isEnabled();
+                    && !LocalDate.now().isAfter(proyecto.getVersion().getFechaCierre())
+                    && proyecto.getVersion().getFeria().isEnabled();
             model.addAttribute("asignacion", ok);
             return "verInformacionProyecto";
-        }catch(Exception e){
+        } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Algo falló al cargar el proyecto, raro");
             System.out.println(e.getMessage());
             return "redirect:/proyecto/mis_proyectos";
@@ -251,9 +249,9 @@ public class ProyectoController {
 
     @PostMapping("/{idProyecto}/jurado")
     public String agregarJurado(Model model, @PathVariable int idProyecto,
-                                @RequestParam Map<String, String> reqParams,
-                                RedirectAttributes redirectAttributes){
-        try{
+            @RequestParam Map<String, String> reqParams,
+            RedirectAttributes redirectAttributes) {
+        try {
             Usuario jurado = usuarioService.obtenerUsuarioPorUsername(reqParams.get("juradoCorreo"));
             Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
 
@@ -261,44 +259,44 @@ public class ProyectoController {
                     .anyMatch(integrante -> integrante.getUsuario() == jurado);
 
             if (contains) {
-                redirectAttributes.addFlashAttribute("error", "Un miembro del proyecto NO puede ser asignado como jurado");
-                return "redirect:/proyecto/"+idProyecto+"?error";
+                redirectAttributes.addFlashAttribute("error",
+                        "Un miembro del proyecto NO puede ser asignado como jurado");
+                return "redirect:/proyecto/" + idProyecto + "?error";
             } else {
                 proyecto.getJurados().add(jurado);
                 proyectoService.guardarProyecto(proyecto);
                 redirectAttributes.addFlashAttribute("exito", "Jurado agregado exitosamente");
-                return "redirect:/proyecto/"+idProyecto+"?exito";
+                return "redirect:/proyecto/" + idProyecto + "?exito";
             }
 
-
-
-        }catch(Exception e){
-            redirectAttributes.addFlashAttribute("error", "No se pudó agregar al jurado, tal vez no esta registrado en el sistema");
-            return "redirect:/proyecto/"+idProyecto+"?error";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error",
+                    "No se pudó agregar al jurado, tal vez no esta registrado en el sistema");
+            return "redirect:/proyecto/" + idProyecto + "?error";
         }
 
     }
 
     @PostMapping("/{idProyecto}/jurado/eliminar")
     public String eliminarJurado(Model model, @PathVariable int idProyecto,
-                                @RequestParam Map<String, String> reqParams,
-                                 RedirectAttributes redirectAttributes){
-        try{
+            @RequestParam Map<String, String> reqParams,
+            RedirectAttributes redirectAttributes) {
+        try {
             String username = sesionService.getUsernameFromSession();
 
             Usuario jurado = usuarioService.obtenerUsuarioPorUsername(reqParams.get("juradoCorreo"));
             Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
 
-            if(!proyecto.getVersion().getFeria().getCreador().getUsername().equals(username)){
+            if (!proyecto.getVersion().getFeria().getCreador().getUsername().equals(username)) {
                 throw new RuntimeException("No es creador de esta feria");
             }
             proyecto.getJurados().remove(jurado);
             proyectoService.guardarProyecto(proyecto);
             redirectAttributes.addFlashAttribute("exito", "Jurado eliminado exitosamente");
-            return "redirect:/proyecto/"+idProyecto+"?exito";
-        }catch(Exception e){
+            return "redirect:/proyecto/" + idProyecto + "?exito";
+        } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Algo falló al eliminar el jurado");
-            return "redirect:/proyecto/"+idProyecto+"?error";
+            return "redirect:/proyecto/" + idProyecto + "?error";
         }
     }
 
@@ -317,5 +315,12 @@ public class ProyectoController {
                 .contentType(MediaType.APPLICATION_PDF)
                 .contentLength(pdfData.length)
                 .body(resource);
+    }
+
+    @GetMapping("/listado_proyectos_calificados")
+    public String calificarProyecto(Model model, @PathVariable int idProyecto,
+            @RequestParam Map<String, String> reqParams,
+            RedirectAttributes redirectAttributes) {
+        return "aprobarProyectos";
     }
 }
