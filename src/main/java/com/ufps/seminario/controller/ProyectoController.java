@@ -120,7 +120,7 @@ public class ProyectoController {
             proyecto.setAreas(proyectoOriginal.getAreas());
             proyecto.setCalificacion(proyectoOriginal.getCalificacion());
             proyecto.setEnabled(proyectoOriginal.isEnabled());
-            proyecto.setEstado(proyectoOriginal.isEstado());
+            //proyecto.setEstado(proyectoOriginal.isEstado());
             proyecto = proyectoService.guardarProyecto(proyecto);
 
             // Asignar areas y crear integrantes
