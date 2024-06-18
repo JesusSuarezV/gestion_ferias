@@ -1,59 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gestion usuarios</title>
-    <link rel="icon" href="../img/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="../css/cuadricula.css" />
-    <link
-      href="https://fonts.googleapis.com/css?family=League Spartan"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../css/estilos.css" />
-    <link rel="stylesheet" href="../css/misCalificaciones.css" />
-  </head>
-  <body>
-    <div class="contenedor" id="contenedor">
-      <div class="header"></div>
-      <div class="menu"></div>
-      <div class="contenido">
-        <h2 class="titulo">Usuarios del sistema</h2>
-        <div class="calificaciones-container">
-          <table id="projectsTable">
-            <thead>
-              <tr>
-                <th>N°</th>
-                <th>Correo</th>
-                <th>Nombre</th>
-                <th>Rol</th>
-                <th>Asignar/Eliminar</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr th:each="usuario : ${usuarios}">
-                <td th:text="${usuario.id}"></td>
-                <td th:text="${usuario.correo}"></td>
-                <td th:text="${usuario.nombre}"></td>
-                <td th:text="${usuario.rol}"></td>
-                <td>
-                  <div class="botoness">
-                    <div class="btn-assign">
-                      <img src="../img/Editar.png" />
-                    </div>
-                    <div class="btn-delete">
-                      <img src="../img/botonX.png" />
-                    </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestion usuarios</title>
+  <link rel="icon" href="../img/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="../css/cuadricula.css" />
+  <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/estilos.css" />
+  <link rel="stylesheet" href="../css/misCalificaciones.css" />
+</head>
+
+<body>
+  <div class="contenedor" id="contenedor">
+    <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
+    <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
+    <div class="contenido">
+      <h2 class="titulo">Usuarios del sistema</h2>
+      <div class="calificaciones-container">
+        <table id="projectsTable">
+          <thead>
+            <tr>
+              <th class="n-user">N°</th>
+              <th class="n-nombre">Correo</th>
+              <th class="n-nombre">Nombre</th>
+              <th class="n-rol">Rol</th>
+              <th class="n-rol">Asignar/Eliminar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="usuario : ${usuarios}">
+              <td th:text="${usuario.id}"></td>
+              <td th:text="${usuario.username}"></td> 
+              <td th:text="${usuario.nombre} + ${usuario.apellido}"></td>
+              <td th:text="${usuario.role.nombre}"></td>
+              <td>
+                <div class="botoness">
+                  <div class="btn-assign">
+                    <img src="../img/Editar.png" />
                   </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+                  <div class="btn-delete">
+                    <img src="../img/botonX.png" />
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-    <script src="../js/agregarContenidoTabla.js"></script>
-    <script src="../js/registro.js"></script>
-    <script src="../js/menuInclude.js"></script>
-  </body>
+  </div>
+  <!-- <script src="../js/agregarContenidoTabla.js"></script> -->
+  <script src="../js/registro.js"></script>
+  <script th:src="@{/js/menu.js}"></script>
+  <script>
+    //Despliegue del menu principal
+    let listElements = document.querySelectorAll('.lista-item');
+
+    listElements.forEach(listElement => {
+      listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
+        listElement.classList.toggle('arrow'); //agrega la clase arrow
+        let menu = listElement.nextElementSibling;
+        menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+      });
+    });
+
+    //ejecutar funcion con click
+    document.getElementById('btn-open').addEventListener("click", open_close_menu);
+
+  </script>
+</body>
+
 </html>

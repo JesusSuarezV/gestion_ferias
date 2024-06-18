@@ -13,10 +13,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
+
     @Autowired
     UsuarioRepository usuarioRepository;
 
@@ -60,4 +62,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioRepository.getUsuarioByUsername(username);
     }
 
+    @Override
+    public List<Usuario> getAllUsuarios() {
+        return usuarioRepository.findAll();
+    }
 }

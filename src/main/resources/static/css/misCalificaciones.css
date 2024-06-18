@@ -17,7 +17,7 @@
 .calificaciones-container {
     padding: 20px;
     border-radius: 10px;
-    margin: 20px auto; /* Center the container */
+    margin: 0px auto; /* Center the container */
     width: 80%; 
     overflow-x: auto;
 }
@@ -109,4 +109,28 @@ th:first-child, td:first-child {
 
 th, td:not(:last-child) {
     border-right: 1px solid #002948;
+}
+
+.n-user{
+    width: 10%;
+}
+
+.n-nombre{
+    width: 35%;
+}
+
+.n-rol{
+    width: 15%;
+}
+
+.botoness img{
+    height: 30px;
+    width: auto;
+    cursor: pointer;
+}
+
+.botoness{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
