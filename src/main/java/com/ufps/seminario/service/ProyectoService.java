@@ -21,6 +21,12 @@ public interface ProyectoService {
 
     public List<Proyecto> obtenerProyectosPorVersionYPalabra(Version version, String keyword);
 
+    public List<Proyecto> obtenerProyectosAprobados(Version version);
+
+    public List<Proyecto> obtenerProyectosReprobados(Version version);
+
+
+
     void eliminarProyecto(Proyecto proyecto);
 
     void eliminarProyecto(int id);

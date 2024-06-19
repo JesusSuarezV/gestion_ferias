@@ -12,4 +12,14 @@ public interface UsuarioService {
     Usuario obtenerUsuarioPorUsername(String username); 
 
     List<Usuario> getAllUsuarios();
+
+    List<Usuario> obtenerEstudiantes();
+
+    List<Usuario> obtenerAdministradores();
+
+    Usuario obtenerUsuarioPorId(int id);
+
+    public void actualizarUsuario(Usuario usuario);
+
+
 }
