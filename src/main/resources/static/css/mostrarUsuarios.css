@@ -104,7 +104,15 @@ th, td {
 }
 
 th:first-child, td:first-child {
-    width: 70%;
+    width: 5%;
+}
+
+.n-nombre{
+    width: 40%;
+}
+
+.n-rol{
+    width: 10%;
 }
 
 th, td:not(:last-child) {

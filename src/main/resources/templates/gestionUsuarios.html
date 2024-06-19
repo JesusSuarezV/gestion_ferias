@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="../css/cuadricula.css" />
   <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet" />
   <link rel="stylesheet" href="../css/estilos.css" />
-  <link rel="stylesheet" href="../css/misCalificaciones.css" />
+  <link rel="stylesheet" href="../css/mostrarUsuarios.css" />
 </head>
 
 <body>
@@ -33,7 +33,7 @@
             <tr th:each="usuario : ${usuarios}">
               <td th:text="${usuario.id}"></td>
               <td th:text="${usuario.username}"></td> 
-              <td th:text="${usuario.nombre} + ${usuario.apellido}"></td>
+              <td th:text="${usuario.nombre} + ' ' + ${usuario.apellido}"></td>
               <td th:text="${usuario.role.nombre}"></td>
               <td>
                 <div class="botoness">
