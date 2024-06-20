@@ -78,6 +78,14 @@ thead th {
     font-size: 26px;
 }
 
+.btn-ico {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+
 .proyectos{
     width: 100%;
     display: flex;
