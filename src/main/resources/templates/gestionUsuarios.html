@@ -21,7 +21,7 @@
         <div class="calificaciones-container" th:if="${#lists.isEmpty(administradores)}">
             <h1 class="titulo">No hay administradores de feria registrados en el sistema</h1>
         </div>
-        <div>
+        <div class="tabla-usuarios">
             <div class="calificaciones-container" th:if="${not #lists.isEmpty(administradores)}">
                 <table id="projectsTable">
                     <thead>
@@ -71,7 +71,7 @@
         <h2 class="titulo">Estudiantes</h2>
         <div class="calificaciones-container" th:if="${#lists.isEmpty(estudiantes)}">
             <h1 class="titulo">No hay estudiantes registrados en el sistema</h1></div>
-        <div>
+        <div class="tabla-usuarios">
             <div class="calificaciones-container" th:if="${not #lists.isEmpty(estudiantes)}">
                 <table id="projectsTable">
                     <thead>
@@ -118,7 +118,6 @@
                 </table>
             </div>
         </div>
-
     </div>
 </div>
 <!-- <script src="../js/agregarContenidoTabla.js"></script> -->

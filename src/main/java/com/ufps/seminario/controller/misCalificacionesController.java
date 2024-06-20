@@ -66,7 +66,7 @@ public class misCalificacionesController {
 
     }
 
-    @GetMapping("/{idFeria}/version")
+    @GetMapping("/{idFeria}/version") 
     public String verVersionFeria(Model model, @PathVariable int idFeria, RedirectAttributes redirectAttributes){
         try{
             String username = sesionService.getUsernameFromSession();

@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
  
 @Controller
 @RequestMapping("/calificaciones")
@@ -109,7 +109,7 @@ public class CalificacionController {
         }
     }
 
-    @GetMapping("/jurado/proyecto/{idProyecto}/calificar")
+    @GetMapping("/jurado/proyecto/{idProyecto}/calificar") 
     public String calificarProyecto(Model model, @PathVariable int idProyecto) {
         Usuario usuario = usuarioService.obtenerUsuarioPorUsername(sesionService.getUsernameFromSession());
         Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
@@ -161,9 +161,42 @@ public class CalificacionController {
             }
             proyecto.setCalificacion(valorCalificacion / proyecto.getJurados().size());
             proyectoService.guardarProyecto(proyecto);
-            return "redirect:/calificaciones/jurado/proyecto/{idProyecto}/calificar?exito";
+            return "redirect:/calificaciones/jurado/proyecto/{idProyecto}/ver";
         } else {
             return "redirect:/calificaciones?error";
+        }
+    }
+
+    @GetMapping("/jurado/proyecto/{idProyecto}/ver") 
+    public String verProyecto(Model model, @PathVariable int idProyecto, RedirectAttributes redirectAttributes) {
+        try {
+            String username = sesionService.getUsernameFromSession();
+            model.addAttribute("username", username);
+            model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
+            Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
+
+            List<Integrante> integrantes = integranteService.obtenerIntegrantePorProyecto(proyecto);
+            model.addAttribute("proyecto", proyecto);
+            model.addAttribute("jurados", proyecto.getJurados());
+            model.addAttribute("areas", proyecto.getAreas());
+            model.addAttribute("integrantes", integrantes);
+            model.addAttribute("rolObj", usuarioService.obtenerUsuarioPorUsername(username).getRole());
+
+            boolean creador = Objects.equals(
+                    proyecto.getVersion().getFeria().getCreador().getUsername(),
+                    sesionService.getUsernameFromSession());
+
+            model.addAttribute("creador", creador);
+
+            boolean ok = !proyecto.getVersion().isCierre() && proyecto.getVersion().isEnabled()
+                    && !LocalDate.now().isAfter(proyecto.getVersion().getFechaCierre())
+                    && proyecto.getVersion().getFeria().isEnabled();
+            model.addAttribute("asignacion", ok);
+            return "proyectosPorCalificar";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Algo falló al cargar el proyecto, raro");
+            System.out.println(e.getMessage());
+            return "redirect:/proyecto/mis_proyectos";
         }
     }
 

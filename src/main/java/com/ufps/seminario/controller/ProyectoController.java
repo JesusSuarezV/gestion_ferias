@@ -214,7 +214,7 @@ public class ProyectoController {
         }
     }
 
-    @GetMapping("/{idProyecto}")
+    @GetMapping("/{idProyecto}") 
     public String verProyecto(Model model, @PathVariable int idProyecto, RedirectAttributes redirectAttributes) {
         try {
             String username = sesionService.getUsernameFromSession();

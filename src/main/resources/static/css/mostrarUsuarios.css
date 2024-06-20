@@ -85,6 +85,9 @@ thead th {
     cursor: pointer;
 }
 
+.tabla-usuarios{
+    width: 100%;
+}
 
 .proyectos{
     width: 100%;
@@ -95,7 +98,7 @@ thead th {
 }
 
 tbody td {
-    padding: 10px;
+    padding: 10px; 
     border: 1px solid #002948;
 }
 
@@ -112,14 +115,14 @@ th, td {
 }
 
 th:first-child, td:first-child {
-    width: 5%;
+    width: 35%;
 }
 
 .n-nombre{
     width: 40%;
 }
 
-.n-rol{
+.n-eliminar{
     width: 10%;
 }
 
