@@ -84,7 +84,7 @@ public class CalificacionController {
             }
             model.addAttribute("proyectos", proyectos);
             model.addAttribute("version", version);
-            return "verInfoVersion";
+            return "versionJurado";
         } catch (Exception e) {
             return "redirect:/verFeria";
         }

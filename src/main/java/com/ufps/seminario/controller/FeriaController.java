@@ -220,7 +220,7 @@ public class FeriaController {
         model.addAttribute("feria", feriaService.obtenerFeria(id));
         return "verFeria";
     }
-
+ 
     @GetMapping("/{idFeria}/version")
     public String verVersionFeria(Model model, @PathVariable int idFeria, RedirectAttributes redirectAttributes){
         try{
