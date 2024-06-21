@@ -1,111 +1,174 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Crear Feria</title>
-    <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
-    <link rel="stylesheet" href="../css/cuadricula.css">
-    <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet">
-    <link rel="stylesheet" href="../css/registros_edicion.css">
-    <link rel="stylesheet" href="../css/estilos.css">
-</head>
-  
-<body>
+    <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon" />
+    <link rel="stylesheet" href="../css/cuadricula.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=League Spartan"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/registros_edicion.css" />
+    <link rel="stylesheet" href="../css/estilos.css" />
+  </head>
+
+  <body>
     <div class="contenedor" id="contenedor">
-        <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
-        <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
-        <div class="contenido">
-            <form class="formulario" th:action="@{/ferias/crear}" th:object="${feria}" method="post"
-                enctype="multipart/form-data">
-                <h2 class="titulo">Crear Feria</h2>
-                <div class="formulario_proyecto">
-                    <div class="item"> 
-                        <div class="item-texto">
-                            <label for="nombre">Nombre de la feria:</label>
-                        </div>
-                        <input class="texto_corto" type="text" name="nombre" id="nombre" required>
-                    </div>
-                    <div class="item">
-                        <div class="item-texto">
-                            <label for="descripcion">Descripcion de la feria:</label>
-                        </div>
-                        <textarea class="texto_largo" name="descripcion" id="descripcion" required></textarea>
-                    </div>
-                    <div class="item">
-                        <div class="item-texto">
-                            <label for="imagenFeria">Imagen de la feria:</label>
-                        </div> 
-                        <input class="texto_corto cargar_archivo" type="file" name="imagenFeria" id="imagenFeria" accept="image/*">
-                    </div>
-                    <div class="item">
-                        <div class="item-texto">
-                            <label>Areas:</label>
-                        </div>
-                        <table class="area-tabla" id="areas">
-                            <tr>
-                                <td>
-                                    <button type="button" class="btnArea" id="btnArea" onclick="addArea()">Añadir area</button>
-                                </td>
-                            </tr>
-                        </table>
-                    </div> 
-                </div>
-                <div class="botones">
-                    <a href="/ferias/mis_ferias"><button type="button" id="cancelarBtn">Cancelar</button></a>
-                    <button id="registrarBtn">Registrar</button>
-                </div>
-            </form>
-            <div th:if="${exito}" class="ventanita ventana-verde" id="notification">
-                <p><span th:text="${exito}"></span></p>
-                <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
+      <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
+      <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
+      <div class="contenido">
+        <form
+          id="myForm"
+          class="formulario"
+          th:action="@{/ferias/crear}"
+          th:object="${feria}"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <h2 class="titulo">Crear Feria</h2>
+          <div class="formulario_proyecto">
+            <div class="item">
+              <div class="item-texto">
+                <label for="nombre">Nombre de la feria:</label>
+              </div>
+              <input
+                class="texto_corto"
+                type="text"
+                name="nombre"
+                id="nombre"
+                required
+              />
             </div>
-            <div th:if="${error}" class="ventanita-roja" id="notification">
-                <p><span th:text="${error}"></span></p>
-                <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
+            <div class="item">
+              <div class="item-texto">
+                <label for="descripcion">Descripcion de la feria:</label>
+              </div>
+              <textarea
+                class="texto_largo"
+                name="descripcion"
+                id="descripcion"
+                required
+              ></textarea>
             </div>
+            <div class="item">
+              <div class="item-texto">
+                <label for="imagenFeria">Imagen de la feria:</label>
+                <span
+                  class="error"
+                  id="errorImagen"
+                  style="color: red; display: none"
+                  >La imagen es obligatoria.</span
+                >
+              </div>
+
+              <input
+                class="texto_corto cargar_archivo"
+                type="file"
+                name="imagenFeria"
+                id="imagenFeria"
+                accept="image/*"
+              />
+              <span
+                class="error"
+                id="errorImagen"
+                style="color: red; display: none"
+                >La imagen es obligatoria.</span
+              >
+            </div>
+            <div class="item">
+              <div class="item-texto">
+                <label>Areas:</label>
+              </div>
+              <table class="area-tabla" id="areas">
+                <tr>
+                  <td>
+                    <button
+                      type="button"
+                      class="btnArea"
+                      id="btnArea"
+                      onclick="addArea()"
+                    >
+                      Añadir area
+                    </button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="botones">
+            <a href="/ferias/mis_ferias"
+              ><button type="button" id="cancelarBtn">Cancelar</button></a
+            >
+            <button id="registrarBtn">Registrar</button>
+          </div>
+        </form>
+        <div th:if="${exito}" class="ventanita ventana-verde" id="notification">
+          <p><span th:text="${exito}"></span></p>
+          <span
+            id="equis"
+            class="close"
+            onclick="closeNotification('notification')"
+            >×</span
+          >
         </div>
+        <div th:if="${error}" class="ventanita-roja" id="notification">
+          <p><span th:text="${error}"></span></p>
+          <span
+            id="equis"
+            class="close"
+            onclick="closeNotification('notification')"
+            >×</span
+          >
+        </div>
+      </div>
     </div>
     <script th:src="@{/js/registro.js}"></script>
     <script th:src="@{/js/menu.js}"></script>
+
     <script>
-        //Despliegue del menu principal
-        let listElements = document.querySelectorAll('.lista-item');
+      //Despliegue del menu principal
+      let listElements = document.querySelectorAll(".lista-item");
 
-        listElements.forEach(listElement => {
-            listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
-                listElement.classList.toggle('arrow'); //agrega la clase arrow
-                let menu = listElement.nextElementSibling;
-                menu.classList.toggle('active'); //agrega la clase active para mover el arrow
-            }); 
+      listElements.forEach((listElement) => {
+        listElement.addEventListener("click", () => {
+          //detecta el evento click en los items de la lista del menú
+          listElement.classList.toggle("arrow"); //agrega la clase arrow
+          let menu = listElement.nextElementSibling;
+          menu.classList.toggle("active"); //agrega la clase active para mover el arrow
         });
+      });
 
-        //ejecutar funcion con click
-        document.getElementById('btn-open').addEventListener("click", open_close_menu);
-
+      //ejecutar funcion con click
+      document
+        .getElementById("btn-open")
+        .addEventListener("click", open_close_menu);
     </script>
     <script>
-        //Se verifica que la extensión sea correcta.
-        document.getElementById('archivo').addEventListener('change', function (event) { //Este ID es del boton, entonces si se cambia arriba, se debe cambiar aquí también
-            const fileInput = event.target;
-            const filePath = fileInput.value;
-            const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+      //Se verifica que la extensión sea correcta.
+      document
+        .getElementById("archivo")
+        .addEventListener("change", function (event) {
+          //Este ID es del boton, entonces si se cambia arriba, se debe cambiar aquí también
+          const fileInput = event.target;
+          const filePath = fileInput.value;
+          const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
 
-            if (!allowedExtensions.exec(filePath)) {
-                alert("Por favor, seleccione un archivo de imagen válido.");
-                fileInput.value = '';
-                return false;
-            }
+          if (!allowedExtensions.exec(filePath)) {
+            alert("Por favor, seleccione un archivo de imagen válido.");
+            fileInput.value = "";
+            return false;
+          }
         });
     </script>
     <script type="text/javascript">
-        let areaIndex = 0;
-        function addArea() {
-            const areasDiv = document.getElementById('areas');
-            const newAreaDiv = document.createElement('tr');
-            newAreaDiv.id = "area[" + areaIndex + "]";
-            newAreaDiv.innerHTML = `
+      let areaIndex = 0;
+      function addArea() {
+        const areasDiv = document.getElementById("areas");
+        const newAreaDiv = document.createElement("tr");
+        newAreaDiv.id = "area[" + areaIndex + "]";
+        newAreaDiv.innerHTML = `
             <td>
                 <input type="text" name="area[${areaIndex}]">
                 <button type="button" class="btnClear" onclick="eliminarComponente2('area[${areaIndex}]')">
@@ -113,31 +176,45 @@
                 </button><br>
             </td>
         `;
-            areasDiv.appendChild(newAreaDiv);
-            areaIndex++;
+        areasDiv.appendChild(newAreaDiv);
+        areaIndex++;
+      }
+      function eliminarComponente(id) {
+        var componente = document.getElementById("[" + id + "]");
+        if (componente) {
+          componente.remove();
         }
-        function eliminarComponente(id) {
-            var componente = document.getElementById('[' + id + ']');
-            if (componente) {
-                componente.remove();
-            }
-            const areasDiv = document.getElementById('areasEliminadas');
-            const newAreaDiv = document.createElement('tr');
-            newAreaDiv.id = "feria_area_delete[${id}]";
-            newAreaDiv.innerHTML = `
+        const areasDiv = document.getElementById("areasEliminadas");
+        const newAreaDiv = document.createElement("tr");
+        newAreaDiv.id = "feria_area_delete[${id}]";
+        newAreaDiv.innerHTML = `
             <td>
                 <input type="hidden" name="feria_area_delete[${id}]" id="feria_area_delete[${id}]">
             </td>
         `;
-            areasDiv.appendChild(newAreaDiv);
+        areasDiv.appendChild(newAreaDiv);
+      }
+      function eliminarComponente2(id) {
+        var componente = document.getElementById(id);
+        if (componente) {
+          componente.remove();
         }
-        function eliminarComponente2(id) {
-            var componente = document.getElementById(id);
-            if (componente) {
-                componente.remove();
-            }
-        }
+      }
     </script>
-</body>
+    <script>
+      document
+        .getElementById("myForm")
+        .addEventListener("submit", function (event) {
+          const imagenFeria = document.getElementById("imagenFeria");
+          const errorImagen = document.getElementById("errorImagen");
 
+          if (imagenFeria.files.length === 0) {
+            errorImagen.style.display = "block";
+            event.preventDefault();
+          } else {
+            errorImagen.style.display = "none";
+          }
+        });
+    </script>
+  </body>
 </html>

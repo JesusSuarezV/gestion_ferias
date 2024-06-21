@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -70,7 +72,7 @@ public class VersionController {
     @GetMapping("/{idVersion}/registrar")
     public String registrarAVersion(Model model, @PathVariable int idVersion) {
         try {
-            if(versionService.estaCerrado(idVersion)){
+            if (versionService.estaCerrado(idVersion)) {
                 throw new Exception();
             }
             String username = sesionService.getUsernameFromSession();
@@ -80,53 +82,53 @@ public class VersionController {
             List<Area> areas = areaService.obtenerAreasPorFeria(version.getFeria());
             model.addAttribute("version", version);
             model.addAttribute("areas", areas);
-            return "registrarProyecto"; //Luego miro esto
+            return "registrarProyecto"; // Luego miro esto
         } catch (Exception e) {
-            return "redirect:/version/"+idVersion;
+            return "redirect:/version/" + idVersion;
         }
     }
 
     @PostMapping("/{idVersion}/registrar")
     public String registrarAVersion(@ModelAttribute Proyecto proyecto, @PathVariable int idVersion,
-                                    @RequestParam Map<String, String> requestParams,
-                                    @RequestParam("archivoProyecto") MultipartFile archivoProyecto) {
+            @RequestParam Map<String, String> requestParams,
+            @RequestParam("archivoProyecto") MultipartFile archivoProyecto) {
         try {
-            if(versionService.estaCerrado(idVersion)){
+            if (versionService.estaCerrado(idVersion)) {
                 throw new Exception();
             }
             String username = sesionService.getUsernameFromSession();
             Usuario creadorProyecto = usuarioService.obtenerUsuarioPorUsername(username);
             Version version = versionService.obtenerVersion(idVersion);
-            //Crear proyecto
-            if(archivoProyecto != null && archivoProyecto.getBytes().length>0){
+            // Crear proyecto
+            if (archivoProyecto != null && archivoProyecto.getBytes().length > 0) {
                 String fileUrl = firebaseService.uploadFile(archivoProyecto);
                 proyecto.setArchivoUrl(fileUrl);
             }
-            //String fileUrl = firebaseService.uploadFile(archivoProyecto);
-            //proyecto.setArchivoUrl(fileUrl);
+            // String fileUrl = firebaseService.uploadFile(archivoProyecto);
+            // proyecto.setArchivoUrl(fileUrl);
             proyecto.setVersion(version);
             proyecto.setFechaRegistro(LocalDate.now());
             proyecto.setEnabled(true);
             Proyecto proyectoCreado = proyectoService.guardarProyecto(proyecto);
 
-            //Asignar areas y crear integrantes
+            // Asignar areas y crear integrantes
             for (Map.Entry<String, String> entry : requestParams.entrySet()) {
                 String llave = entry.getKey();
                 String nombre = entry.getValue();
                 if (nombre != null && !nombre.isEmpty()) {
-                    if (llave.startsWith("integrante")) { //Crear Integrante
+                    if (llave.startsWith("integrante")) { // Crear Integrante
                         Integrante integrante = new Integrante();
                         integrante.setCorreoRegistro(nombre);
                         try {
                             Usuario usuario = usuarioService.obtenerUsuarioPorUsername(nombre);
                             integrante.setUsuario(usuario);
                         } catch (Exception e) {
-                            //Nada xd
+                            // Nada xd
                         }
                         integrante.setProyecto(proyectoCreado);
                         Integrante integranteCreado = integranteService.guardarIntegrante(integrante);
                         tokenIntegranteService.generarToken(integranteCreado);
-                    } else if (llave.startsWith("area")) { //Asignar Area
+                    } else if (llave.startsWith("area")) { // Asignar Area
                         String pref = "area[";
                         int idArea = Integer.parseInt(llave.substring(pref.length(), llave.length() - 1));
                         Area area = areaService.obtenerArea(idArea);
@@ -135,25 +137,24 @@ public class VersionController {
                 }
             }
 
-            //Agregar creador como integrante
+            // Agregar creador como integrante
             Integrante integrante = new Integrante();
             integrante.setEnabled(true); // el creador no tiene token
-            System.out.println("correo: "+creadorProyecto.getUsername());
+            System.out.println("correo: " + creadorProyecto.getUsername());
             integrante.setCorreoRegistro(creadorProyecto.getUsername());
             integrante.setUsuario(creadorProyecto);
             integrante.setProyecto(proyectoCreado);
             integranteService.guardarIntegrante(integrante);
 
-            //Actualizar proyecto
+            // Actualizar proyecto
             proyectoService.guardarProyecto(proyectoCreado);
 
-            return "redirect:/version/"+idVersion+"?exito";
+            return "redirect:/version/" + idVersion + "?exito";
         } catch (Exception e) {
-            System.out.println("Error "+e.getMessage());
-            return "redirect:/version/"+idVersion+"?error";
+            System.out.println("Error " + e.getMessage());
+            return "redirect:/version/" + idVersion + "?error";
         }
     }
-
 
     @GetMapping("/ferias_disponibles")
     public String searchFeriasDisponibles(Model model) {
@@ -161,7 +162,8 @@ public class VersionController {
     }
 
     @GetMapping("/ferias_disponibles/search")
-    public String searchFeriasDisponibles(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
+    public String searchFeriasDisponibles(@RequestParam(value = "keyword", required = false) String keyword,
+            Model model) {
         try {
             String username = sesionService.getUsernameFromSession();
             model.addAttribute("username", username);
@@ -180,19 +182,20 @@ public class VersionController {
     }
 
     @GetMapping("/ferias_inscritas/search")
-    public String searchFeriasInscritas(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
+    public String searchFeriasInscritas(@RequestParam(value = "keyword", required = false) String keyword,
+            Model model) {
         try {
             String username = sesionService.getUsernameFromSession();
             model.addAttribute("username", username);
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
-            List<Version> versiones = versionService.obtenerVersionesPorIntegranteYDisponibles(username, keyword, LocalDate.now());
+            List<Version> versiones = versionService.obtenerVersionesPorIntegranteYDisponibles(username, keyword,
+                    LocalDate.now());
             model.addAttribute("versiones", versiones);
-            return "feriasInscritas"; //Luego miro esto
+            return "feriasInscritas"; // Luego miro esto
         } catch (Exception e) {
             return "redirect:/";
         }
     }
-
 
     @GetMapping("/ferias_finalizadas")
     public String searchFeriasFinalizadas(Model model) {
@@ -200,7 +203,8 @@ public class VersionController {
     }
 
     @GetMapping("/ferias_finalizadas/search")
-    public String searchFeriasFinalizadas(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
+    public String searchFeriasFinalizadas(@RequestParam(value = "keyword", required = false) String keyword,
+            Model model) {
         try {
             String username = sesionService.getUsernameFromSession();
             model.addAttribute("username", username);
@@ -221,14 +225,14 @@ public class VersionController {
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             Version version = versionService.obtenerVersion(idVersion);
             Feria feria = version.getFeria();
-            if(!version.getFeria().getCreador().getUsername().equals(username)){
+            if (!version.getFeria().getCreador().getUsername().equals(username)) {
                 throw new Exception("No es el creador de esta feria");
             }
             model.addAttribute("version", version);
             model.addAttribute("feria", feria);
             List<Auspiciador> auspiciadores = auspiciadorService.obtenerAuspiciadorPorVersion(version);
             model.addAttribute("auspiciadores", auspiciadores);
-            return "editarVersionFeria"; //Luego miro esto
+            return "editarVersionFeria"; // Luego miro esto
         } catch (Exception e) {
             return "redirect:/mis_ferias";
         }
@@ -236,8 +240,8 @@ public class VersionController {
 
     @PostMapping("/{idVersion}/editar")
     public String editarVersionFeria(Model model, @PathVariable int idVersion, @ModelAttribute Version version,
-                                    @RequestParam Map<String, String> requestParams,
-                                    @RequestParam("formatoVersion") MultipartFile formatoVersion) {
+            @RequestParam Map<String, String> requestParams,
+            @RequestParam("formatoVersion") MultipartFile formatoVersion) {
         try {
             String username = sesionService.getUsernameFromSession();
             Feria feria = feriaService.obtenerFeriaByVersion(idVersion);
@@ -250,10 +254,10 @@ public class VersionController {
 
             version.setFeria(feria);
             version.setId(idVersion);
-            int cantidadDisponible = versionService.obtenerCantidadDisponiblePorFeriayFecha(feria, version.getFechaInicio());
-            boolean fechasCorrectas =
-                    !version.getFechaInicio().isAfter(version.getFechaLimite())
-                            && !version.getFechaLimite().isAfter(version.getFechaCierre());
+            int cantidadDisponible = versionService.obtenerCantidadDisponiblePorFeriayFecha(feria,
+                    version.getFechaInicio());
+            boolean fechasCorrectas = !version.getFechaInicio().isAfter(version.getFechaLimite())
+                    && !version.getFechaLimite().isAfter(version.getFechaCierre());
             if (fechasCorrectas) {
                 version.setNumero(versionService.obtenerVersionesPorFeria(feria).size());
                 Version versionCreada = versionService.guardarVersion(version);
@@ -275,12 +279,12 @@ public class VersionController {
                     }
                 }
             } else {
-                return "redirect:/version/"+idVersion+"/editar?error";
+                return "redirect:/version/" + idVersion + "/editar?error";
             }
-            return "redirect:/ferias/"+feria.getId()+"/version";
+            return "redirect:/ferias/" + feria.getId() + "/version";
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return "redirect:/version/"+idVersion+"/editar";
+            return "redirect:/version/" + idVersion + "/editar";
         }
     }
 
@@ -294,7 +298,7 @@ public class VersionController {
 
             Version version = versionService.obtenerVersion(idVersion);
 
-            if(!version.getFeria().getCreador().getUsername().equals(username)){
+            if (!version.getFeria().getCreador().getUsername().equals(username)) {
                 throw new Exception("No es el creador de esta feria");
             }
             List<Criterio> criterios = criterioService.obtenerCriterioPorVersion(version);
@@ -302,13 +306,14 @@ public class VersionController {
             model.addAttribute("version", version);
             return "editarRubrica";
         } catch (Exception e) {
-            return "redirect:/version/"+idVersion;
+            return "redirect:/version/" + idVersion;
         }
     }
 
     @PostMapping("/{idVersion}/rubrica/editar")
     public String editarRubrica(Model model, @PathVariable int idVersion,
-                                @RequestParam Map<String, String> requestParams) {
+            @RequestParam Map<String, String> requestParams,
+            RedirectAttributes redirectAttributes) {
         try {
             String username = sesionService.getUsernameFromSession();
             model.addAttribute("username", username);
@@ -318,11 +323,10 @@ public class VersionController {
                 String llave = entry.getKey();
                 String valor = entry.getValue();
                 if (llave != null && !llave.isEmpty()) {
-                        String prefijoViejos = "criterio_item[";
+                    String prefijoViejos = "criterio_item[";
                     String prefijoNuevos = "item[";
 
                     String prefNivel = "criterio_nivel[";
-
 
                     if (llave.startsWith(prefijoViejos)) {
                         int idCriterio = Integer.parseInt(llave.substring(prefijoViejos.length(), llave.length() - 1));
@@ -350,7 +354,7 @@ public class VersionController {
                         criterio.setEnabled(true);
                         criterio.setVersion(version);
                         criterioService.guardarCriterio(criterio);
-                    }else if(llave.startsWith("version_criterio_delete")){
+                    } else if (llave.startsWith("version_criterio_delete")) {
                         String pref = "version_criterio_delete[";
                         int idCriterio = Integer.parseInt(llave.substring(pref.length(), llave.length() - 1));
                         Criterio criterio = criterioService.obtenerCriterioPorId(idCriterio);
@@ -359,31 +363,32 @@ public class VersionController {
                     }
                 }
             }
-            return "redirect:/version/"+idVersion+"/rubrica/editar";
+            return "redirect:/ferias/" + version.getFeria().getId() + "/version";
         } catch (Exception e) {
-            return "redirect:/version/"+idVersion;
+            redirectAttributes.addFlashAttribute("error", "Algo falló en la creación");
+            return "redirect:/version/" + idVersion + "/rubrica/editar";
         }
     }
 
     @PostMapping("/{idVersion}/cerrar")
-    public String cerrarVersion(Model model, @PathVariable int idVersion){
-        try{
+    public String cerrarVersion(Model model, @PathVariable int idVersion) {
+        try {
             Version version = versionService.obtenerVersion(idVersion);
             version.setCierre(true);
             versionService.guardarVersion(version);
-            return "redirect:/ferias/"+version.getFeria().getId()+"/version";
-        }catch(Exception e){
+            return "redirect:/ferias/" + version.getFeria().getId() + "/version";
+        } catch (Exception e) {
             return "redirect:/ferias/mis_ferias?error";
         }
     }
 
     @PostMapping("/{idVersion}/eliminar")
-    public String eliminarVersion(Model model, @PathVariable int idVersion){
-        try{
+    public String eliminarVersion(Model model, @PathVariable int idVersion) {
+        try {
             Version version = versionService.obtenerVersion(idVersion);
             versionService.ocultarVersion(idVersion);
-            return "redirect:/ferias/"+version.getFeria().getId()+"/version";
-        }catch(Exception e){
+            return "redirect:/ferias/" + version.getFeria().getId() + "/version";
+        } catch (Exception e) {
             return "redirect:/ferias/mis_ferias?error";
         }
     }
