@@ -25,4 +25,5 @@ public interface VersionRepository extends JpaRepository<Version, Integer> {
     List<Version> findByCierreOrFechaCierreBefore(boolean b, LocalDate fecha);
 
     Version[] findByFeria(Feria feria);
-}
+
+} 

@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
- 
+
 @Controller
 @RequestMapping("/calificaciones")
 public class CalificacionController {
@@ -113,7 +113,7 @@ public class CalificacionController {
         }
     }
 
-    @GetMapping("/jurado/proyecto/{idProyecto}/calificar") 
+    @GetMapping("/jurado/proyecto/{idProyecto}/calificar")
     public String calificarProyecto(Model model, @PathVariable int idProyecto) {
         Usuario usuario = usuarioService.obtenerUsuarioPorUsername(sesionService.getUsernameFromSession());
         Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
@@ -166,13 +166,14 @@ public class CalificacionController {
             }
             proyecto.setCalificacion(valorCalificacion / proyecto.getJurados().size());
             proyectoService.guardarProyecto(proyecto);
-            return "redirect:/calificaciones/jurado/proyecto/{idProyecto}/ver";
+            return "redirect:/calificaciones/jurado/version/" + proyecto.getVersion().getId()
+            ;
         } else {
             return "redirect:/calificaciones?error";
         }
     }
 
-    @GetMapping("/jurado/proyecto/{idProyecto}/ver") 
+    @GetMapping("/jurado/proyecto/{idProyecto}/ver")
     public String verProyecto(Model model, @PathVariable int idProyecto, RedirectAttributes redirectAttributes) {
         try {
             String username = sesionService.getUsernameFromSession();

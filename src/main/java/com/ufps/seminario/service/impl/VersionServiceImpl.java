@@ -175,4 +175,5 @@ public class VersionServiceImpl implements VersionService {
         version.setCierre(true);
         versionRepository.save(version);
     }
+
 }

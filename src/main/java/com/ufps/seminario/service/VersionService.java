@@ -1,6 +1,7 @@
 package com.ufps.seminario.service;
 
 import com.ufps.seminario.entity.Feria;
+import com.ufps.seminario.entity.Proyecto;
 import com.ufps.seminario.entity.Usuario;
 import com.ufps.seminario.entity.Version;
 import org.springframework.data.domain.Page;

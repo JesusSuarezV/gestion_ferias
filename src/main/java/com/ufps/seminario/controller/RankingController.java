@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/Ranking")
+@RequestMapping("/ranking")
 public class RankingController {
 
     @Autowired
@@ -35,7 +35,8 @@ public class RankingController {
     public String verRanking(Model model, @PathVariable int idVersion) {
         try {
             String username = sesionService.getUsernameFromSession();
-            model.addAttribute("username", username);
+            model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+                model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             Version version = versionService.obtenerVersion(idVersion);
             model.addAttribute("version", version);
