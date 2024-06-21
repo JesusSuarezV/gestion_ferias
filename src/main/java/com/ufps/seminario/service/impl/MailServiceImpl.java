@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class MailServiceImpl implements MailService {
 
     @Autowired
-    private JavaMailSender javaMailSender;
+    private JavaMailSender javaMailSender; 
 
     public void enviarCorreo(String destinatario, String asunto, String cuerpo) throws MessagingException {
         MimeMessage mensaje = javaMailSender.createMimeMessage();

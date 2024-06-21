@@ -26,7 +26,7 @@ public class Proyecto {
     @ManyToOne
     @JoinColumn(name = "version_id")
     private Version version;
-    private boolean estado;
+    private int estado;
     private LocalDate fechaRegistro;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

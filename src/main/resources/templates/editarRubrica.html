@@ -108,6 +108,98 @@
           >
         </div>
       </div>
+      <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
+      <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
+      <div class="contenido">
+        <form
+          class="formulario"
+          th:action="@{/version/{idVersion}/rubrica/editar(idVersion=${version.id})}"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <h2 class="titulo">Editar Rúbrica</h2>
+          <div class="cuadraro_grande">
+            <div class="rubrica">
+              <label class="advertencia" for="enunciadoValor"
+                >Recordar: Valor significa que peso tiene la pregunta respecto a
+                la calificación. Debe ser un número entre 1 a 100.</label
+              >
+              <div id="criterios">
+                <div
+                  th:each="criterio : ${criterios}"
+                  th:id="'[' + ${criterio.id} +']'"
+                >
+                  <div class="entradaItem">
+                    <label for="item">Item:</label>
+                    <input
+                      class="entrada"
+                      type="text"
+                      id="item"
+                      th:name="'criterio_item[' + ${criterio.id} +']'"
+                      th:value="${criterio.nombre}"
+                      required
+                    />
+                  </div>
+                  <div class="valorItem">
+                    <label for="valorPregunta">Valor:</label>
+                    <input
+                      class="valor"
+                      type="number"
+                      min="0"
+                      max="100"
+                      id="valorPregunta"
+                      th:name="'criterio_nivel[' + ${criterio.id} +']'"
+                      th:value="${criterio.valor}"
+                      required
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    class="btnClear"
+                    th:onclick="'eliminarComponente(\'' +${criterio.id} + '\')'"
+                  >
+                    X
+                  </button>
+                </div>
+              </div>
+              <div id="criteriosEliminados"></div>
+              <div class="agregarItem">
+                <button
+                  type="button"
+                  id="agregarBtn"
+                  onclick="agregarCriterio()"
+                >
+                  Agregar Item
+                </button>
+              </div>
+            </div>
+            <div class="botones">
+              <a th:href="'/ferias/' + ${version.feria.id} + '/version'"
+                ><button type="button" id="cancelarBtn">Cancelar</button></a
+              >
+              <button id="guardarBtn">Guardar</button>
+            </div>
+          </div>
+        </form>
+        <div th:if="${exito}" class="ventanita ventana-verde" id="notification">
+          <p><span th:text="${exito}"></span></p>
+          <span
+            id="equis"
+            class="close"
+            onclick="closeNotification('notification')"
+            >×</span
+          >
+        </div>
+        <div th:if="${error}" class="ventanita-roja" id="notification">
+          <p><span th:text="${error}"></span></p>
+          <span
+            id="equis"
+            class="close"
+            onclick="closeNotification('notification')"
+            >×</span
+          >
+        </div>
+      </div>
     </div>
     <script th:src="@{/js/menu.js}"></script>
     <script>

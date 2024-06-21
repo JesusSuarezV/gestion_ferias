@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -120,7 +120,7 @@ public class ProyectoController {
             proyecto.setAreas(proyectoOriginal.getAreas());
             proyecto.setCalificacion(proyectoOriginal.getCalificacion());
             proyecto.setEnabled(proyectoOriginal.isEnabled());
-            proyecto.setEstado(proyectoOriginal.isEstado());
+            proyecto.setEstado(proyectoOriginal.getEstado());
             proyecto = proyectoService.guardarProyecto(proyecto);
 
             // Asignar areas y crear integrantes
@@ -214,7 +214,7 @@ public class ProyectoController {
         }
     }
 
-    @GetMapping("/{idProyecto}")
+    @GetMapping("/{idProyecto}") 
     public String verProyecto(Model model, @PathVariable int idProyecto, RedirectAttributes redirectAttributes) {
         try {
             String username = sesionService.getUsernameFromSession();

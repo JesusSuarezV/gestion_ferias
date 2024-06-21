@@ -25,12 +25,8 @@
     justify-content: space-evenly;
 }
 
-/* .titulo {
-    margin-top: 30px;
-} */
-
 .titulo {
-    margin-top: 30px;
+    margin-top: 50px;
     color: #002948;
 }
 
@@ -174,8 +170,17 @@ h3 {
     height: 25px;
 }
 
+.top-boton{
+    width: 90%;
+}
+
 .noFerias {
-    margin-top: 30px;
+    width: 90%;
+}
+
+.aviso{
+    width: 100%;
+    text-align: center;
 }
 
 /*Paginación*/
@@ -209,4 +214,18 @@ h3 {
 .photo img {
     height: 50px;
     width: auto;
+}
+
+/*Boton calificar*/
+
+.calificar {
+    width: 130px;
+    height: 35px; 
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    margin-right: 20px;
+    background-color: #002948;
+    border: none;
 }

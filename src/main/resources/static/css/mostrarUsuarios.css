@@ -2,23 +2,57 @@
     font-family: 'League Spartan', sans-serif;
 }
 
-.titulo {
+.contenido{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.titulo{
     margin-top: 50px;
     color: #002948;
     width: 90%;
+} 
+
+.mensaje-usuario{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.imagen-ver {
+.aviso{
+    color: #6A8BA4;
+}
+
+.panel-administrador{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.imagen-ver{
     height: 30px;
     width: auto;
     cursor: pointer;
 }
 
 .calificaciones-container {
-    margin: 0px auto;
-    width: 90%;
+    margin: 0px auto; /* Center the container */
+    width: 90%; 
     overflow-x: auto;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
+}
+
+.panel-administrador .titulo{
+    margin-top: 10px;
+    font-size: 25px;
+    margin-bottom: 15px;
+}
+
+.panel-administrador{
+    margin-bottom: 50px;
+    width: 100%;
 }
 
 table {
@@ -26,7 +60,7 @@ table {
     border-collapse: collapse;
 }
 
-.tabla-item {
+.tabla-item{
     text-align: center;
 }
 
@@ -39,47 +73,56 @@ thead th {
     font-size: 20px;
 }
 
-.algo {
+.algo{
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.tabla-item-2 {
+.tabla-item-2{
     width: fit-content;
 }
 
-.boton-verde {
+.boton-verde{
     background-color: green;
     cursor: pointer;
     border-radius: 50%;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
     font-weight: bold;
     font-size: 26px;
-    border: none;
 }
 
-.boton-rojo {
+.boton-rojo{
     background-color: red;
     cursor: pointer;
     border-radius: 50%;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
     font-weight: bold;
     font-size: 26px;
-    border: none;
 }
 
-.proyectos {
+.btn-ico {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.tabla-usuarios{
+    width: 100%;
+}
+
+.proyectos{
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -88,7 +131,7 @@ thead th {
 }
 
 tbody td {
-    padding: 5px;
+    padding: 3px; 
     border: 1px solid #002948;
 }
 
@@ -100,53 +143,34 @@ tbody tr:nth-child(odd) {
     background-color: white;
 }
 
-th,
-td {
+th, td {
     text-align: left;
 }
 
-th:first-child,
-td:first-child {
-    width: 70%;
+th:first-child, td:first-child {
+    width: 35%;
 }
 
-th,
-td:not(:last-child) {
+.n-nombre{
+    width: 40%; 
+}
+
+.n-eliminar{
+    width: 10%;
+}
+
+th, td:not(:last-child) {
     border-right: 1px solid #002948;
 }
 
-.botoness img {
+.botoness img{
     height: 30px;
     width: auto;
     cursor: pointer;
 }
 
-.botoness {
+.botoness{
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-}
-
-.tablas-calificaciones {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-bottom: 70px;
-}
-
-.calificaciones-container .titulo {
-    margin-top: 10px;
-    font-size: 25px;
-    margin-bottom: 15px;
-}
-
-.celda-centrada {
-    text-align: center;
-    vertical-align: middle;
-}
- 
-.celda-centrada form{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }

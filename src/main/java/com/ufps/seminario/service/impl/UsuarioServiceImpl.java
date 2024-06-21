@@ -13,10 +13,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
+
     @Autowired
     UsuarioRepository usuarioRepository;
 
@@ -31,7 +33,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public boolean guardarUsuario(Usuario usuario) {
-        try {
+        try { 
             usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
             usuario.setRole(new Role(1, "ESTUDIANTE", true));
             usuarioRepository.save(usuario);
@@ -52,12 +54,38 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public int obtenerId(String correo) {
-        return usuarioRepository.getUsuarioByUsername(correo).getId();
+        return usuarioRepository.getUsuarioByUsernameIgnoreCase(correo).getId();
     }
 
     @Override
     public Usuario obtenerUsuarioPorUsername(String username) {
-        return usuarioRepository.getUsuarioByUsername(username);
+        return usuarioRepository.getUsuarioByUsernameIgnoreCase(username);
     }
+
+    @Override
+    public List<Usuario> getAllUsuarios() {
+        return usuarioRepository.findAll();
+    }
+
+    @Override
+    public List<Usuario> obtenerEstudiantes() {
+        return usuarioRepository.findEstudiantes();
+    }
+
+    @Override
+    public List<Usuario> obtenerAdministradores() {
+        return usuarioRepository.findAdmins();
+    }
+
+    @Override
+    public Usuario obtenerUsuarioPorId(int id) {
+        return usuarioRepository.findById(id).get();
+    }
+
+    @Override
+    public void actualizarUsuario(Usuario usuario) {
+        usuarioRepository.save(usuario);
+    }
+
 
 }

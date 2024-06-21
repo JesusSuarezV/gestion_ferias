@@ -111,6 +111,16 @@ public class ProyectoServiceImpl implements ProyectoService {
     }
 
     @Override
+    public List<Proyecto> obtenerProyectosAprobados(Version version) {
+        return proyectoRepository.findProyectosAprobados(version);
+    }
+
+    @Override
+    public List<Proyecto> obtenerProyectosReprobados(Version version) {
+        return proyectoRepository.findProyectosReprobados(version);
+    }
+
+    @Override
     public void eliminarProyecto(Proyecto proyecto) {
         for(Integrante integrante: integranteRepository.findByProyecto(proyecto)){
             integranteService.eliminarIntegrante(integrante);
