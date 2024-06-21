@@ -21,47 +21,52 @@
             <div class="top-boton">
                 <h2 class="titulo">Ferias creadas</h2>
                 <div class="CrearEvento">
-                    <a th:href="'/ferias/crear'">
+                    <a th:if="${role != 'ESTUDIANTE'}" th:href="'/ferias/crear'">
                         <button>Crea feria</button>
                     </a>
                 </div>
             </div>
-            <div th:if="${#lists.isEmpty(ferias)}" class="noFerias">
-                <h3>No hay ferias creadas.</h3>
+            <div th:if="${role == 'ESTUDIANTE'}" class="mensaje-estudiante">
+                <h3>No tienes permisos para crear ferias</h3>
             </div>
-            <div th:if="${not #lists.isEmpty(ferias)}" class="ferias">
-                <tr th:each="feria : ${ferias}">
-                    <div class="cuadro">
-                        <div class="top">
-                            <img th:src="${feria.imagenUrl != null and !feria.imagenUrl.isEmpty() ? feria.imagenUrl : '/img/img1.jpeg'}"
-                                alt="">
-                        </div>
-                        <div class="info">
-                            <h3 class="titulo_feria" th:text="${feria.nombre}"></h3>
-                            <div class="botones">
-                                <a th:href="'/ferias/' + ${feria.id} + '/editar'">
-                                    <button class="edit">Editar</button>
-                                </a>
-                                <form method="post" th:action="@{/ferias/{idFeria}/eliminar(idFeria=${feria.id})}"
-                                    enctype="multipart/form-data">
-                                    <button class="delete">Eliminar</button>
-                                </form>
-                                <a th:href="'/ferias/' + ${feria.id} + '/version'">
-                                    <button class="versiones">Versiones</button>
-                                </a>
+            <div th:if="${role != 'ESTUDIANTE'}" class="contenido-admin">
+                <div th:if="${#lists.isEmpty(ferias)}" class="noFerias">
+                    <h3>No hay ferias creadas.</h3>
+                </div>
+                <div th:if="${not #lists.isEmpty(ferias)}" class="ferias">
+                    <tr th:each="feria : ${ferias}">
+                        <div class="cuadro">
+                            <div class="top">
+                                <img th:src="${feria.imagenUrl != null and !feria.imagenUrl.isEmpty() ? feria.imagenUrl : '/img/img1.jpeg'}"
+                                    alt="">
+                            </div>
+                            <div class="info">
+                                <h3 class="titulo_feria" th:text="${feria.nombre}"></h3>
+                                <div class="botones">
+                                    <a th:href="'/ferias/' + ${feria.id} + '/editar'">
+                                        <button class="edit">Editar</button>
+                                    </a>
+                                    <form method="post" th:action="@{/ferias/{idFeria}/eliminar(idFeria=${feria.id})}"
+                                        enctype="multipart/form-data">
+                                        <button class="delete">Eliminar</button>
+                                    </form>
+                                    <a th:href="'/ferias/' + ${feria.id} + '/version'">
+                                        <button class="versiones">Versiones</button>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </tr>
-            </div>
-            <div id="pagination" class="pagination"></div>
-            <div th:if="${exito}" class="ventanita ventana-verde" id="notification">
-                <p><span th:text="${exito}"></span></p>
-                <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
-            </div>
-            <div th:if="${error}" class="ventanita-roja" id="notification">
-                <p><span th:text="${error}"></span></p>
-                <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
+                    </tr>
+                </div>
+                <div id="pagination" class="pagination"></div>
+                <div th:if="${exito}" class="ventanita ventana-verde" id="notification">
+                    <p><span th:text="${exito}"></span></p>
+                    <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
+                </div>
+                <div th:if="${error}" class="ventanita-roja" id="notification">
+                    <p><span th:text="${error}"></span></p>
+                    <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
+                </div>
             </div>
         </div>
     </div>

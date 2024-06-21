@@ -13,112 +13,116 @@
 </head>
 
 <body>
-<div class="contenedor" id="contenedor">
-    <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
-    <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
-    <div class="contenido" th:if="${#lists.isEmpty(aprobados) and #lists.isEmpty(reprobados)}">
-        <h3 class="titulo">No se han registrado proyectos para esta versión de feria</h3>
-    </div>
-    <div class="contenido" th:if="${not #lists.isEmpty(aprobados) or not #lists.isEmpty(reprobados)}">
-        <h2 class="titulo"
-            th:text="'Proyectos registrados en: ' + ${version.feria.nombre} + ' versión: ' + ${version.numero}">Nombre
-            del proyecto</h2>
-        <div class="proyectos aprobados" th:if="${not #lists.isEmpty(aprobados)}">
-            <h2 class="titulo">Proyectos Aprobados</h2>
-            <div class="calificaciones-container">
-                <table> 
-                    <thead>
-                    <tr>
-                        <th>Proyecto</th>
-                        <th>Ver</th>
-                        <th>Calificación</th>
-                        <th class="tabla-item-2">Reprobar</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="aprobado: ${aprobados}">
-                        <td th:text="${aprobado.nombre}"></td>
-                        <td>
-                            <a th:href="@{/proyecto/{id}(id=${aprobado.id})}">
-                                <img class="imagen-ver" th:src="@{/img/ver.png}" alt="">
-                            </a>
-                            </td>
-                        <td
-                                th:text="${aprobado.calificacion == 0.0 ? 'Este proyecto no ha sido calificado' : aprobado.calificacion}">
-                            85
-                        </td>
-                        <td>
-                            <form th:action="@{'/ferias_calificables/' + ${version.feria.id} + '/version/' + ${version.id} + '/reprobar/' + ${aprobado.id}}"
-                                  method="post">
-                                <button type="submit" class="boton-rojo">x</button>
-                            </form>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+    <div class="contenedor" id="contenedor">
+        <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
+        <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
+        <div class="contenido" th:if="${#lists.isEmpty(aprobados) and #lists.isEmpty(reprobados)}">
+            <h3 class="titulo">No se han registrado proyectos para esta versión de feria</h3>
+        </div>
+        <div class="contenido" th:if="${not #lists.isEmpty(aprobados) or not #lists.isEmpty(reprobados)}">
+            <h2 class="titulo"
+                th:text="'Proyectos registrados en: ' + ${version.feria.nombre} + ' versión: ' + ${version.numero}">
+                Nombre
+                del proyecto</h2>
+            <div class="proyectos aprobados" th:if="${not #lists.isEmpty(aprobados)}">
+                <div class="tablas-calificaciones">
+                    <div class="calificaciones-container">
+                        <h2 class="titulo">Proyectos Aprobados</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Proyecto</th>
+                                    <th>Ver</th>
+                                    <th>Calificación</th>
+                                    <th class="tabla-item-2">Reprobar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="aprobado: ${aprobados}">
+                                    <td th:text="${aprobado.nombre}"></td>
+                                    <td class="celda-centrada">
+                                        <a th:href="@{/proyecto/{id}(id=${aprobado.id})}">
+                                            <img class="imagen-ver" th:src="@{/img/ver.png}" alt="">
+                                        </a>
+                                    </td>
+                                    <td class="celda-centrada"
+                                        th:text="${aprobado.calificacion == 0.0 ? 'Este proyecto no ha sido calificado' : aprobado.calificacion}">
+                                        85
+                                    </td>
+                                    <td class="celda-centrada">
+                                        <form
+                                            th:action="@{'/ferias_calificables/' + ${version.feria.id} + '/version/' + ${version.id} + '/reprobar/' + ${aprobado.id}}"
+                                            method="post">
+                                            <button type="submit" class="boton-rojo">x</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="proyectos desaprobados" th:if="${not #lists.isEmpty(reprobados)}">
+                            <div class="calificaciones-container">
+                            <h2 class="titulo">Proyectos Reprobados</h2>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Proyecto</th>
+                                        <th>Ver</th>
+                                        <th>Calificación</th>
+                                        <th class="tabla-item-2">Aprobar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="reprobado: ${reprobados}">
+                                        <td th:text="${reprobado.nombre}">Proyecto 1</td>
+                                        <td class="celda-centrada"><a th:href="@{/proyecto/{id}(id=${reprobado.id})}">
+                                                <img class="imagen-ver" th:src="@{/img/ver.png}" alt="">
+                                            </a></td>
+                                        <td class="celda-centrada"
+                                            th:text="${reprobado.calificacion == 0.0 ? 'Este proyecto no ha sido calificado' : reprobado.calificacion}">
+                                            85
+                                        </td>
+                                        <td class="celda-centrada">
+                                            <form
+                                                th:action="@{'/ferias_calificables/' + ${version.feria.id} + '/version/' + ${version.id} + '/aprobar/' + ${reprobado.id}}"
+                                                method="post">
+                                                <button type="submit" class="boton-verde">+</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${exito}" class="ventanita ventana-verde" id="notification">
+                    <p><span th:text="${exito}"></span></p>
+                    <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
+                </div>
+                <div th:if="${error}" class="ventanita-roja" id="notification">
+                    <p><span th:text="${error}"></span></p>
+                    <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
+                </div>
             </div>
         </div>
-        <div class="proyectos desaprobados" th:if="${not #lists.isEmpty(reprobados)}">
-            <h2 class="titulo">Proyectos Reprobados</h2>
-            <div class="calificaciones-container">
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Proyecto</th>
-                        <th>Ver</th>
-                        <th>Calificación</th>
-                        <th class="tabla-item-2">Aprobar</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="reprobado: ${reprobados}">
-                        <td th:text="${reprobado.nombre}">Proyecto 1</td>
-                        <td><a th:href="@{/proyecto/{id}(id=${reprobado.id})}">
-                            <img class="imagen-ver" th:src="@{/img/ver.png}" alt="">
-                        </a></td>
-                        <td
-                                th:text="${reprobado.calificacion == 0.0 ? 'Este proyecto no ha sido calificado' : reprobado.calificacion}">
-                            85
-                        </td>
-                        <td>
-                            <form th:action="@{'/ferias_calificables/' + ${version.feria.id} + '/version/' + ${version.id} + '/aprobar/' + ${reprobado.id}}"
-                                  method="post">
-                                <button type="submit" class="boton-verde">+</button>
-                            </form>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div th:if="${exito}" class="ventanita ventana-verde" id="notification">
-            <p><span th:text="${exito}"></span></p>
-            <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
-        </div>
-        <div th:if="${error}" class="ventanita-roja" id="notification">
-            <p><span th:text="${error}"></span></p>
-            <span id="equis" class="close" onclick="closeNotification('notification')">×</span>
-        </div>
-    </div>
-</div>
-<script th:src="@{/js/registro.js}"></script>
-<script th:src="@{/js/menu.js}"></script>
-<script>
-    //Despliegue del menu principal
-    let listElements = document.querySelectorAll('.lista-item');
+        <script th:src="@{/js/registro.js}"></script>
+        <script th:src="@{/js/menu.js}"></script>
+        <script>
+            //Despliegue del menu principal
+            let listElements = document.querySelectorAll('.lista-item');
 
-    listElements.forEach(listElement => {
-        listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
-            listElement.classList.toggle('arrow'); //agrega la clase arrow
-            let menu = listElement.nextElementSibling;
-            menu.classList.toggle('active'); //agrega la clase active para mover el arrow
-        });
-    });
+            listElements.forEach(listElement => {
+                listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
+                    listElement.classList.toggle('arrow'); //agrega la clase arrow
+                    let menu = listElement.nextElementSibling;
+                    menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+                });
+            });
 
-    //ejecutar funcion con click
-    document.getElementById('btn-open').addEventListener("click", open_close_menu);
+            //ejecutar funcion con click
+            document.getElementById('btn-open').addEventListener("click", open_close_menu);
 
-</script>
+        </script>
 </body>
 
 </html>

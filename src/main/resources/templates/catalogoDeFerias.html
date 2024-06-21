@@ -18,6 +18,7 @@
         <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
         <div class="contenido">
             <div class="noFerias" th:if="${#lists.isEmpty(versiones)}">
+                <h2 class="titulo">Ferias disponibles</h2>
                 <h3 class="aviso">No hay ferias disponibles</h3>
             </div> 
             <div class="info-contenido" th:if="${not #lists.isEmpty(versiones)}">
@@ -77,7 +78,7 @@
     <script>
         //Despliegue del menu principal
         let listElements = document.querySelectorAll('.lista-item');
-
+ 
         listElements.forEach(listElement => {
             listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
                 listElement.classList.toggle('arrow'); //agrega la clase arrow

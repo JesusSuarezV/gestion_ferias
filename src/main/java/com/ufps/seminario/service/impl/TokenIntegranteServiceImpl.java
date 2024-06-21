@@ -29,7 +29,7 @@ public class TokenIntegranteServiceImpl implements TokenIntegranteService {
     public void guardarTokenIntegrante(TokenIntegrante tokenIntegrante) {
         tokenIntegranteRepository.save(tokenIntegrante);
     }
-
+ 
     @Override
     public void generarToken(Integrante integranteCreado) {
         try{
@@ -39,7 +39,7 @@ public class TokenIntegranteServiceImpl implements TokenIntegranteService {
             String url = "https://gestionferias-production.up.railway.app/Confirmacion/integrante/"+token;
             String cuerpo = "Acaba de ser agregado al proyecto '"+ integranteCreado.getProyecto().getNombre() + "', confirme su registro en el siguiente enlace: <a href=\"" + url + "\">" + url + "</a>";
             mailService.enviarCorreo(integranteCreado.getCorreoRegistro(), "Invitación a Proyecto - FPA", cuerpo);
-        }catch(Exception ignored){
+        }catch(Exception ignored){ 
 
         }
     }

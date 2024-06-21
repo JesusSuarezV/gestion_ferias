@@ -2,11 +2,34 @@
     font-family: 'League Spartan', sans-serif;
 }
 
+.contenido{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
 .titulo{
     margin-top: 50px;
     color: #002948;
-    width: 80%;
+    width: 90%;
 } 
+
+.mensaje-usuario{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.aviso{
+    color: #6A8BA4;
+}
+
+.panel-administrador{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 .imagen-ver{
     height: 30px;
@@ -15,11 +38,21 @@
 }
 
 .calificaciones-container {
-    padding: 20px;
-    border-radius: 10px;
     margin: 0px auto; /* Center the container */
-    width: 80%; 
+    width: 90%; 
     overflow-x: auto;
+    margin-bottom: 40px;
+}
+
+.panel-administrador .titulo{
+    margin-top: 10px;
+    font-size: 25px;
+    margin-bottom: 15px;
+}
+
+.panel-administrador{
+    margin-bottom: 50px;
+    width: 100%;
 }
 
 table {
@@ -34,7 +67,7 @@ table {
 thead th {
     background-color: #6A8BA4;
     color: #002948;
-    padding: 10px;
+    padding: 5px;
     border: 1px solid #002948;
     text-align: center;
     font-size: 20px;
@@ -54,8 +87,8 @@ thead th {
     background-color: green;
     cursor: pointer;
     border-radius: 50%;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -68,8 +101,8 @@ thead th {
     background-color: red;
     cursor: pointer;
     border-radius: 50%;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -98,7 +131,7 @@ thead th {
 }
 
 tbody td {
-    padding: 10px; 
+    padding: 3px; 
     border: 1px solid #002948;
 }
 
@@ -119,7 +152,7 @@ th:first-child, td:first-child {
 }
 
 .n-nombre{
-    width: 40%;
+    width: 40%; 
 }
 
 .n-eliminar{

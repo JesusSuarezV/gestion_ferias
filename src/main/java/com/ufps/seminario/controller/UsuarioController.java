@@ -39,7 +39,7 @@ public class UsuarioController {
         model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
 
         return "gestionUsuarios";
-    }
+    } 
 
     @PostMapping("{idUsuario}/admin")
     public String promoverUsuario(@PathVariable int idUsuario, RedirectAttributes redirectAttributes){

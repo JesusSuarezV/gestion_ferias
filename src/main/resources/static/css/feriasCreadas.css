@@ -116,6 +116,13 @@ h3 {
     position: absolute;
 }
 
+.contenido-admin{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .CrearEvento button {
     padding: 10px 15px;
     color: rgb(255, 255, 255);

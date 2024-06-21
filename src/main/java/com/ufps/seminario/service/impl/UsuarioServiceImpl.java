@@ -33,7 +33,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public boolean guardarUsuario(Usuario usuario) {
-        try {
+        try { 
             usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
             usuario.setRole(new Role(1, "ESTUDIANTE", true));
             usuarioRepository.save(usuario);

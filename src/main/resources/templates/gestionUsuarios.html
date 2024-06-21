@@ -2,143 +2,154 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gestion usuarios</title>
-    <link rel="icon" href="../img/favicon.ico" type="image/x-icon"/>
-    <link rel="stylesheet" href="../css/cuadricula.css"/>
-    <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet"/>
-    <link rel="stylesheet" href="../css/estilos.css"/>
-    <link rel="stylesheet" href="../css/mostrarUsuarios.css"/>
+    <link rel="icon" href="../img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../css/cuadricula.css" />
+    <link href="https://fonts.googleapis.com/css?family=League Spartan" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/estilos.css" />
+    <link rel="stylesheet" href="../css/mostrarUsuarios.css" />
 </head>
 
 <body>
-<div class="contenedor" id="contenedor">
-    <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
-    <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
-    <div class="contenido">
-        <h2 class="titulo">Administradores de Feria</h2>
-        <div class="calificaciones-container" th:if="${#lists.isEmpty(administradores)}">
-            <h1 class="titulo">No hay administradores de feria registrados en el sistema</h1>
-        </div>
-        <div class="tabla-usuarios">
-            <div class="calificaciones-container" th:if="${not #lists.isEmpty(administradores)}">
-                <table id="projectsTable">
-                    <thead>
-                    <tr>
-                        <th class="n-nombre">Correo</th>
-                        <th class="n-user">ID</th>
-                        <th class="n-nombre">Nombre</th>
-                        <th class="n-rol">Degradar a Estudiante</th>
-                        <th class="n-rol">Eliminar</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="admin : ${administradores}">
-                        <td th:text="${admin.username}"></td>
-                        <td th:text="${admin.id}"></td>
-                        <td th:text="${admin.nombre} + ' ' + ${admin.apellido}"></td>
-                        <td>
-                            <div class="botoness">
-                                <div class="btn-assign">
-                                    <form action="#" th:action="@{/usuario/{id}/estudiante(id=${admin.id})}" method="post">
-                                        <button type="submit" class="btn-ico">
-                                            <img src="../img/Degradado.png"/>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </td>
-
-                        <td>
-                            <div class="botoness">
-                                <div class="btn-delete">
-                                    <form action="#" th:action="@{/usuario/{id}/eliminar(id=${admin.id})}" method="post">
-                                        <button type="submit" class="btn-ico">
-                                            <img src="../img/botonX.png" alt="Eliminar" />
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </td>
-
-                    </tr>
-                    </tbody>
-                </table>
+    <div class="contenedor" id="contenedor">
+        <div class="header" th:insert="~{@{fragments/navbar.html}}"></div>
+        <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
+        <div class="contenido">
+            <h2 class="titulo">Gestion de usuarios</h2>
+            <div th:if="${role == 'ESTUDIANTE'}" class="mensaje-usuario">
+                <h3 class="aviso">No tienes permiso para acceder a usuarios</h3>
             </div>
+            <div th:if="${role == 'ADMIN_SISTEMA'}" class="panel-administrador">
+                <h2 class="titulo">Administradores de Feria</h2>
+                <div class="calificaciones-container" th:if="${#lists.isEmpty(administradores)}">
+                    <h1 class="aviso">No hay administradores de feria registrados en el sistema</h1>
+                </div>
+                <div class="tabla-usuarios">
+                    <div class="calificaciones-container" th:if="${not #lists.isEmpty(administradores)}">
+                        <table id="projectsTable">
+                            <thead>
+                                <tr>
+                                    <th class="n-nombre">Correo</th>
+                                    <th class="n-user">ID</th>
+                                    <th class="n-nombre">Nombre</th>
+                                    <th class="n-rol">Degradar a Estudiante</th>
+                                    <th class="n-rol">Eliminar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="admin : ${administradores}">
+                                    <td th:text="${admin.username}"></td>
+                                    <td th:text="${admin.id}"></td>
+                                    <td th:text="${admin.nombre} + ' ' + ${admin.apellido}"></td>
+                                    <td>
+                                        <div class="botoness">
+                                            <div class="btn-assign">
+                                                <form action="#" th:action="@{/usuario/{id}/estudiante(id=${admin.id})}"
+                                                    method="post">
+                                                    <button type="submit" class="btn-ico">
+                                                        <img src="../img/Degradado.png" />
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </td>
 
-        </div>
-        <h2 class="titulo">Estudiantes</h2>
-        <div class="calificaciones-container" th:if="${#lists.isEmpty(estudiantes)}">
-            <h1 class="titulo">No hay estudiantes registrados en el sistema</h1></div>
-        <div class="tabla-usuarios">
-            <div class="calificaciones-container" th:if="${not #lists.isEmpty(estudiantes)}">
-                <table id="projectsTable">
-                    <thead>
-                    <tr>
-                        <th class="n-nombre">Correo</th>
-                        <th class="n-user">ID</th>
-                        <th class="n-nombre">Nombre</th>
-                        <th class="n-rol">Promover a Administrador de Feria</th>
-                        <th class="n-rol">Eliminar</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="estudiante : ${estudiantes}">
-                        <td th:text="${estudiante.username}"></td>
-                        <td th:text="${estudiante.id}"></td>
-                        <td th:text="${estudiante.nombre} + ' ' + ${estudiante.apellido}"></td>
+                                    <td>
+                                        <div class="botoness">
+                                            <div class="btn-delete">
+                                                <form action="#" th:action="@{/usuario/{id}/eliminar(id=${admin.id})}"
+                                                    method="post">
+                                                    <button type="submit" class="btn-ico">
+                                                        <img src="../img/botonX.png" alt="Eliminar" />
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </td>
 
-                        <td>
-                            <div class="botoness">
-                                <div class="btn-assign">
-                                    <form action="#" th:action="@{/usuario/{id}/admin(id=${estudiante.id})}" method="post">
-                                        <button type="submit" class="btn-ico">
-                                            <img src="../img/Promovido.png"/>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <h2 class="titulo">Estudiantes</h2>
+                <div class="calificaciones-container" th:if="${#lists.isEmpty(estudiantes)}">
+                    <h1 class="titulo">No hay estudiantes registrados en el sistema</h1>
+                </div>
+                <div class="tabla-usuarios">
+                    <div class="calificaciones-container" th:if="${not #lists.isEmpty(estudiantes)}">
+                        <table id="projectsTable">
+                            <thead>
+                                <tr>
+                                    <th class="n-nombre">Correo</th>
+                                    <th class="n-user">ID</th>
+                                    <th class="n-nombre">Nombre</th>
+                                    <th class="n-rol">Promover a Administrador de Feria</th>
+                                    <th class="n-rol">Eliminar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="estudiante : ${estudiantes}">
+                                    <td th:text="${estudiante.username}"></td>
+                                    <td th:text="${estudiante.id}"></td>
+                                    <td th:text="${estudiante.nombre} + ' ' + ${estudiante.apellido}"></td>
 
-                        <td>
-                            <div class="botoness">
-                                <div class="btn-delete">
-                                    <form action="#" th:action="@{/usuario/{id}/eliminar(id=${estudiante.id})}" method="post">
-                                        <button type="submit" class="btn-ico">
-                                            <img src="../img/botonX.png" alt="Eliminar" />
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </td>
+                                    <td>
+                                        <div class="botoness">
+                                            <div class="btn-assign">
+                                                <form action="#" th:action="@{/usuario/{id}/admin(id=${estudiante.id})}"
+                                                    method="post">
+                                                    <button type="submit" class="btn-ico">
+                                                        <img src="../img/Promovido.png" />
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </td>
 
-                    </tr>
-                    </tbody>
-                </table>
+                                    <td>
+                                        <div class="botoness">
+                                            <div class="btn-delete">
+                                                <form action="#"
+                                                    th:action="@{/usuario/{id}/eliminar(id=${estudiante.id})}"
+                                                    method="post">
+                                                    <button type="submit" class="btn-ico">
+                                                        <img src="../img/botonX.png" alt="Eliminar" />
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- <script src="../js/agregarContenidoTabla.js"></script> -->
-<script src="../js/registro.js"></script>
-<script th:src="@{/js/menu.js}"></script>
-<script>
-    //Despliegue del menu principal
-    let listElements = document.querySelectorAll('.lista-item');
+    <!-- <script src="../js/agregarContenidoTabla.js"></script> -->
+    <script src="../js/registro.js"></script>
+    <script th:src="@{/js/menu.js}"></script>
+    <script>
+        //Despliegue del menu principal
+        let listElements = document.querySelectorAll('.lista-item');
 
-    listElements.forEach(listElement => {
-      listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
-        listElement.classList.toggle('arrow'); //agrega la clase arrow
-        let menu = listElement.nextElementSibling;
-        menu.classList.toggle('active'); //agrega la clase active para mover el arrow
-      });
-    });
+        listElements.forEach(listElement => {
+            listElement.addEventListener('click', () => { //detecta el evento click en los items de la lista del menú
+                listElement.classList.toggle('arrow'); //agrega la clase arrow
+                let menu = listElement.nextElementSibling;
+                menu.classList.toggle('active'); //agrega la clase active para mover el arrow
+            });
+        });
 
-    //ejecutar funcion con click
-    document.getElementById('btn-open').addEventListener("click", open_close_menu);
+        //ejecutar funcion con click
+        document.getElementById('btn-open').addEventListener("click", open_close_menu);
 
-</script>
+    </script>
 </body>
 
 </html>
