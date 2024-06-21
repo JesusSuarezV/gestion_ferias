@@ -56,7 +56,8 @@ public class misCalificacionesController {
             System.out.println(feria.getNombre());
         }
 
-        model.addAttribute("username", username);
+        model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+        model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
         model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
         Collections.reverse(real);
         model.addAttribute("ferias", real);
@@ -70,7 +71,8 @@ public class misCalificacionesController {
     public String verVersionFeria(Model model, @PathVariable int idFeria, RedirectAttributes redirectAttributes){
         try{
             String username = sesionService.getUsernameFromSession();
-            model.addAttribute("username", username);
+            model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+            model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             Feria feria = feriaService.obtenerFeria(idFeria);
             List<Version> versiones = versionService.obtenerVersionesPorFeria(feria);
@@ -87,7 +89,8 @@ public class misCalificacionesController {
     public String verCalificacionesVersionFeria(Model model,@PathVariable int idFeria, @PathVariable int idVersion, RedirectAttributes redirectAttributes){
         try{
             String username = sesionService.getUsernameFromSession();
-            model.addAttribute("username", username);
+            model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+            model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             Version version = versionService.obtenerVersion(idVersion);
             model.addAttribute("version", version);

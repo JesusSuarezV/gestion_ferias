@@ -66,7 +66,8 @@ public class FeriaController {
         // for(Feria feria:feriasPagina.getContent()){
         // System.out.println(feria.getNombre());
         // }
-        model.addAttribute("username", username);
+        model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+        model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
         model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
 
         model.addAttribute("ferias", ferias);
@@ -98,7 +99,8 @@ public class FeriaController {
             System.out.println(feria.getNombre());
         }
 
-        model.addAttribute("username", username);
+        model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+        model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
         model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
         Collections.reverse(real);
         model.addAttribute("ferias", real);
@@ -111,7 +113,8 @@ public class FeriaController {
     @GetMapping("/crear")
     public String crearFeria(Model model) {
         String username = sesionService.getUsernameFromSession();
-        model.addAttribute("username", username);
+        model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+        model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
         model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
         return "crearFeria";
     }
@@ -121,7 +124,8 @@ public class FeriaController {
         try {
             String username = sesionService.getUsernameFromSession();
             Usuario usuario = usuarioService.obtenerUsuarioPorUsername(username);
-            model.addAttribute("username", username);
+            model.addAttribute("username", usuario.getNombre());
+            model.addAttribute("apellido", usuario.getApellido());
             model.addAttribute("role", usuario.getRole().getNombre());
 
             Feria feria = feriaService.obtenerFeria(id);
@@ -218,7 +222,8 @@ public class FeriaController {
     @GetMapping("/{id}")
     public String verFeria(Model model, @PathVariable int id) {
         String username = sesionService.getUsernameFromSession();
-        model.addAttribute("username", username);
+        model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+        model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
         model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
         model.addAttribute("feria", feriaService.obtenerFeria(id));
         return "verFeria";
@@ -228,7 +233,8 @@ public class FeriaController {
     public String verVersionFeria(Model model, @PathVariable int idFeria, RedirectAttributes redirectAttributes) {
         try {
             String username = sesionService.getUsernameFromSession();
-            model.addAttribute("username", username);
+            model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+            model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             Feria feria = feriaService.obtenerFeria(idFeria);
             List<Version> versiones = versionService.obtenerVersionesPorFeria(feria);
@@ -245,7 +251,8 @@ public class FeriaController {
     public String crearVersionFeria(Model model, @PathVariable int idFeria, RedirectAttributes redirectAttributes) {
         try {
             String username = sesionService.getUsernameFromSession();
-            model.addAttribute("username", username);
+            model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+            model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             model.addAttribute("feria", feriaService.obtenerFeria(idFeria));
             return "crearVersionFeria";

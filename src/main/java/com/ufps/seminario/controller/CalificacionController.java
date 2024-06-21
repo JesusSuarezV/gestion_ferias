@@ -42,7 +42,8 @@ public class CalificacionController {
     public String verMisCalificaciones(Model model) {
         try {
             String username = sesionService.getUsernameFromSession();
-            model.addAttribute("username", username);
+            model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+            model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             List<Proyecto> proyectos = proyectoService.obtenerProyectosPorCorreoOrdenadosPorFechaRegistro(username);
             model.addAttribute("proyectosCalificados", proyectos);
@@ -56,7 +57,8 @@ public class CalificacionController {
     public String verVersionesJurado(Model model) {
         try {
             String username = sesionService.getUsernameFromSession();
-            model.addAttribute("username", username);
+            model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+            model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
             Usuario usuario = usuarioService.obtenerUsuarioPorUsername(username);
             model.addAttribute("role", usuario.getRole().getNombre());
             List<Version> versiones = versionService.obtenerVersionesPorJurado(usuario);
@@ -71,7 +73,8 @@ public class CalificacionController {
     public String verVersionJurado(Model model, @PathVariable int idVersion) {
         try {
             String username = sesionService.getUsernameFromSession();
-            model.addAttribute("username", username);
+            model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+            model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
             Usuario usuario = usuarioService.obtenerUsuarioPorUsername(username);
             model.addAttribute("role", usuario.getRole().getNombre());
             Version version = versionService.obtenerVersion(idVersion);
@@ -94,7 +97,8 @@ public class CalificacionController {
     public String verProyectoJurado(Model model, @PathVariable int idProyecto) {
         try {
             String username = sesionService.getUsernameFromSession();
-            model.addAttribute("username", username);
+            model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+            model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
             Usuario usuario = usuarioService.obtenerUsuarioPorUsername(username);
             model.addAttribute("role", usuario.getRole().getNombre());
             Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
@@ -115,7 +119,8 @@ public class CalificacionController {
         Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
         if (proyecto.getJurados().contains(usuario)) {
             // obligatorio para el tema de los menus
-            model.addAttribute("username", usuario.getUsername());
+            model.addAttribute("username", usuario.getNombre());
+            model.addAttribute("apellido", usuario.getApellido());
             model.addAttribute("role", usuario.getRole().getNombre());
             model.addAttribute("jurado", usuario);
             List<Criterio> criterios = criterioService.obtenerCriterioPorVersion(proyecto.getVersion());
@@ -171,7 +176,8 @@ public class CalificacionController {
     public String verProyecto(Model model, @PathVariable int idProyecto, RedirectAttributes redirectAttributes) {
         try {
             String username = sesionService.getUsernameFromSession();
-            model.addAttribute("username", username);
+            model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+            model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
 

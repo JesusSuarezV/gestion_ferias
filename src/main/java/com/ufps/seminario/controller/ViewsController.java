@@ -34,7 +34,8 @@ public class ViewsController {
     @GetMapping("/menu")
     public String verMenu(Model model) {
         String username = sesionService.getUsernameFromSession();
-        model.addAttribute("username", username);
+        model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+        model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
         model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
         return "menu";
     }
@@ -42,7 +43,8 @@ public class ViewsController {
     @GetMapping("/navbar")
     public String verNavbar(Model model) {
         String username = sesionService.getUsernameFromSession();
-        model.addAttribute("username", username);
+        model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+        model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
         model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
         return "navbar";
     }

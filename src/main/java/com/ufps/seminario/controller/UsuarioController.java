@@ -35,7 +35,8 @@ public class UsuarioController {
         model.addAttribute("administradores", administradores);
 
         String username = sesionService.getUsernameFromSession();
-        model.addAttribute("username", username);
+        model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+        model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
         model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
 
         return "gestionUsuarios";

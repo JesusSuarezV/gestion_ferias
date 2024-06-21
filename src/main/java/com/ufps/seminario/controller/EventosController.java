@@ -44,7 +44,8 @@ public class EventosController {
         try {
             try{
                 String username = sesionService.getUsernameFromSession();
-                model.addAttribute("username", username);
+                model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+                model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
                 model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             }catch(Exception e){
                 model.addAttribute("role", 0);
@@ -67,7 +68,8 @@ public class EventosController {
         try {
             try{
                 String username = sesionService.getUsernameFromSession();
-                model.addAttribute("username", username);
+                model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+                model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
                 model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             }catch(Exception e){
                 model.addAttribute("role", 0);
@@ -87,7 +89,8 @@ public class EventosController {
         try {
             try{
                 String username = sesionService.getUsernameFromSession();
-                model.addAttribute("username", username);
+                model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+                model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
                 model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             }catch(Exception e){
                 model.addAttribute("role", 0);

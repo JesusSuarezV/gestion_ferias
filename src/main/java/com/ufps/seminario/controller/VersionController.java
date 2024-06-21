@@ -55,7 +55,8 @@ public class VersionController {
     public String verVersion(Model model, @PathVariable int idVersion) {
         try {
             String username = sesionService.getUsernameFromSession();
-            model.addAttribute("username", username);
+            model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+            model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             Version version = versionService.obtenerVersion(idVersion);
             model.addAttribute("version", version);
@@ -74,7 +75,8 @@ public class VersionController {
                 throw new Exception();
             }
             String username = sesionService.getUsernameFromSession();
-            model.addAttribute("username", username);
+            model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+            model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             Version version = versionService.obtenerVersion(idVersion);
             List<Area> areas = areaService.obtenerAreasPorFeria(version.getFeria());
@@ -165,7 +167,8 @@ public class VersionController {
     public String searchFeriasDisponibles(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
         try {
             String username = sesionService.getUsernameFromSession();
-            model.addAttribute("username", username);
+            model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+            model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             List<Version> versiones = versionService.obtenerVersionesDisponibles(keyword, LocalDate.now());
             model.addAttribute("versiones", versiones);
@@ -184,7 +187,8 @@ public class VersionController {
     public String searchFeriasInscritas(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
         try {
             String username = sesionService.getUsernameFromSession();
-            model.addAttribute("username", username);
+            model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+            model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             List<Version> versiones = versionService.obtenerVersionesPorIntegranteYDisponibles(username, keyword, LocalDate.now());
             model.addAttribute("versiones", versiones);
@@ -204,7 +208,8 @@ public class VersionController {
     public String searchFeriasFinalizadas(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
         try {
             String username = sesionService.getUsernameFromSession();
-            model.addAttribute("username", username);
+            model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+            model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             List<Version> versiones = versionService.obtenerVersionesCerradas(keyword, LocalDate.now());
             model.addAttribute("versiones", versiones);
@@ -218,7 +223,8 @@ public class VersionController {
     public String editarVersion(Model model, @PathVariable int idVersion) {
         try {
             String username = sesionService.getUsernameFromSession();
-            model.addAttribute("username", username);
+            model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+            model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             Version version = versionService.obtenerVersion(idVersion);
             Feria feria = version.getFeria();
@@ -290,7 +296,8 @@ public class VersionController {
         try {
 
             String username = sesionService.getUsernameFromSession();
-            model.addAttribute("username", username);
+            model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+            model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
 
             Version version = versionService.obtenerVersion(idVersion);

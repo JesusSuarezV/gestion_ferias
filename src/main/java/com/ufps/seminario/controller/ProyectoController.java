@@ -51,7 +51,8 @@ public class ProyectoController {
             List<Proyecto> proyectosActuales = proyectoService.obtenerProyectosActualesPorCorreo(username);
             List<Proyecto> proyectosPasados = proyectoService.obtenerProyectosPasadosPorCorreo(username);
 
-            model.addAttribute("username", username);
+            model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+            model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
 
             model.addAttribute("proyectosActuales", proyectosActuales);
@@ -69,7 +70,8 @@ public class ProyectoController {
     public String editarProyecto(Model model, @PathVariable int idProyecto, RedirectAttributes redirectAttributes) {
         try {
             String username = sesionService.getUsernameFromSession();
-            model.addAttribute("username", username);
+            model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+            model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
 
@@ -218,7 +220,8 @@ public class ProyectoController {
     public String verProyecto(Model model, @PathVariable int idProyecto, RedirectAttributes redirectAttributes) {
         try {
             String username = sesionService.getUsernameFromSession();
-            model.addAttribute("username", username);
+            model.addAttribute("username", usuarioService.obtenerUsuarioPorUsername(username).getNombre());
+            model.addAttribute("apellido", usuarioService.obtenerUsuarioPorUsername(username).getApellido());
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
 

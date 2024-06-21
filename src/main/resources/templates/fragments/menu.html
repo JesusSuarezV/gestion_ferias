@@ -2,8 +2,8 @@
     <div class="user">
         <img class="imagen-user" th:src="@{/img/user.png}" alt="eventos">
         <div class="datos-user" >
-            <a class="n-user" th:text="${username}"></a>
-            <a class="r-user">Rol usuario</a>
+            <a class="n-user" th:text="${username} + ' ' + ${apellido}"></a>
+            <a class="r-user" th:text="${role}"></a>
         </div> 
     </div> 
     <div class="lista">
