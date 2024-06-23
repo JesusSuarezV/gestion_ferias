@@ -40,9 +40,9 @@
                     </tr>
                     <tr class="fila" >
                         <td class="columna-item">Archivo proyecto:</td>
-                        <td class="columna-desc" th:if="${#lists.isEmpty(proyecto.archivo)}">No posee</td>
-                        <td class="columna-desc" th:if="${not #lists.isEmpty(proyecto.archivo)}">
-                            <a th:href="@{/proyecto/archivo/{idProyecto}(idProyecto=${proyecto.id})}">
+                        <td class="columna-desc" th:if="${proyecto.archivoUrl == null}">No posee</td>
+                        <td class="columna-desc" th:if="${proyecto.archivoUrl != null}">
+                            <a th:href="${proyecto.archivoUrl}" target="_blank" rel="noopener noreferrer">
                                 <div class="boton-doc">
                                     Descargar
                                 </div>

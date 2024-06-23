@@ -320,13 +320,14 @@ public class VersionController {
 
     @PostMapping("/{idVersion}/rubrica/editar")
     public String editarRubrica(Model model, @PathVariable int idVersion,
-            @RequestParam Map<String, String> requestParams,
-            RedirectAttributes redirectAttributes) {
+                                @RequestParam Map<String, String> requestParams,
+                                RedirectAttributes redirectAttributes) {
         try {
             String username = sesionService.getUsernameFromSession();
             model.addAttribute("username", username);
             model.addAttribute("role", usuarioService.obtenerUsuarioPorUsername(username).getRole().getNombre());
             Version version = versionService.obtenerVersion(idVersion);
+
             for (Map.Entry<String, String> entry : requestParams.entrySet()) {
                 String llave = entry.getKey();
                 String valor = entry.getValue();
@@ -339,8 +340,7 @@ public class VersionController {
                     if (llave.startsWith(prefijoViejos)) {
                         int idCriterio = Integer.parseInt(llave.substring(prefijoViejos.length(), llave.length() - 1));
 
-                        String llaveNivel = "criterio_nivel["
-                                + idCriterio + "]";
+                        String llaveNivel = "criterio_nivel[" + idCriterio + "]";
                         int valorNivel = Integer.parseInt(requestParams.get(llaveNivel));
 
                         Criterio criterio = criterioService.obtenerCriterioPorId(idCriterio);
@@ -352,8 +352,7 @@ public class VersionController {
                     } else if (llave.startsWith(prefijoNuevos)) {
                         int idCriterio = Integer.parseInt(llave.substring(prefijoNuevos.length(), llave.length() - 1));
 
-                        String llaveNivel = "nivel["
-                                + idCriterio + "]";
+                        String llaveNivel = "nivel[" + idCriterio + "]";
                         int valorNivel = Integer.parseInt(requestParams.get(llaveNivel));
 
                         Criterio criterio = new Criterio();

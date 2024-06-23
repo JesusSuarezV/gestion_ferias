@@ -29,9 +29,9 @@
           </thead>
           <tbody>
             <tr th:each="proyecto, iterStat: ${proyectos}">
-              <td th:text="${iterStat.index}"></td>
+              <td style="text-align: center;" th:text="${iterStat.index}"></td>
               <td th:text="${proyecto.nombre}"></td>
-              <td th:text="${proyecto.calificacion}"></td>
+              <td style="text-align: center;" th:text="${proyecto.calificacion}"></td>
             </tr>
           </tbody>
         </table>
