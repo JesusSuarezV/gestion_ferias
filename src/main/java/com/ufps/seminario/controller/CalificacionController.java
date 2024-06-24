@@ -135,40 +135,43 @@ public class CalificacionController {
 
     @PostMapping("/jurado/proyecto/{idProyecto}/guardar_calificacion")
     public String guardarCalificacion(Model model, @PathVariable int idProyecto,
-            @RequestParam("criterioId") List<Integer> criterioIds,
-            @RequestParam("valor") List<Integer> valores) {
+                                      @RequestParam("criterioId") List<Integer> criterioIds,
+                                      @RequestParam("valor") List<Integer> valores) {
         Usuario usuario = usuarioService.obtenerUsuarioPorUsername(sesionService.getUsernameFromSession());
         Proyecto proyecto = proyectoService.obtenerProyectoPorId(idProyecto);
         // verificamos que el usuario en cuestion pueda calificar dicho proyecto
         if (proyecto.getJurados().contains(usuario)) {
             for (int i = 0; i < criterioIds.size(); i++) {
+                //comprobamos si el usuario ya califico este criterio
                 Criterio criterio = criterioService.obtenerCriterioPorId(criterioIds.get(i));
-                if (criterio != null) {
-                    Calificacion calificacion = calificacionService.obtenerCalificacion(proyecto, usuario, criterio);
-                    if (calificacion == null) {
-                        calificacion = new Calificacion();
-                        calificacion.setProyecto(proyecto);
-                        calificacion.setJurado(usuario);
-                        calificacion.setCriterio(criterio);
-                    }
-                    calificacion.setProyecto(proyecto);
-                    calificacion.setJurado(usuario);
-                    calificacion.setCriterio(criterio);
+                Calificacion calificacion = calificacionService.obtenerCalificacion(proyecto, usuario, criterio);
+                if (calificacion != null) {
                     calificacion.setValor(valores.get(i));
-                    calificacion.setEnabled(true);
                     calificacionService.guardarCalificacion(calificacion);
+                } else {
+                    Calificacion calificacion1 = new Calificacion();
+                    calificacion1.setProyecto(proyecto);
+                    calificacion1.setJurado(usuario);
+                    calificacion1.setCriterio(criterio);
+                    calificacion1.setValor(valores.get(i));
+                    calificacion1.setEnabled(true);
+                    calificacionService.guardarCalificacion(calificacion1);
                 }
             }
+
             // actualizamos la calificacion
             float valorCalificacion = 0.0f;
             List<Calificacion> calificaciones = calificacionService.obtenerCalificaciones(proyecto, usuario);
             for (Calificacion calificacion : calificaciones) {
-                valorCalificacion += (float) (calificacion.getValor() * calificacion.getCriterio().getValor()) / 5;
+                if (calificacion.isEnabled() && calificacion.getCriterio().isEnabled()) {
+                    valorCalificacion += (float) (calificacion.getValor() * calificacion.getCriterio().getValor()) / 5;
+                }
             }
-            proyecto.setCalificacion(valorCalificacion / calificaciones.size());
+            float puntaje = (valorCalificacion / ((float) calificaciones.size() / criterioIds.size()));
+            proyecto.setCalificacion((float) (Math.round(puntaje * 100.0) / 100.0));
             proyectoService.guardarProyecto(proyecto);
             return "redirect:/calificaciones/jurado/version/" + proyecto.getVersion().getId()
-            ;
+                    ;
         } else {
             return "redirect:/calificaciones?error";
         }
