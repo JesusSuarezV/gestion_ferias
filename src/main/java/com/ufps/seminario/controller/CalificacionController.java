@@ -161,10 +161,11 @@ public class CalificacionController {
             }
             // actualizamos la calificacion
             float valorCalificacion = 0.0f;
-            for (Calificacion calificacion : calificacionService.obtenerCalificaciones(proyecto, usuario)) {
+            List<Calificacion> calificaciones = calificacionService.obtenerCalificaciones(proyecto, usuario);
+            for (Calificacion calificacion : calificaciones) {
                 valorCalificacion += (float) (calificacion.getValor() * calificacion.getCriterio().getValor()) / 5;
             }
-            proyecto.setCalificacion(valorCalificacion / proyecto.getJurados().size());
+            proyecto.setCalificacion(valorCalificacion / calificaciones.size());
             proyectoService.guardarProyecto(proyecto);
             return "redirect:/calificaciones/jurado/version/" + proyecto.getVersion().getId()
             ;
