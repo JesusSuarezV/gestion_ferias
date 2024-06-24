@@ -22,6 +22,7 @@
         <div class="cuadraro_grande">
           <div class="rubrica">
             <label class="advertencia" for="enunciadoValor">Recordar: Valor significa que peso tiene la pregunta respecto a la calificación. Debe ser un número entre 1 a 100.</label>
+            <label class="advertencia" for="enunciadoValor">Tener en cuenta que la suma de estos valores debe ser igual a 100</label>
             <div id="criterios">
               <div th:each="criterio : ${criterios}" th:id="'criterio_' + ${criterio.id}">
                 <div class="entradaItem">
