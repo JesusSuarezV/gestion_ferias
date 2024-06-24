@@ -18,7 +18,7 @@
         <div class="menu" th:insert="~{@{fragments/menu.html}}"></div>
         <div class="contenido">
             <h2 class="titulo">Gestion de usuarios</h2>
-            <div th:if="${role == 'ESTUDIANTE'}" class="mensaje-usuario">
+            <div th:if="${role != 'ADMIN_SISTEMA'}" class="mensaje-usuario">
                 <h3 class="aviso">No tienes permiso para acceder a usuarios</h3>
             </div>
             <div th:if="${role == 'ADMIN_SISTEMA'}" class="panel-administrador">
